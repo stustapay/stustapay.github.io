@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://stustapay.github.io/blog</id>
+    <title>StuStaPay Blog</title>
+    <updated>2023-06-30T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://stustapay.github.io/blog"/>
+    <subtitle>StuStaPay Blog</subtitle>
+    <icon>https://stustapay.github.io/img/logo.svg</icon>
+    <entry>
+        <title type="html"><![CDATA[Placeholder Blog Post]]></title>
+        <id>https://stustapay.github.io/blog/placeholder</id>
+        <link href="https://stustapay.github.io/blog/placeholder"/>
+        <updated>2023-06-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet]]></summary>
+        <content type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>]]></content>
+        <author>
+            <name>Michael Loipführer</name>
+            <uri>https://github.com/mikonse</uri>
+        </author>
+        <category label="placeholder" term="placeholder"/>
+    </entry>
+</feed>

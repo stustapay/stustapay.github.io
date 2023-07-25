@@ -711,6 +711,9 @@ components:
           type: string
           format: date-time
           title: Mapping Was Valid Until
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - user_tag_uid

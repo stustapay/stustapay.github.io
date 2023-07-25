@@ -2355,6 +2355,9 @@ components:
             $ref: '#/components/schemas/UserTagHistoryEntry'
           type: array
           title: Tag History
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - id
@@ -2580,6 +2583,9 @@ components:
             type: integer
           type: array
           title: Till Ids
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - id
@@ -2885,6 +2891,9 @@ components:
             - type: integer
             - type: 'null'
           title: Cash Register Id
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - id
@@ -3074,6 +3083,7 @@ components:
         fixed_price:
           type: boolean
           title: Fixed Price
+          default: true
         price_in_vouchers:
           anyOf:
             - type: integer
@@ -3092,12 +3102,15 @@ components:
             $ref: '#/components/schemas/ProductRestriction'
           type: array
           title: Restrictions
+          default: []
         is_locked:
           type: boolean
           title: Is Locked
+          default: false
         is_returnable:
           type: boolean
           title: Is Returnable
+          default: false
         target_account_id:
           anyOf:
             - type: integer
@@ -3107,11 +3120,7 @@ components:
       required:
         - name
         - price
-        - fixed_price
         - tax_name
-        - restrictions
-        - is_locked
-        - is_returnable
       title: NewProduct
     NewTicket:
       properties:
@@ -3587,6 +3596,9 @@ components:
             $ref: '#/components/schemas/LineItem'
           type: array
           title: Line Items
+        customer_tag_uid_hex:
+          type: string
+          title: Customer Tag Uid Hex
       type: object
       required:
         - id
@@ -3643,6 +3655,9 @@ components:
         tax_rate:
           type: number
           title: Tax Rate
+        total_price:
+          type: number
+          title: Total Price
       type: object
       required:
         - quantity
@@ -4199,6 +4214,9 @@ components:
         id:
           type: integer
           title: Id
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - login
@@ -4263,6 +4281,9 @@ components:
             $ref: '#/components/schemas/UserTagAccountAssociation'
           type: array
           title: Account History
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - user_tag_uid
@@ -4285,6 +4306,9 @@ components:
           type: string
           format: date-time
           title: Mapping Was Valid Until
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - user_tag_uid

@@ -927,6 +927,9 @@ components:
             $ref: '#/components/schemas/UserTagHistoryEntry'
           type: array
           title: Tag History
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - id
@@ -1349,6 +1352,9 @@ components:
             - type: integer
             - type: 'null'
           title: Cash Register Id
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - id
@@ -1716,6 +1722,9 @@ components:
             $ref: '#/components/schemas/LineItem'
           type: array
           title: Line Items
+        customer_tag_uid_hex:
+          type: string
+          title: Customer Tag Uid Hex
       type: object
       required:
         - id
@@ -1772,6 +1781,9 @@ components:
         tax_rate:
           type: number
           title: Tax Rate
+        total_price:
+          type: number
+          title: Total Price
       type: object
       required:
         - quantity
@@ -1841,6 +1853,15 @@ components:
             $ref: '#/components/schemas/Button'
           type: array
           title: Buttons
+        used_vouchers:
+          type: number
+          title: Used vouchers
+        item_count:
+          type: number
+          title: Item count
+        total_price:
+          type: number
+          title: Total Price
       type: object
       required:
         - uuid
@@ -2410,6 +2431,9 @@ components:
         id:
           type: integer
           title: Id
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - login
@@ -2533,6 +2557,9 @@ components:
           type: string
           format: date-time
           title: Mapping Was Valid Until
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
       type: object
       required:
         - user_tag_uid

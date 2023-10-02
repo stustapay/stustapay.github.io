@@ -302,6 +302,9 @@ components:
       title: CreateCheckoutResponse
     Customer:
       properties:
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -379,6 +382,7 @@ components:
           title: Payout Export
       type: object
       required:
+        - node_id
         - id
         - type
         - name
@@ -596,11 +600,6 @@ components:
             - type: integer
             - type: 'null'
           title: Price In Vouchers
-        price_per_voucher:
-          anyOf:
-            - type: number
-            - type: 'null'
-          title: Price Per Voucher
         tax_name:
           type: string
           title: Tax Name
@@ -620,12 +619,20 @@ components:
             - type: integer
             - type: 'null'
           title: Target Account Id
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
         tax_rate:
           type: number
           title: Tax Rate
+        price_per_voucher:
+          anyOf:
+            - type: number
+            - type: 'null'
+          title: Price Per Voucher
       type: object
       required:
         - name
@@ -635,6 +642,7 @@ components:
         - restrictions
         - is_locked
         - is_returnable
+        - node_id
         - id
         - tax_rate
       title: Product
@@ -652,39 +660,37 @@ components:
         test_mode_message:
           type: string
           title: Test Mode Message
-        sumup_topup_enabled:
+        sumup_topup_enabled_globally:
           type: boolean
-          title: Sumup Topup Enabled
-        currency_symbol:
-          type: string
-          title: Currency Symbol
-        currency_identifier:
-          type: string
-          title: Currency Identifier
-        contact_email:
-          type: string
-          title: Contact Email
+          title: Sumup Topup Enabled Globally
         data_privacy_url:
           type: string
           title: Data Privacy Url
+        contact_email:
+          type: string
+          title: Contact Email
         about_page_url:
           type: string
           title: About Page Url
+        payout_enabled:
+          type: boolean
+          title: Payout Enabled
         allowed_country_codes:
-          items:
-            type: string
-          type: array
+          anyOf:
+            - items:
+                type: string
+              type: array
+            - type: 'null'
           title: Allowed Country Codes
       type: object
       required:
         - test_mode
         - test_mode_message
-        - sumup_topup_enabled
-        - currency_symbol
-        - currency_identifier
-        - contact_email
+        - sumup_topup_enabled_globally
         - data_privacy_url
+        - contact_email
         - about_page_url
+        - payout_enabled
         - allowed_country_codes
       title: PublicCustomerApiConfig
     SumupCheckoutStatus:

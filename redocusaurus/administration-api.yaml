@@ -11,6 +11,17 @@ paths:
         - products
       summary: List Products
       operationId: list_products
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -20,19 +31,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_Product_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - products
       summary: Create Product
       operationId: create_product
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewProduct'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -48,8 +74,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /products/{product_id}:
     get:
       tags:
@@ -65,6 +89,14 @@ paths:
           schema:
             type: integer
             title: Product Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -94,6 +126,14 @@ paths:
           schema:
             type: integer
             title: Product Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -129,6 +169,14 @@ paths:
           schema:
             type: integer
             title: Product Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -149,6 +197,17 @@ paths:
         - users
       summary: List Users
       operationId: list_users
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -158,19 +217,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_User_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - users
       summary: Create User
       operationId: create_user
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateUserPayload'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -186,8 +260,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /users/{user_id}:
     get:
       tags:
@@ -203,6 +275,14 @@ paths:
           schema:
             type: integer
             title: User Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -232,6 +312,14 @@ paths:
           schema:
             type: integer
             title: User Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -267,6 +355,14 @@ paths:
           schema:
             type: integer
             title: User Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -287,6 +383,17 @@ paths:
         - user-roles
       summary: List User Roles
       operationId: list_user_roles
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -296,19 +403,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_UserRole_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - user-roles
       summary: Create User Role
       operationId: create_user_role
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewUserRole'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -324,8 +446,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /user-roles/{user_role_id}:
     post:
       tags:
@@ -341,6 +461,14 @@ paths:
           schema:
             type: integer
             title: User Role Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -376,6 +504,14 @@ paths:
           schema:
             type: integer
             title: User Role Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -396,6 +532,17 @@ paths:
         - tax-rates
       summary: List Tax Rates
       operationId: list_tax_rates
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -405,19 +552,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_TaxRate_str_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - tax-rates
       summary: Create Tax Rate
       operationId: create_tax_rate
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaxRate'
-        required: true
+              $ref: '#/components/schemas/NewTaxRate'
       responses:
         '200':
           description: Successful Response
@@ -433,8 +595,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /tax-rates/{tax_rate_name}:
     get:
       tags:
@@ -450,6 +610,14 @@ paths:
           schema:
             type: string
             title: Tax Rate Name
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -479,6 +647,14 @@ paths:
           schema:
             type: string
             title: Tax Rate Name
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -514,6 +690,14 @@ paths:
           schema:
             type: string
             title: Tax Rate Name
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -536,9 +720,9 @@ paths:
       operationId: login
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
-              $ref: '#/components/schemas/Body_login_auth_login_post'
+              $ref: '#/components/schemas/LoginPayload'
         required: true
       responses:
         '200':
@@ -602,6 +786,17 @@ paths:
         - tills
       summary: List Tills
       operationId: list_tills
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -611,19 +806,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_Till_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - tills
       summary: Create Till
       operationId: create_till
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewTill'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -639,8 +849,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /tills/{till_id}:
     get:
       tags:
@@ -656,6 +864,14 @@ paths:
           schema:
             type: integer
             title: Till Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -685,6 +901,14 @@ paths:
           schema:
             type: integer
             title: Till Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -720,6 +944,14 @@ paths:
           schema:
             type: integer
             title: Till Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -749,6 +981,14 @@ paths:
           schema:
             type: integer
             title: Till Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -778,6 +1018,14 @@ paths:
           schema:
             type: integer
             title: Till Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -798,6 +1046,17 @@ paths:
         - till-layouts
       summary: List Till Layouts
       operationId: list_till_layouts
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -807,19 +1066,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_TillLayout_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - till-layouts
       summary: Create Till Layout
       operationId: create_till_layout
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewTillLayout'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -835,8 +1109,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /till-layouts/{layout_id}:
     get:
       tags:
@@ -852,6 +1124,14 @@ paths:
           schema:
             type: integer
             title: Layout Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -881,6 +1161,14 @@ paths:
           schema:
             type: integer
             title: Layout Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -916,6 +1204,14 @@ paths:
           schema:
             type: integer
             title: Layout Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -936,6 +1232,17 @@ paths:
         - till-profiles
       summary: List Till Profiles
       operationId: list_till_profiles
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -945,19 +1252,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_TillProfile_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - till-profiles
       summary: Create Till Profile
       operationId: create_till_profile
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewTillProfile'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -973,8 +1295,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /till-profiles/{profile_id}:
     get:
       tags:
@@ -990,6 +1310,14 @@ paths:
           schema:
             type: integer
             title: Profile Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1019,6 +1347,14 @@ paths:
           schema:
             type: integer
             title: Profile Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1054,6 +1390,14 @@ paths:
           schema:
             type: integer
             title: Profile Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1074,6 +1418,17 @@ paths:
         - till-buttons
       summary: List Till Buttons
       operationId: list_till_buttons
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1083,19 +1438,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_TillButton_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - till-buttons
       summary: Create Till Button
       operationId: create_till_button
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewTillButton'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -1111,8 +1481,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /till-buttons/{button_id}:
     get:
       tags:
@@ -1128,6 +1496,14 @@ paths:
           schema:
             type: integer
             title: Button Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1157,6 +1533,14 @@ paths:
           schema:
             type: integer
             title: Button Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1192,6 +1576,14 @@ paths:
           schema:
             type: integer
             title: Button Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1212,6 +1604,17 @@ paths:
         - till-register-stockings
       summary: List Register Stockings
       operationId: list_register_stockings
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1221,19 +1624,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_CashRegisterStocking_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - till-register-stockings
       summary: Create Register Stocking
       operationId: create_register_stocking
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewCashRegisterStocking'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -1249,8 +1667,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /till-register-stockings/{stocking_id}:
     post:
       tags:
@@ -1266,6 +1682,14 @@ paths:
           schema:
             type: integer
             title: Stocking Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1301,6 +1725,14 @@ paths:
           schema:
             type: integer
             title: Stocking Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1321,6 +1753,17 @@ paths:
         - till-registers
       summary: List Cash Registers Admin
       operationId: list_cash_registers_admin
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1330,19 +1773,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_CashRegister_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - till-registers
       summary: Create Register
       operationId: create_register
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewCashRegister'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -1358,20 +1816,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /till-registers/transfer-register:
     post:
       tags:
         - till-registers
       summary: Transfer Register
       operationId: transfer_register
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/TransferRegisterPayload'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -1386,8 +1853,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /till-registers/{register_id}:
     post:
       tags:
@@ -1403,6 +1868,14 @@ paths:
           schema:
             type: integer
             title: Register Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1437,6 +1910,14 @@ paths:
           schema:
             type: integer
             title: Register Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1517,29 +1998,17 @@ paths:
         - accounts
       summary: List System Accounts
       operationId: list_system_accounts
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NormalizedList_Account_int_'
-        '404':
-          description: Not found
       security:
         - OAuth2PasswordBearer: []
-  /accounts/find-accounts:
-    post:
-      tags:
-        - accounts
-      summary: Find Accounts
-      operationId: find_accounts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FindAccountPayload'
-        required: true
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1555,8 +2024,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /accounts/find-accounts:
+    post:
+      tags:
+        - accounts
+      summary: Find Accounts
+      operationId: find_accounts
       security:
         - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindAccountPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedList_Account_int_'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /accounts/{account_id}:
     get:
       tags:
@@ -1572,6 +2077,14 @@ paths:
           schema:
             type: integer
             title: Account Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1602,6 +2115,14 @@ paths:
           schema:
             type: integer
             title: Account Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1631,6 +2152,14 @@ paths:
           schema:
             type: integer
             title: Account Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1666,6 +2195,14 @@ paths:
           schema:
             type: integer
             title: Account Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1701,6 +2238,14 @@ paths:
           schema:
             type: integer
             title: Account Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1736,6 +2281,14 @@ paths:
           schema:
             type: integer
             title: Account Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1749,72 +2302,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /user-tags/{user_tag_uid_hex}:
-    get:
-      tags:
-        - accounts
-      summary: Get User Tag Detail
-      operationId: get_user_tag_detail
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: user_tag_uid_hex
-          in: path
-          required: true
-          schema:
-            type: string
-            title: User Tag Uid Hex
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserTagDetail'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /user-tags/{user_tag_uid_hex}/update-comment:
-    post:
-      tags:
-        - accounts
-      summary: Update User Tag Comment
-      operationId: update_user_tag_comment
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: user_tag_uid_hex
-          in: path
-          required: true
-          schema:
-            type: string
-            title: User Tag Uid Hex
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateCommentPayload'
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserTagDetail'
         '404':
           description: Not found
         '422':
@@ -1838,6 +2325,14 @@ paths:
           schema:
             type: integer
             title: Till Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1870,6 +2365,14 @@ paths:
               - type: integer
               - type: 'null'
             title: Customer Account Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1900,6 +2403,14 @@ paths:
           schema:
             type: integer
             title: Order Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1929,6 +2440,14 @@ paths:
           schema:
             type: integer
             title: Order Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1958,6 +2477,14 @@ paths:
           schema:
             type: integer
             title: Order Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -1985,6 +2512,17 @@ paths:
         - cashiers
       summary: List Cashiers
       operationId: list_cashiers
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -1994,8 +2532,12 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_Cashier_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /cashiers/{cashier_id}:
     get:
       tags:
@@ -2011,6 +2553,14 @@ paths:
           schema:
             type: integer
             title: Cashier Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2041,6 +2591,14 @@ paths:
           schema:
             type: integer
             title: Cashier Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2079,6 +2637,14 @@ paths:
               - type: integer
               - type: 'null'
             title: Shift Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2109,6 +2675,14 @@ paths:
           schema:
             type: integer
             title: Cashier Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -2157,6 +2731,14 @@ paths:
                 format: date-time
               - type: 'null'
             title: From Timestamp
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2179,6 +2761,17 @@ paths:
         - tickets
       summary: List Tickets
       operationId: list_tickets
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2188,19 +2781,34 @@ paths:
                 $ref: '#/components/schemas/NormalizedList_Ticket_int_'
         '404':
           description: Not found
-      security:
-        - OAuth2PasswordBearer: []
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - tickets
       summary: Create Ticket
       operationId: create_ticket
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewTicket'
-        required: true
       responses:
         '200':
           description: Successful Response
@@ -2216,8 +2824,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /tickets/{ticket_id}:
     get:
       tags:
@@ -2233,6 +2839,14 @@ paths:
           schema:
             type: integer
             title: Ticket Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2262,6 +2876,14 @@ paths:
           schema:
             type: integer
             title: Ticket Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       requestBody:
         required: true
         content:
@@ -2297,6 +2919,14 @@ paths:
           schema:
             type: integer
             title: Ticket Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2311,10 +2941,538 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /user-tags/find-user-tags:
+    post:
+      tags:
+        - user_tags
+      summary: Find User Tags
+      operationId: find_user_tags
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindUserTagPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedList_UserTagDetail_int_'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user-tags/{user_tag_uid_hex}:
+    get:
+      tags:
+        - user_tags
+      summary: Get User Tag Detail
+      operationId: get_user_tag_detail
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_tag_uid_hex
+          in: path
+          required: true
+          schema:
+            type: string
+            title: User Tag Uid Hex
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTagDetail'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user-tags/{user_tag_uid_hex}/update-comment:
+    post:
+      tags:
+        - user_tags
+      summary: Update User Tag Comment
+      operationId: update_user_tag_comment
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_tag_uid_hex
+          in: path
+          required: true
+          schema:
+            type: string
+            title: User Tag Uid Hex
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommentPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTagDetail'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tses/:
+    get:
+      tags:
+        - tses
+      summary: List Tses
+      operationId: list_tses
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedList_Tse_int_'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - tses
+      summary: Create Tse
+      operationId: create_tse
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTse'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tse'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tses/{tse_id}:
+    post:
+      tags:
+        - tses
+      summary: Update Tse
+      operationId: update_tse
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: tse_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Tse Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTse'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tse'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /payouts/:
+    get:
+      tags:
+        - payouts
+      summary: List Payout Runs
+      operationId: list_payout_runs
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedList_PayoutRunWithStats_int_'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - payouts
+      summary: Create Payout Run
+      operationId: create_payout_run
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPayoutRun'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutRunWithStats'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /payouts/pending-payout-detail:
+    get:
+      tags:
+        - payouts
+      summary: Pending Payout Detail
+      operationId: pending_payout_detail
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingPayoutDetail'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /payouts/{payout_run_id}/csv:
+    get:
+      tags:
+        - payouts
+      summary: Payout Run Payouts
+      operationId: payout_run_payouts
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: payout_run_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Payout Run Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payout'
+                title: Response Payout Run Payouts Payouts  Payout Run Id  Csv Get
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - payouts
+      summary: Payout Run Csv Export
+      operationId: payout_run_csv_export
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: payout_run_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Payout Run Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCSVPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                title: >-
+                  Response Payout Run Csv Export Payouts  Payout Run Id  Csv
+                  Post
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /payouts/{payout_run_id}/sepa_xml:
+    post:
+      tags:
+        - payouts
+      summary: Payout Run Sepa Xml Export
+      operationId: payout_run_sepa_xml_export
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: payout_run_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Payout Run Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSepaXMLPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                title: >-
+                  Response Payout Run Sepa Xml Export Payouts  Payout Run Id 
+                  Sepa Xml Post
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tree/:
+    get:
+      tags:
+        - tree
+      summary: Get Tree For Current User
+      operationId: get_tree_for_current_user
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+        '404':
+          description: Not found
+      security:
+        - OAuth2PasswordBearer: []
+  /tree/events/{node_id}:
+    post:
+      tags:
+        - tree
+      summary: Update Event
+      operationId: update_event
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEvent'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
       properties:
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -2360,6 +3518,7 @@ components:
           title: User Tag Uid Hex
       type: object
       required:
+        - node_id
         - id
         - type
         - name
@@ -2377,39 +3536,6 @@ components:
         - internal
         - private
       title: AccountType
-    Body_login_auth_login_post:
-      properties:
-        grant_type:
-          anyOf:
-            - type: string
-              pattern: password
-            - type: 'null'
-          title: Grant Type
-        username:
-          type: string
-          title: Username
-        password:
-          type: string
-          title: Password
-        scope:
-          type: string
-          title: Scope
-          default: ''
-        client_id:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Client Id
-        client_secret:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Client Secret
-      type: object
-      required:
-        - username
-        - password
-      title: Body_login_auth_login_post
     BookedProduct:
       properties:
         product_id:
@@ -2434,6 +3560,9 @@ components:
         name:
           type: string
           title: Name
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -2458,6 +3587,7 @@ components:
       type: object
       required:
         - name
+        - node_id
         - id
         - current_cashier_id
         - current_cashier_tag_uid
@@ -2529,6 +3659,9 @@ components:
           type: number
           title: Variable In Euro
           default: 0
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -2538,11 +3671,15 @@ components:
       type: object
       required:
         - name
+        - node_id
         - id
         - total
       title: CashRegisterStocking
     Cashier:
       properties:
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -2588,6 +3725,7 @@ components:
           title: User Tag Uid Hex
       type: object
       required:
+        - node_id
         - id
         - login
         - display_name
@@ -2756,18 +3894,9 @@ components:
         test_mode_message:
           type: string
           title: Test Mode Message
-        sumup_topup_enabled:
+        sumup_topup_enabled_globally:
           type: boolean
-          title: Sumup Topup Enabled
-        currency_symbol:
-          type: string
-          title: Currency Symbol
-        currency_identifier:
-          type: string
-          title: Currency Identifier
-        contact_email:
-          type: string
-          title: Contact Email
+          title: Sumup Topup Enabled Globally
         terminal_api_endpoint:
           type: string
           title: Terminal Api Endpoint
@@ -2775,10 +3904,7 @@ components:
       required:
         - test_mode
         - test_mode_message
-        - sumup_topup_enabled
-        - currency_symbol
-        - currency_identifier
-        - contact_email
+        - sumup_topup_enabled_globally
         - terminal_api_endpoint
       title: Config
     ConfigEntry:
@@ -2796,6 +3922,30 @@ components:
         - key
         - value
       title: ConfigEntry
+    CreateCSVPayload:
+      properties:
+        batch_size:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Batch Size
+      type: object
+      title: CreateCSVPayload
+    CreateSepaXMLPayload:
+      properties:
+        execution_date:
+          type: string
+          format: date
+          title: Execution Date
+        batch_size:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Batch Size
+      type: object
+      required:
+        - execution_date
+      title: CreateSepaXMLPayload
     CreateUserPayload:
       properties:
         login:
@@ -2819,16 +3969,6 @@ components:
             - type: string
             - type: 'null'
           title: User Tag Uid Hex
-        transport_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Transport Account Id
-        cashier_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Cashier Account Id
         password:
           anyOf:
             - type: string
@@ -2842,6 +3982,9 @@ components:
       title: CreateUserPayload
     CurrentUser:
       properties:
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -2896,6 +4039,7 @@ components:
           title: User Tag Uid Hex
       type: object
       required:
+        - node_id
         - id
         - login
         - display_name
@@ -2926,6 +4070,70 @@ components:
         - uuid
         - products
       title: EditSaleProducts
+    Event:
+      properties:
+        id:
+          type: integer
+          title: Id
+        currency_identifier:
+          type: string
+          title: Currency Identifier
+        sumup_topup_enabled:
+          type: boolean
+          title: Sumup Topup Enabled
+        max_account_balance:
+          type: number
+          title: Max Account Balance
+        customer_portal_contact_email:
+          type: string
+          format: email
+          title: Customer Portal Contact Email
+        ust_id:
+          type: string
+          title: Ust Id
+        bon_issuer:
+          type: string
+          title: Bon Issuer
+        bon_address:
+          type: string
+          title: Bon Address
+        bon_title:
+          type: string
+          title: Bon Title
+        sepa_enabled:
+          type: boolean
+          title: Sepa Enabled
+        sepa_sender_name:
+          type: string
+          title: Sepa Sender Name
+        sepa_sender_iban:
+          type: string
+          title: Sepa Sender Iban
+        sepa_description:
+          type: string
+          title: Sepa Description
+        sepa_allowed_country_codes:
+          items:
+            type: string
+          type: array
+          title: Sepa Allowed Country Codes
+      type: object
+      required:
+        - id
+        - currency_identifier
+        - sumup_topup_enabled
+        - max_account_balance
+        - customer_portal_contact_email
+        - ust_id
+        - bon_issuer
+        - bon_address
+        - bon_title
+        - sepa_enabled
+        - sepa_sender_name
+        - sepa_sender_iban
+        - sepa_description
+        - sepa_allowed_country_codes
+      title: Event
     FindAccountPayload:
       properties:
         search_term:
@@ -2935,6 +4143,15 @@ components:
       required:
         - search_term
       title: FindAccountPayload
+    FindUserTagPayload:
+      properties:
+        search_term:
+          type: string
+          title: Search Term
+      type: object
+      required:
+        - search_term
+      title: FindUserTagPayload
     HTTPValidationError:
       properties:
         detail:
@@ -2976,6 +4193,19 @@ components:
         - item_id
         - total_tax
       title: LineItem
+    LoginPayload:
+      properties:
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+        - username
+        - password
+      title: LoginPayload
     LoginResponse:
       properties:
         user:
@@ -3070,6 +4300,15 @@ components:
       required:
         - name
       title: NewCashRegisterStocking
+    NewPayoutRun:
+      properties:
+        max_payout_sum:
+          type: number
+          title: Max Payout Sum
+      type: object
+      required:
+        - max_payout_sum
+      title: NewPayoutRun
     NewProduct:
       properties:
         name:
@@ -3089,11 +4328,6 @@ components:
             - type: integer
             - type: 'null'
           title: Price In Vouchers
-        price_per_voucher:
-          anyOf:
-            - type: number
-            - type: 'null'
-          title: Price Per Voucher
         tax_name:
           type: string
           title: Tax Name
@@ -3122,6 +4356,23 @@ components:
         - price
         - tax_name
       title: NewProduct
+    NewTaxRate:
+      properties:
+        rate:
+          type: number
+          title: Rate
+        description:
+          type: string
+          title: Description
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+        - rate
+        - description
+        - name
+      title: NewTaxRate
     NewTicket:
       properties:
         name:
@@ -3249,6 +4500,36 @@ components:
         - allow_ticket_sale
         - allowed_role_names
       title: NewTillProfile
+    NewTse:
+      properties:
+        name:
+          type: string
+          title: Name
+        ws_url:
+          type: string
+          title: Ws Url
+        ws_timeout:
+          type: number
+          title: Ws Timeout
+        password:
+          type: string
+          title: Password
+        type:
+          $ref: '#/components/schemas/TseType'
+        serial:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Serial
+      type: object
+      required:
+        - name
+        - ws_url
+        - ws_timeout
+        - password
+        - type
+        - serial
+      title: NewTse
     NewUserRole:
       properties:
         name:
@@ -3268,6 +4549,72 @@ components:
         - name
         - privileges
       title: NewUserRole
+    Node:
+      properties:
+        id:
+          type: integer
+          title: Id
+        parent:
+          type: integer
+          title: Parent
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        event:
+          anyOf:
+            - $ref: '#/components/schemas/Event'
+            - type: 'null'
+        path:
+          type: string
+          title: Path
+        parent_ids:
+          items:
+            type: integer
+          type: array
+          title: Parent Ids
+        allowed_objects_at_node:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Allowed Objects At Node
+        computed_allowed_objects_at_node:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Computed Allowed Objects At Node
+        allowed_objects_in_subtree:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Allowed Objects In Subtree
+        computed_allowed_objects_in_subtree:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Computed Allowed Objects In Subtree
+        children:
+          items:
+            $ref: '#/components/schemas/Node'
+          type: array
+          title: Children
+      type: object
+      required:
+        - id
+        - parent
+        - name
+        - description
+        - event
+        - path
+        - parent_ids
+        - allowed_objects_at_node
+        - computed_allowed_objects_at_node
+        - allowed_objects_in_subtree
+        - computed_allowed_objects_in_subtree
+        - children
+      title: Node
     NormalizedList_Account_int_:
       properties:
         ids:
@@ -3387,6 +4734,23 @@ components:
         - ids
         - entities
       title: NormalizedList[Order, int]
+    NormalizedList_PayoutRunWithStats_int_:
+      properties:
+        ids:
+          items:
+            type: integer
+          type: array
+          title: Ids
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/PayoutRunWithStats'
+          type: object
+          title: Entities
+      type: object
+      required:
+        - ids
+        - entities
+      title: NormalizedList[PayoutRunWithStats, int]
     NormalizedList_Product_int_:
       properties:
         ids:
@@ -3506,6 +4870,23 @@ components:
         - ids
         - entities
       title: NormalizedList[Till, int]
+    NormalizedList_Tse_int_:
+      properties:
+        ids:
+          items:
+            type: integer
+          type: array
+          title: Ids
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/Tse'
+          type: object
+          title: Entities
+      type: object
+      required:
+        - ids
+        - entities
+      title: NormalizedList[Tse, int]
     NormalizedList_UserRole_int_:
       properties:
         ids:
@@ -3523,6 +4904,23 @@ components:
         - ids
         - entities
       title: NormalizedList[UserRole, int]
+    NormalizedList_UserTagDetail_int_:
+      properties:
+        ids:
+          items:
+            type: integer
+          type: array
+          title: Ids
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/UserTagDetail'
+          type: object
+          title: Entities
+      type: object
+      required:
+        - ids
+        - entities
+      title: NormalizedList[UserTagDetail, int]
     NormalizedList_User_int_:
       properties:
         ids:
@@ -3540,6 +4938,20 @@ components:
         - ids
         - entities
       title: NormalizedList[User, int]
+    ObjectType:
+      type: string
+      enum:
+        - user
+        - product
+        - ticket
+        - till
+        - user_role
+        - account
+        - order
+        - user_tags
+        - tax_rate
+        - tse
+      title: ObjectType
     Order:
       properties:
         id:
@@ -3639,6 +5051,72 @@ components:
         - tag
         - sumup_online
       title: PaymentMethod
+    Payout:
+      properties:
+        customer_account_id:
+          type: integer
+          title: Customer Account Id
+        iban:
+          type: string
+          title: Iban
+        account_name:
+          type: string
+          title: Account Name
+        email:
+          type: string
+          title: Email
+        user_tag_uid:
+          type: integer
+          title: User Tag Uid
+        balance:
+          type: number
+          title: Balance
+        payout_run_id:
+          type: integer
+          title: Payout Run Id
+        user_tag_uid_hex:
+          type: string
+          title: User Tag Uid Hex
+      type: object
+      required:
+        - customer_account_id
+        - iban
+        - account_name
+        - email
+        - user_tag_uid
+        - balance
+        - payout_run_id
+      title: Payout
+    PayoutRunWithStats:
+      properties:
+        id:
+          type: integer
+          title: Id
+        created_by:
+          type: string
+          title: Created By
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        total_donation_amount:
+          type: number
+          title: Total Donation Amount
+        total_payout_amount:
+          type: number
+          title: Total Payout Amount
+        n_payouts:
+          type: integer
+          title: N Payouts
+      type: object
+      required:
+        - id
+        - created_by
+        - created_at
+        - total_donation_amount
+        - total_payout_amount
+        - n_payouts
+      title: PayoutRunWithStats
     PendingLineItem:
       properties:
         quantity:
@@ -3666,6 +5144,23 @@ components:
         - tax_name
         - tax_rate
       title: PendingLineItem
+    PendingPayoutDetail:
+      properties:
+        total_payout_amount:
+          type: number
+          title: Total Payout Amount
+        total_donation_amount:
+          type: number
+          title: Total Donation Amount
+        n_payouts:
+          type: integer
+          title: N Payouts
+      type: object
+      required:
+        - total_payout_amount
+        - total_donation_amount
+        - n_payouts
+      title: PendingPayoutDetail
     Privilege:
       type: string
       enum:
@@ -3678,6 +5173,7 @@ components:
         - till_management
         - order_management
         - festival_overview
+        - tse_management
         - terminal_login
         - supervised_terminal_login
         - can_book_orders
@@ -3702,11 +5198,6 @@ components:
             - type: integer
             - type: 'null'
           title: Price In Vouchers
-        price_per_voucher:
-          anyOf:
-            - type: number
-            - type: 'null'
-          title: Price Per Voucher
         tax_name:
           type: string
           title: Tax Name
@@ -3726,12 +5217,20 @@ components:
             - type: integer
             - type: 'null'
           title: Target Account Id
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
         tax_rate:
           type: number
           title: Tax Rate
+        price_per_voucher:
+          anyOf:
+            - type: number
+            - type: 'null'
+          title: Price Per Voucher
       type: object
       required:
         - name
@@ -3741,6 +5240,7 @@ components:
         - restrictions
         - is_locked
         - is_returnable
+        - node_id
         - id
         - tax_rate
       title: Product
@@ -3768,11 +5268,6 @@ components:
             - type: integer
             - type: 'null'
           title: Price In Vouchers
-        price_per_voucher:
-          anyOf:
-            - type: number
-            - type: 'null'
-          title: Price Per Voucher
         tax_name:
           type: string
           title: Tax Name
@@ -3792,12 +5287,20 @@ components:
             - type: integer
             - type: 'null'
           title: Target Account Id
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
         tax_rate:
           type: number
           title: Tax Rate
+        price_per_voucher:
+          anyOf:
+            - type: number
+            - type: 'null'
+          title: Price Per Voucher
         quantity_sold:
           type: integer
           title: Quantity Sold
@@ -3810,6 +5313,7 @@ components:
         - restrictions
         - is_locked
         - is_returnable
+        - node_id
         - id
         - tax_rate
         - quantity_sold
@@ -3825,11 +5329,15 @@ components:
         name:
           type: string
           title: Name
+        node_id:
+          type: integer
+          title: Node Id
       type: object
       required:
         - rate
         - description
         - name
+        - node_id
       title: TaxRate
     TaxRateWithoutName:
       properties:
@@ -3864,6 +5372,9 @@ components:
           anyOf:
             - $ref: '#/components/schemas/ProductRestriction'
             - type: 'null'
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -3887,6 +5398,7 @@ components:
         - name
         - product_id
         - initial_top_up_amount
+        - node_id
         - id
         - product_name
         - price
@@ -3912,6 +5424,9 @@ components:
         active_profile_id:
           type: integer
           title: Active Profile Id
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -3964,6 +5479,7 @@ components:
       required:
         - name
         - active_profile_id
+        - node_id
         - id
         - z_nr
       title: Till
@@ -3977,6 +5493,9 @@ components:
             type: integer
           type: array
           title: Product Ids
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -3987,6 +5506,7 @@ components:
       required:
         - name
         - product_ids
+        - node_id
         - id
         - price
       title: TillButton
@@ -4012,6 +5532,9 @@ components:
               type: array
             - type: 'null'
           title: Ticket Ids
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -4019,6 +5542,7 @@ components:
       required:
         - name
         - description
+        - node_id
         - id
       title: TillLayout
     TillProfile:
@@ -4048,6 +5572,9 @@ components:
             type: string
           type: array
           title: Allowed Role Names
+        node_id:
+          type: integer
+          title: Node Id
         id:
           type: integer
           title: Id
@@ -4059,6 +5586,7 @@ components:
         - allow_cash_out
         - allow_ticket_sale
         - allowed_role_names
+        - node_id
         - id
       title: TillProfile
     TransferRegisterPayload:
@@ -4074,6 +5602,88 @@ components:
         - source_cashier_id
         - target_cashier_id
       title: TransferRegisterPayload
+    Tse:
+      properties:
+        name:
+          type: string
+          title: Name
+        ws_url:
+          type: string
+          title: Ws Url
+        ws_timeout:
+          type: number
+          title: Ws Timeout
+        password:
+          type: string
+          title: Password
+        type:
+          $ref: '#/components/schemas/TseType'
+        serial:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Serial
+        node_id:
+          type: integer
+          title: Node Id
+        id:
+          type: integer
+          title: Id
+        status:
+          $ref: '#/components/schemas/TseStatus'
+        hashalgo:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Hashalgo
+        time_format:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Time Format
+        public_key:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Public Key
+        certificate:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Certificate
+        process_data_encoding:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Process Data Encoding
+      type: object
+      required:
+        - name
+        - ws_url
+        - ws_timeout
+        - password
+        - type
+        - serial
+        - node_id
+        - id
+        - status
+        - hashalgo
+        - time_format
+        - public_key
+        - certificate
+        - process_data_encoding
+      title: Tse
+    TseStatus:
+      type: string
+      enum:
+        - new
+        - active
+        - disabled
+        - failed
+      title: TseStatus
+    TseType:
+      const: diebold_nixdorf
+      title: TseType
     UpdateAccountCommentPayload:
       properties:
         comment:
@@ -4101,6 +5711,66 @@ components:
       required:
         - comment
       title: UpdateCommentPayload
+    UpdateEvent:
+      properties:
+        currency_identifier:
+          type: string
+          title: Currency Identifier
+        sumup_topup_enabled:
+          type: boolean
+          title: Sumup Topup Enabled
+        max_account_balance:
+          type: number
+          title: Max Account Balance
+        customer_portal_contact_email:
+          type: string
+          format: email
+          title: Customer Portal Contact Email
+        ust_id:
+          type: string
+          title: Ust Id
+        bon_issuer:
+          type: string
+          title: Bon Issuer
+        bon_address:
+          type: string
+          title: Bon Address
+        bon_title:
+          type: string
+          title: Bon Title
+        sepa_enabled:
+          type: boolean
+          title: Sepa Enabled
+        sepa_sender_name:
+          type: string
+          title: Sepa Sender Name
+        sepa_sender_iban:
+          type: string
+          title: Sepa Sender Iban
+        sepa_description:
+          type: string
+          title: Sepa Description
+        sepa_allowed_country_codes:
+          items:
+            type: string
+          type: array
+          title: Sepa Allowed Country Codes
+      type: object
+      required:
+        - currency_identifier
+        - sumup_topup_enabled
+        - max_account_balance
+        - customer_portal_contact_email
+        - ust_id
+        - bon_issuer
+        - bon_address
+        - bon_title
+        - sepa_enabled
+        - sepa_sender_name
+        - sepa_sender_iban
+        - sepa_description
+        - sepa_allowed_country_codes
+      title: UpdateEvent
     UpdateTagUidPayload:
       properties:
         new_tag_uid_hex:
@@ -4115,6 +5785,27 @@ components:
       required:
         - new_tag_uid_hex
       title: UpdateTagUidPayload
+    UpdateTse:
+      properties:
+        name:
+          type: string
+          title: Name
+        ws_url:
+          type: string
+          title: Ws Url
+        ws_timeout:
+          type: number
+          title: Ws Timeout
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+        - name
+        - ws_url
+        - ws_timeout
+        - password
+      title: UpdateTse
     UpdateUserPayload:
       properties:
         login:
@@ -4138,16 +5829,6 @@ components:
             - type: string
             - type: 'null'
           title: User Tag Uid Hex
-        transport_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Transport Account Id
-        cashier_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Cashier Account Id
       type: object
       required:
         - login
@@ -4186,6 +5867,11 @@ components:
         display_name:
           type: string
           title: Display Name
+        user_tag_uid:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Uid
         role_names:
           items:
             type: string
@@ -4196,11 +5882,9 @@ components:
             - type: string
             - type: 'null'
           title: Description
-        user_tag_uid:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: User Tag Uid
+        node_id:
+          type: integer
+          title: Node Id
         transport_account_id:
           anyOf:
             - type: integer
@@ -4222,6 +5906,7 @@ components:
         - login
         - display_name
         - role_names
+        - node_id
         - id
       title: User
     UserRole:
@@ -4241,11 +5926,15 @@ components:
         id:
           type: integer
           title: Id
+        node_id:
+          type: integer
+          title: Node Id
       type: object
       required:
         - name
         - privileges
         - id
+        - node_id
       title: UserRole
     UserTagAccountAssociation:
       properties:
@@ -4341,12 +6030,13 @@ components:
         vouchers_issued:
           type: integer
           title: Vouchers Issued
-          default: 0
         vouchers_spent:
           type: integer
           title: Vouchers Spent
-          default: 0
       type: object
+      required:
+        - vouchers_issued
+        - vouchers_spent
       title: VoucherStats
     stustapay__core__schema__cashier__CashierShiftStats__ProductStats:
       properties:

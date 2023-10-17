@@ -138,25 +138,38 @@ paths:
           description: not found
       security:
         - OAuth2PasswordBearer: []
-  /public_customer_config:
+  /config:
     get:
       tags:
         - base
-      summary: get customer config
+      summary: get customer customer portal config
       operationId: get_customer_config
+      parameters:
+        - name: base_url
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Base Url
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PublicCustomerApiConfig'
+                $ref: '#/components/schemas/CustomerPortalApiConfig'
         '401':
           description: unauthorized
         '403':
           description: forbidden
         '404':
           description: not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /sumup/create-checkout:
     post:
       tags:
@@ -228,9 +241,18 @@ components:
     AccountType:
       type: string
       enum:
-        - virtual
-        - internal
         - private
+        - sale_exit
+        - cash_entry
+        - cash_exit
+        - cash_topup_source
+        - cash_imbalance
+        - cash_vault
+        - sumup_entry
+        - sumup_online_entry
+        - transport
+        - cashier
+        - voucher_create
       title: AccountType
     Body_login_auth_login_post:
       properties:
@@ -380,6 +402,12 @@ components:
             - type: boolean
             - type: 'null'
           title: Payout Export
+        user_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - node_id
@@ -399,6 +427,7 @@ components:
         - payout_error
         - payout_run_id
         - payout_export
+        - user_tag_uid_hex
       title: Customer
     CustomerBank:
       properties:
@@ -421,6 +450,47 @@ components:
         - account_name
         - email
       title: CustomerBank
+    CustomerPortalApiConfig:
+      properties:
+        test_mode:
+          type: boolean
+          title: Test Mode
+        test_mode_message:
+          type: string
+          title: Test Mode Message
+        data_privacy_url:
+          type: string
+          title: Data Privacy Url
+        contact_email:
+          type: string
+          title: Contact Email
+        about_page_url:
+          type: string
+          title: About Page Url
+        payout_enabled:
+          type: boolean
+          title: Payout Enabled
+        sumup_topup_enabled:
+          type: boolean
+          title: Sumup Topup Enabled
+        allowed_country_codes:
+          anyOf:
+            - items:
+                type: string
+              type: array
+            - type: 'null'
+          title: Allowed Country Codes
+      type: object
+      required:
+        - test_mode
+        - test_mode_message
+        - data_privacy_url
+        - contact_email
+        - about_page_url
+        - payout_enabled
+        - sumup_topup_enabled
+        - allowed_country_codes
+      title: CustomerPortalApiConfig
     HTTPValidationError:
       properties:
         detail:
@@ -452,6 +522,10 @@ components:
         total_tax:
           type: number
           title: Total Tax
+        total_price:
+          type: number
+          title: Total Price
+          readOnly: true
       type: object
       required:
         - quantity
@@ -461,6 +535,7 @@ components:
         - tax_rate
         - item_id
         - total_tax
+        - total_price
       title: LineItem
     LoginResponse:
       properties:
@@ -555,6 +630,12 @@ components:
             - type: string
             - type: 'null'
           title: Bon Output File
+        customer_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Customer Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - id
@@ -573,6 +654,7 @@ components:
         - line_items
         - bon_generated
         - bon_output_file
+        - customer_tag_uid_hex
       title: OrderWithBon
     PaymentMethod:
       type: string
@@ -652,47 +734,6 @@ components:
         - under_16
         - under_18
       title: ProductRestriction
-    PublicCustomerApiConfig:
-      properties:
-        test_mode:
-          type: boolean
-          title: Test Mode
-        test_mode_message:
-          type: string
-          title: Test Mode Message
-        sumup_topup_enabled_globally:
-          type: boolean
-          title: Sumup Topup Enabled Globally
-        data_privacy_url:
-          type: string
-          title: Data Privacy Url
-        contact_email:
-          type: string
-          title: Contact Email
-        about_page_url:
-          type: string
-          title: About Page Url
-        payout_enabled:
-          type: boolean
-          title: Payout Enabled
-        allowed_country_codes:
-          anyOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: Allowed Country Codes
-      type: object
-      required:
-        - test_mode
-        - test_mode_message
-        - sumup_topup_enabled_globally
-        - data_privacy_url
-        - contact_email
-        - about_page_url
-        - payout_enabled
-        - allowed_country_codes
-      title: PublicCustomerApiConfig
     SumupCheckoutStatus:
       type: string
       enum:
@@ -718,13 +759,17 @@ components:
           format: date-time
           title: Mapping Was Valid Until
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - user_tag_uid
         - account_id
         - mapping_was_valid_until
+        - user_tag_uid_hex
       title: UserTagHistoryEntry
     ValidationError:
       properties:

@@ -3514,8 +3514,11 @@ components:
           type: array
           title: Tag History
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - node_id
@@ -3528,13 +3531,23 @@ components:
         - user_tag_uid
         - restriction
         - tag_history
+        - user_tag_uid_hex
       title: Account
     AccountType:
       type: string
       enum:
-        - virtual
-        - internal
         - private
+        - sale_exit
+        - cash_entry
+        - cash_exit
+        - cash_topup_source
+        - cash_imbalance
+        - cash_vault
+        - sumup_entry
+        - sumup_online_entry
+        - transport
+        - cashier
+        - voucher_create
       title: AccountType
     BookedProduct:
       properties:
@@ -3721,8 +3734,11 @@ components:
           type: array
           title: Till Ids
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - node_id
@@ -3732,6 +3748,7 @@ components:
         - cashier_account_id
         - cash_drawer_balance
         - till_ids
+        - user_tag_uid_hex
       title: Cashier
     CashierShift:
       properties:
@@ -3871,6 +3888,18 @@ components:
         till_id:
           type: integer
           title: Till Id
+        used_vouchers:
+          type: integer
+          title: Used Vouchers
+          readOnly: true
+        item_count:
+          type: integer
+          title: Item Count
+          readOnly: true
+        total_price:
+          type: number
+          title: Total Price
+          readOnly: true
       type: object
       required:
         - uuid
@@ -3885,6 +3914,9 @@ components:
         - booked_at
         - cashier_id
         - till_id
+        - used_vouchers
+        - item_count
+        - total_price
       title: CompletedSaleProducts
     Config:
       properties:
@@ -4035,8 +4067,11 @@ components:
             - type: 'null'
           title: Cash Register Id
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - node_id
@@ -4044,11 +4079,9 @@ components:
         - login
         - display_name
         - privileges
+        - user_tag_uid_hex
       title: CurrentUser
-      description: |2-
-
-            Describes a logged-in user in the system
-            
+      description: Describes a logged-in user in the system
     EditSaleProducts:
       properties:
         uuid:
@@ -4183,6 +4216,10 @@ components:
         total_tax:
           type: number
           title: Total Tax
+        total_price:
+          type: number
+          title: Total Price
+          readOnly: true
       type: object
       required:
         - quantity
@@ -4192,6 +4229,7 @@ components:
         - tax_rate
         - item_id
         - total_tax
+        - total_price
       title: LineItem
     LoginPayload:
       properties:
@@ -4575,6 +4613,18 @@ components:
             type: integer
           type: array
           title: Parent Ids
+        event_node_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Event Node Id
+        parents_until_event_node:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Parents Until Event Node
         allowed_objects_at_node:
           items:
             $ref: '#/components/schemas/ObjectType'
@@ -4609,6 +4659,8 @@ components:
         - event
         - path
         - parent_ids
+        - event_node_id
+        - parents_until_event_node
         - allowed_objects_at_node
         - computed_allowed_objects_at_node
         - allowed_objects_in_subtree
@@ -5009,8 +5061,11 @@ components:
           type: array
           title: Line Items
         customer_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Customer Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - id
@@ -5027,11 +5082,9 @@ components:
         - customer_account_id
         - customer_tag_uid
         - line_items
+        - customer_tag_uid_hex
       title: Order
-      description: |2-
-
-            represents a completely finished order with all relevant data
-            
+      description: represents a completely finished order with all relevant data
     OrderType:
       type: string
       enum:
@@ -5077,6 +5130,7 @@ components:
         user_tag_uid_hex:
           type: string
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - customer_account_id
@@ -5086,6 +5140,7 @@ components:
         - user_tag_uid
         - balance
         - payout_run_id
+        - user_tag_uid_hex
       title: Payout
     PayoutRunWithStats:
       properties:
@@ -5136,6 +5191,7 @@ components:
         total_price:
           type: number
           title: Total Price
+          readOnly: true
       type: object
       required:
         - quantity
@@ -5143,6 +5199,7 @@ components:
         - product_price
         - tax_name
         - tax_rate
+        - total_price
       title: PendingLineItem
     PendingPayoutDetail:
       properties:
@@ -5722,6 +5779,9 @@ components:
         max_account_balance:
           type: number
           title: Max Account Balance
+        customer_portal_url:
+          type: string
+          title: Customer Portal Url
         customer_portal_contact_email:
           type: string
           format: email
@@ -5760,6 +5820,7 @@ components:
         - currency_identifier
         - sumup_topup_enabled
         - max_account_balance
+        - customer_portal_url
         - customer_portal_contact_email
         - ust_id
         - bon_issuer
@@ -5899,8 +5960,11 @@ components:
           type: integer
           title: Id
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - login
@@ -5908,6 +5972,7 @@ components:
         - role_names
         - node_id
         - id
+        - user_tag_uid_hex
       title: User
     UserRole:
       properties:
@@ -5971,12 +6036,16 @@ components:
           type: array
           title: Account History
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - user_tag_uid
         - account_history
+        - user_tag_uid_hex
       title: UserTagDetail
     UserTagHistoryEntry:
       properties:
@@ -5996,13 +6065,17 @@ components:
           format: date-time
           title: Mapping Was Valid Until
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - user_tag_uid
         - account_id
         - mapping_was_valid_until
+        - user_tag_uid_hex
       title: UserTagHistoryEntry
     ValidationError:
       properties:

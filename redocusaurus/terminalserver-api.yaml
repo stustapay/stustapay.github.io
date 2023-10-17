@@ -931,8 +931,11 @@ components:
           type: array
           title: Tag History
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - node_id
@@ -945,13 +948,23 @@ components:
         - user_tag_uid
         - restriction
         - tag_history
+        - user_tag_uid_hex
       title: Account
     AccountType:
       type: string
       enum:
-        - virtual
-        - internal
         - private
+        - sale_exit
+        - cash_entry
+        - cash_exit
+        - cash_topup_source
+        - cash_imbalance
+        - cash_vault
+        - sumup_entry
+        - sumup_online_entry
+        - transport
+        - cashier
+        - voucher_create
       title: AccountType
     Button:
       properties:
@@ -1206,6 +1219,18 @@ components:
         till_id:
           type: integer
           title: Till Id
+        used_vouchers:
+          type: integer
+          title: Used Vouchers
+          readOnly: true
+        item_count:
+          type: integer
+          title: Item Count
+          readOnly: true
+        total_price:
+          type: number
+          title: Total Price
+          readOnly: true
       type: object
       required:
         - uuid
@@ -1220,6 +1245,9 @@ components:
         - booked_at
         - cashier_id
         - till_id
+        - used_vouchers
+        - item_count
+        - total_price
       title: CompletedSale
     CompletedTicketSale:
       properties:
@@ -1255,6 +1283,14 @@ components:
         till_id:
           type: integer
           title: Till Id
+        item_count:
+          type: integer
+          title: Item Count
+          readOnly: true
+        total_price:
+          type: number
+          title: Total Price
+          readOnly: true
       type: object
       required:
         - uuid
@@ -1266,6 +1302,8 @@ components:
         - customer_account_id
         - cashier_id
         - till_id
+        - item_count
+        - total_price
       title: CompletedTicketSale
     CompletedTopUp:
       properties:
@@ -1368,8 +1406,11 @@ components:
             - type: 'null'
           title: Cash Register Id
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - node_id
@@ -1377,11 +1418,9 @@ components:
         - login
         - display_name
         - privileges
+        - user_tag_uid_hex
       title: CurrentUser
-      description: |2-
-
-            Describes a logged-in user in the system
-            
+      description: Describes a logged-in user in the system
     Customer:
       properties:
         node_id:
@@ -1462,6 +1501,12 @@ components:
             - type: boolean
             - type: 'null'
           title: Payout Export
+        user_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - node_id
@@ -1481,6 +1526,7 @@ components:
         - payout_error
         - payout_run_id
         - payout_export
+        - user_tag_uid_hex
       title: Customer
     GrantVoucherPayload:
       properties:
@@ -1526,6 +1572,10 @@ components:
         total_tax:
           type: number
           title: Total Tax
+        total_price:
+          type: number
+          title: Total Price
+          readOnly: true
       type: object
       required:
         - quantity
@@ -1535,6 +1585,7 @@ components:
         - tax_rate
         - item_id
         - total_tax
+        - total_price
       title: LineItem
     LoginPayload:
       properties:
@@ -1744,8 +1795,11 @@ components:
           type: array
           title: Line Items
         customer_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Customer Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - id
@@ -1762,11 +1816,9 @@ components:
         - customer_account_id
         - customer_tag_uid
         - line_items
+        - customer_tag_uid_hex
       title: Order
-      description: |2-
-
-            represents a completely finished order with all relevant data
-            
+      description: represents a completely finished order with all relevant data
     OrderType:
       type: string
       enum:
@@ -1805,6 +1857,7 @@ components:
         total_price:
           type: number
           title: Total Price
+          readOnly: true
       type: object
       required:
         - quantity
@@ -1812,6 +1865,7 @@ components:
         - product_price
         - tax_name
         - tax_rate
+        - total_price
       title: PendingLineItem
     PendingPayOut:
       properties:
@@ -1875,14 +1929,17 @@ components:
           type: array
           title: Buttons
         used_vouchers:
-          type: number
-          title: Used vouchers
+          type: integer
+          title: Used Vouchers
+          readOnly: true
         item_count:
-          type: number
-          title: Item count
+          type: integer
+          title: Item Count
+          readOnly: true
         total_price:
           type: number
           title: Total Price
+          readOnly: true
       type: object
       required:
         - uuid
@@ -1893,6 +1950,9 @@ components:
         - customer_account_id
         - line_items
         - buttons
+        - used_vouchers
+        - item_count
+        - total_price
       title: PendingSale
     PendingTicketSale:
       properties:
@@ -1914,12 +1974,22 @@ components:
             $ref: '#/components/schemas/TicketScanResultEntry'
           type: array
           title: Scanned Tickets
+        item_count:
+          type: integer
+          title: Item Count
+          readOnly: true
+        total_price:
+          type: number
+          title: Total Price
+          readOnly: true
       type: object
       required:
         - uuid
         - payment_method
         - line_items
         - scanned_tickets
+        - item_count
+        - total_price
       title: PendingTicketSale
     PendingTopUp:
       properties:
@@ -2469,8 +2539,11 @@ components:
           type: integer
           title: Id
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - login
@@ -2478,6 +2551,7 @@ components:
         - role_names
         - node_id
         - id
+        - user_tag_uid_hex
       title: User
     UserInfo:
       properties:
@@ -2533,6 +2607,12 @@ components:
             - type: number
             - type: 'null'
           title: Transport Account Balance
+        user_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - login
@@ -2540,6 +2620,7 @@ components:
         - user_tag_uid
         - role_names
         - node_id
+        - user_tag_uid_hex
       title: UserInfo
     UserInfoPayload:
       properties:
@@ -2604,13 +2685,17 @@ components:
           format: date-time
           title: Mapping Was Valid Until
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - user_tag_uid
         - account_id
         - mapping_was_valid_until
+        - user_tag_uid_hex
       title: UserTagHistoryEntry
     UserTagSecret:
       properties:

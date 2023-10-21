@@ -549,7 +549,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_TaxRate_str_'
+                $ref: '#/components/schemas/NormalizedList_TaxRate_int_'
         '404':
           description: Not found
         '422':
@@ -595,7 +595,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /tax-rates/{tax_rate_name}:
+  /tax-rates/{tax_rate_id}:
     get:
       tags:
         - tax-rates
@@ -604,12 +604,12 @@ paths:
       security:
         - OAuth2PasswordBearer: []
       parameters:
-        - name: tax_rate_name
+        - name: tax_rate_id
           in: path
           required: true
           schema:
-            type: string
-            title: Tax Rate Name
+            type: integer
+            title: Tax Rate Id
         - name: node_id
           in: query
           required: false
@@ -641,12 +641,12 @@ paths:
       security:
         - OAuth2PasswordBearer: []
       parameters:
-        - name: tax_rate_name
+        - name: tax_rate_id
           in: path
           required: true
           schema:
-            type: string
-            title: Tax Rate Name
+            type: integer
+            title: Tax Rate Id
         - name: node_id
           in: query
           required: false
@@ -660,7 +660,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaxRateWithoutName'
+              $ref: '#/components/schemas/NewTaxRate'
       responses:
         '200':
           description: Successful Response
@@ -684,12 +684,12 @@ paths:
       security:
         - OAuth2PasswordBearer: []
       parameters:
-        - name: tax_rate_name
+        - name: tax_rate_id
           in: path
           required: true
           schema:
             type: string
-            title: Tax Rate Name
+            title: Tax Rate Id
         - name: node_id
           in: query
           required: false
@@ -4103,70 +4103,6 @@ components:
         - uuid
         - products
       title: EditSaleProducts
-    Event:
-      properties:
-        id:
-          type: integer
-          title: Id
-        currency_identifier:
-          type: string
-          title: Currency Identifier
-        sumup_topup_enabled:
-          type: boolean
-          title: Sumup Topup Enabled
-        max_account_balance:
-          type: number
-          title: Max Account Balance
-        customer_portal_contact_email:
-          type: string
-          format: email
-          title: Customer Portal Contact Email
-        ust_id:
-          type: string
-          title: Ust Id
-        bon_issuer:
-          type: string
-          title: Bon Issuer
-        bon_address:
-          type: string
-          title: Bon Address
-        bon_title:
-          type: string
-          title: Bon Title
-        sepa_enabled:
-          type: boolean
-          title: Sepa Enabled
-        sepa_sender_name:
-          type: string
-          title: Sepa Sender Name
-        sepa_sender_iban:
-          type: string
-          title: Sepa Sender Iban
-        sepa_description:
-          type: string
-          title: Sepa Description
-        sepa_allowed_country_codes:
-          items:
-            type: string
-          type: array
-          title: Sepa Allowed Country Codes
-      type: object
-      required:
-        - id
-        - currency_identifier
-        - sumup_topup_enabled
-        - max_account_balance
-        - customer_portal_contact_email
-        - ust_id
-        - bon_issuer
-        - bon_address
-        - bon_title
-        - sepa_enabled
-        - sepa_sender_name
-        - sepa_sender_iban
-        - sepa_description
-        - sepa_allowed_country_codes
-      title: Event
     FindAccountPayload:
       properties:
         search_term:
@@ -4204,6 +4140,9 @@ components:
         product_price:
           type: number
           title: Product Price
+        tax_rate_id:
+          type: integer
+          title: Tax Rate Id
         tax_name:
           type: string
           title: Tax Name
@@ -4225,6 +4164,7 @@ components:
         - quantity
         - product
         - product_price
+        - tax_rate_id
         - tax_name
         - tax_rate
         - item_id
@@ -4366,9 +4306,9 @@ components:
             - type: integer
             - type: 'null'
           title: Price In Vouchers
-        tax_name:
-          type: string
-          title: Tax Name
+        tax_rate_id:
+          type: integer
+          title: Tax Rate Id
         restrictions:
           items:
             $ref: '#/components/schemas/ProductRestriction'
@@ -4392,49 +4332,54 @@ components:
       required:
         - name
         - price
-        - tax_name
+        - tax_rate_id
       title: NewProduct
     NewTaxRate:
       properties:
+        name:
+          type: string
+          title: Name
         rate:
           type: number
           title: Rate
         description:
           type: string
           title: Description
-        name:
-          type: string
-          title: Name
       type: object
       required:
+        - name
         - rate
         - description
-        - name
       title: NewTaxRate
     NewTicket:
       properties:
         name:
           type: string
           title: Name
-        description:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Description
-        product_id:
+        price:
+          type: number
+          title: Price
+        tax_rate_id:
           type: integer
-          title: Product Id
+          title: Tax Rate Id
+        restrictions:
+          items:
+            $ref: '#/components/schemas/ProductRestriction'
+          type: array
+          title: Restrictions
+          default: []
+        is_locked:
+          type: boolean
+          title: Is Locked
+          default: false
         initial_top_up_amount:
           type: number
           title: Initial Top Up Amount
-        restriction:
-          anyOf:
-            - $ref: '#/components/schemas/ProductRestriction'
-            - type: 'null'
       type: object
       required:
         - name
-        - product_id
+        - price
+        - tax_rate_id
         - initial_top_up_amount
       title: NewTicket
     NewTill:
@@ -4603,7 +4548,7 @@ components:
           title: Description
         event:
           anyOf:
-            - $ref: '#/components/schemas/Event'
+            - $ref: '#/components/schemas/PublicEventSettings'
             - type: 'null'
         path:
           type: string
@@ -4820,11 +4765,11 @@ components:
         - ids
         - entities
       title: NormalizedList[Product, int]
-    NormalizedList_TaxRate_str_:
+    NormalizedList_TaxRate_int_:
       properties:
         ids:
           items:
-            type: string
+            type: integer
           type: array
           title: Ids
         entities:
@@ -4836,7 +4781,7 @@ components:
       required:
         - ids
         - entities
-      title: NormalizedList[TaxRate, str]
+      title: NormalizedList[TaxRate, int]
     NormalizedList_Ticket_int_:
       properties:
         ids:
@@ -5182,6 +5127,9 @@ components:
         product_price:
           type: number
           title: Product Price
+        tax_rate_id:
+          type: integer
+          title: Tax Rate Id
         tax_name:
           type: string
           title: Tax Name
@@ -5197,6 +5145,7 @@ components:
         - quantity
         - product
         - product_price
+        - tax_rate_id
         - tax_name
         - tax_rate
         - total_price
@@ -5255,9 +5204,9 @@ components:
             - type: integer
             - type: 'null'
           title: Price In Vouchers
-        tax_name:
-          type: string
-          title: Tax Name
+        tax_rate_id:
+          type: integer
+          title: Tax Rate Id
         restrictions:
           items:
             $ref: '#/components/schemas/ProductRestriction'
@@ -5280,9 +5229,14 @@ components:
         id:
           type: integer
           title: Id
+        tax_name:
+          type: string
+          title: Tax Name
         tax_rate:
           type: number
           title: Tax Rate
+        type:
+          $ref: '#/components/schemas/ProductType'
         price_per_voucher:
           anyOf:
             - type: number
@@ -5293,13 +5247,15 @@ components:
         - name
         - price
         - fixed_price
-        - tax_name
+        - tax_rate_id
         - restrictions
         - is_locked
         - is_returnable
         - node_id
         - id
+        - tax_name
         - tax_rate
+        - type
       title: Product
     ProductRestriction:
       type: string
@@ -5325,9 +5281,9 @@ components:
             - type: integer
             - type: 'null'
           title: Price In Vouchers
-        tax_name:
-          type: string
-          title: Tax Name
+        tax_rate_id:
+          type: integer
+          title: Tax Rate Id
         restrictions:
           items:
             $ref: '#/components/schemas/ProductRestriction'
@@ -5350,9 +5306,14 @@ components:
         id:
           type: integer
           title: Id
+        tax_name:
+          type: string
+          title: Tax Name
         tax_rate:
           type: number
           title: Tax Rate
+        type:
+          $ref: '#/components/schemas/ProductType'
         price_per_voucher:
           anyOf:
             - type: number
@@ -5366,81 +5327,159 @@ components:
         - name
         - price
         - fixed_price
-        - tax_name
+        - tax_rate_id
         - restrictions
         - is_locked
         - is_returnable
         - node_id
         - id
+        - tax_name
         - tax_rate
+        - type
         - quantity_sold
       title: ProductSoldStats
+    ProductType:
+      type: string
+      enum:
+        - discount
+        - topup
+        - payout
+        - money_transfer
+        - imbalance
+        - user_defined
+        - ticket
+      title: ProductType
+    PublicEventSettings:
+      properties:
+        currency_identifier:
+          type: string
+          title: Currency Identifier
+        max_account_balance:
+          type: number
+          title: Max Account Balance
+        sumup_topup_enabled:
+          type: boolean
+          title: Sumup Topup Enabled
+          default: false
+        sumup_payment_enabled:
+          type: boolean
+          title: Sumup Payment Enabled
+          default: false
+        customer_portal_url:
+          type: string
+          title: Customer Portal Url
+        customer_portal_about_page_url:
+          type: string
+          title: Customer Portal About Page Url
+        customer_portal_data_privacy_url:
+          type: string
+          title: Customer Portal Data Privacy Url
+        customer_portal_contact_email:
+          type: string
+          format: email
+          title: Customer Portal Contact Email
+        ust_id:
+          type: string
+          title: Ust Id
+        bon_issuer:
+          type: string
+          title: Bon Issuer
+        bon_address:
+          type: string
+          title: Bon Address
+        bon_title:
+          type: string
+          title: Bon Title
+        sepa_enabled:
+          type: boolean
+          title: Sepa Enabled
+        sepa_sender_name:
+          type: string
+          title: Sepa Sender Name
+        sepa_sender_iban:
+          type: string
+          title: Sepa Sender Iban
+        sepa_description:
+          type: string
+          title: Sepa Description
+        sepa_allowed_country_codes:
+          items:
+            type: string
+          type: array
+          title: Sepa Allowed Country Codes
+      type: object
+      required:
+        - currency_identifier
+        - max_account_balance
+        - customer_portal_url
+        - customer_portal_about_page_url
+        - customer_portal_data_privacy_url
+        - customer_portal_contact_email
+        - ust_id
+        - bon_issuer
+        - bon_address
+        - bon_title
+        - sepa_enabled
+        - sepa_sender_name
+        - sepa_sender_iban
+        - sepa_description
+        - sepa_allowed_country_codes
+      title: PublicEventSettings
     TaxRate:
       properties:
+        name:
+          type: string
+          title: Name
         rate:
           type: number
           title: Rate
         description:
           type: string
           title: Description
-        name:
-          type: string
-          title: Name
+        id:
+          type: integer
+          title: Id
         node_id:
           type: integer
           title: Node Id
       type: object
       required:
+        - name
         - rate
         - description
-        - name
+        - id
         - node_id
       title: TaxRate
-    TaxRateWithoutName:
-      properties:
-        rate:
-          type: number
-          title: Rate
-        description:
-          type: string
-          title: Description
-      type: object
-      required:
-        - rate
-        - description
-      title: TaxRateWithoutName
     Ticket:
       properties:
         name:
           type: string
           title: Name
-        description:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Description
-        product_id:
+        price:
+          type: number
+          title: Price
+        tax_rate_id:
           type: integer
-          title: Product Id
+          title: Tax Rate Id
+        restrictions:
+          items:
+            $ref: '#/components/schemas/ProductRestriction'
+          type: array
+          title: Restrictions
+          default: []
+        is_locked:
+          type: boolean
+          title: Is Locked
+          default: false
         initial_top_up_amount:
           type: number
           title: Initial Top Up Amount
-        restriction:
-          anyOf:
-            - $ref: '#/components/schemas/ProductRestriction'
-            - type: 'null'
         node_id:
           type: integer
           title: Node Id
         id:
           type: integer
           title: Id
-        product_name:
-          type: string
-          title: Product Name
-        price:
-          type: number
-          title: Price
         tax_name:
           type: string
           title: Tax Name
@@ -5453,12 +5492,11 @@ components:
       type: object
       required:
         - name
-        - product_id
+        - price
+        - tax_rate_id
         - initial_top_up_amount
         - node_id
         - id
-        - product_name
-        - price
         - tax_name
         - tax_rate
         - total_price
@@ -5770,18 +5808,41 @@ components:
       title: UpdateCommentPayload
     UpdateEvent:
       properties:
+        sumup_api_key:
+          type: string
+          title: Sumup Api Key
+          default: ''
+        sumup_affiliate_key:
+          type: string
+          title: Sumup Affiliate Key
+          default: ''
+        sumup_merchant_code:
+          type: string
+          title: Sumup Merchant Code
+          default: ''
         currency_identifier:
           type: string
           title: Currency Identifier
-        sumup_topup_enabled:
-          type: boolean
-          title: Sumup Topup Enabled
         max_account_balance:
           type: number
           title: Max Account Balance
+        sumup_topup_enabled:
+          type: boolean
+          title: Sumup Topup Enabled
+          default: false
+        sumup_payment_enabled:
+          type: boolean
+          title: Sumup Payment Enabled
+          default: false
         customer_portal_url:
           type: string
           title: Customer Portal Url
+        customer_portal_about_page_url:
+          type: string
+          title: Customer Portal About Page Url
+        customer_portal_data_privacy_url:
+          type: string
+          title: Customer Portal Data Privacy Url
         customer_portal_contact_email:
           type: string
           format: email
@@ -5818,9 +5879,10 @@ components:
       type: object
       required:
         - currency_identifier
-        - sumup_topup_enabled
         - max_account_balance
         - customer_portal_url
+        - customer_portal_about_page_url
+        - customer_portal_data_privacy_url
         - customer_portal_contact_email
         - ust_id
         - bon_issuer

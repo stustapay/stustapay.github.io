@@ -510,6 +510,9 @@ components:
         product_price:
           type: number
           title: Product Price
+        tax_rate_id:
+          type: integer
+          title: Tax Rate Id
         tax_name:
           type: string
           title: Tax Name
@@ -531,6 +534,7 @@ components:
         - quantity
         - product
         - product_price
+        - tax_rate_id
         - tax_name
         - tax_rate
         - item_id
@@ -682,9 +686,9 @@ components:
             - type: integer
             - type: 'null'
           title: Price In Vouchers
-        tax_name:
-          type: string
-          title: Tax Name
+        tax_rate_id:
+          type: integer
+          title: Tax Rate Id
         restrictions:
           items:
             $ref: '#/components/schemas/ProductRestriction'
@@ -707,9 +711,14 @@ components:
         id:
           type: integer
           title: Id
+        tax_name:
+          type: string
+          title: Tax Name
         tax_rate:
           type: number
           title: Tax Rate
+        type:
+          $ref: '#/components/schemas/ProductType'
         price_per_voucher:
           anyOf:
             - type: number
@@ -720,13 +729,15 @@ components:
         - name
         - price
         - fixed_price
-        - tax_name
+        - tax_rate_id
         - restrictions
         - is_locked
         - is_returnable
         - node_id
         - id
+        - tax_name
         - tax_rate
+        - type
       title: Product
     ProductRestriction:
       type: string
@@ -734,6 +745,17 @@ components:
         - under_16
         - under_18
       title: ProductRestriction
+    ProductType:
+      type: string
+      enum:
+        - discount
+        - topup
+        - payout
+        - money_transfer
+        - imbalance
+        - user_defined
+        - ticket
+      title: ProductType
     SumupCheckoutStatus:
       type: string
       enum:

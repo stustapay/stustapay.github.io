@@ -688,7 +688,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: integer
             title: Tax Rate Id
         - name: node_id
           in: query
@@ -3466,6 +3466,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /tree/events/{node_id}/settings:
+    get:
+      tags:
+        - tree
+      summary: Get Restricted Event Settings
+      operationId: get_restricted_event_settings
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestrictedEventSettings'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
@@ -4367,11 +4397,9 @@ components:
             $ref: '#/components/schemas/ProductRestriction'
           type: array
           title: Restrictions
-          default: []
         is_locked:
           type: boolean
           title: Is Locked
-          default: false
         initial_top_up_amount:
           type: number
           title: Initial Top Up Amount
@@ -4380,6 +4408,8 @@ components:
         - name
         - price
         - tax_rate_id
+        - restrictions
+        - is_locked
         - initial_top_up_amount
       title: NewTicket
     NewTill:
@@ -4469,11 +4499,6 @@ components:
         allow_ticket_sale:
           type: boolean
           title: Allow Ticket Sale
-        allowed_role_names:
-          items:
-            type: string
-          type: array
-          title: Allowed Role Names
       type: object
       required:
         - name
@@ -4481,7 +4506,6 @@ components:
         - allow_top_up
         - allow_cash_out
         - allow_ticket_sale
-        - allowed_role_names
       title: NewTillProfile
     NewTse:
       properties:
@@ -5170,16 +5194,9 @@ components:
     Privilege:
       type: string
       enum:
-        - account_management
-        - cashier_management
-        - config_management
-        - product_management
-        - tax_rate_management
+        - node_administration
         - user_management
-        - till_management
-        - order_management
-        - festival_overview
-        - tse_management
+        - cash_transport
         - terminal_login
         - supervised_terminal_login
         - can_book_orders
@@ -5425,6 +5442,94 @@ components:
         - sepa_description
         - sepa_allowed_country_codes
       title: PublicEventSettings
+    RestrictedEventSettings:
+      properties:
+        sumup_api_key:
+          type: string
+          title: Sumup Api Key
+          default: ''
+        sumup_affiliate_key:
+          type: string
+          title: Sumup Affiliate Key
+          default: ''
+        sumup_merchant_code:
+          type: string
+          title: Sumup Merchant Code
+          default: ''
+        currency_identifier:
+          type: string
+          title: Currency Identifier
+        max_account_balance:
+          type: number
+          title: Max Account Balance
+        sumup_topup_enabled:
+          type: boolean
+          title: Sumup Topup Enabled
+          default: false
+        sumup_payment_enabled:
+          type: boolean
+          title: Sumup Payment Enabled
+          default: false
+        customer_portal_url:
+          type: string
+          title: Customer Portal Url
+        customer_portal_about_page_url:
+          type: string
+          title: Customer Portal About Page Url
+        customer_portal_data_privacy_url:
+          type: string
+          title: Customer Portal Data Privacy Url
+        customer_portal_contact_email:
+          type: string
+          format: email
+          title: Customer Portal Contact Email
+        ust_id:
+          type: string
+          title: Ust Id
+        bon_issuer:
+          type: string
+          title: Bon Issuer
+        bon_address:
+          type: string
+          title: Bon Address
+        bon_title:
+          type: string
+          title: Bon Title
+        sepa_enabled:
+          type: boolean
+          title: Sepa Enabled
+        sepa_sender_name:
+          type: string
+          title: Sepa Sender Name
+        sepa_sender_iban:
+          type: string
+          title: Sepa Sender Iban
+        sepa_description:
+          type: string
+          title: Sepa Description
+        sepa_allowed_country_codes:
+          items:
+            type: string
+          type: array
+          title: Sepa Allowed Country Codes
+      type: object
+      required:
+        - currency_identifier
+        - max_account_balance
+        - customer_portal_url
+        - customer_portal_about_page_url
+        - customer_portal_data_privacy_url
+        - customer_portal_contact_email
+        - ust_id
+        - bon_issuer
+        - bon_address
+        - bon_title
+        - sepa_enabled
+        - sepa_sender_name
+        - sepa_sender_iban
+        - sepa_description
+        - sepa_allowed_country_codes
+      title: RestrictedEventSettings
     TaxRate:
       properties:
         name:
@@ -5466,11 +5571,9 @@ components:
             $ref: '#/components/schemas/ProductRestriction'
           type: array
           title: Restrictions
-          default: []
         is_locked:
           type: boolean
           title: Is Locked
-          default: false
         initial_top_up_amount:
           type: number
           title: Initial Top Up Amount
@@ -5494,6 +5597,8 @@ components:
         - name
         - price
         - tax_rate_id
+        - restrictions
+        - is_locked
         - initial_top_up_amount
         - node_id
         - id
@@ -5662,11 +5767,6 @@ components:
         allow_ticket_sale:
           type: boolean
           title: Allow Ticket Sale
-        allowed_role_names:
-          items:
-            type: string
-          type: array
-          title: Allowed Role Names
         node_id:
           type: integer
           title: Node Id
@@ -5680,7 +5780,6 @@ components:
         - allow_top_up
         - allow_cash_out
         - allow_ticket_sale
-        - allowed_role_names
         - node_id
         - id
       title: TillProfile

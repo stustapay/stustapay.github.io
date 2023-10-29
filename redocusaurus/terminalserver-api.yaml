@@ -2035,16 +2035,9 @@ components:
     Privilege:
       type: string
       enum:
-        - account_management
-        - cashier_management
-        - config_management
-        - product_management
-        - tax_rate_management
+        - node_administration
         - user_management
-        - till_management
-        - order_management
-        - festival_overview
-        - tse_management
+        - cash_transport
         - terminal_login
         - supervised_terminal_login
         - can_book_orders
@@ -2346,11 +2339,9 @@ components:
             $ref: '#/components/schemas/ProductRestriction'
           type: array
           title: Restrictions
-          default: []
         is_locked:
           type: boolean
           title: Is Locked
-          default: false
         initial_top_up_amount:
           type: number
           title: Initial Top Up Amount
@@ -2374,6 +2365,8 @@ components:
         - name
         - price
         - tax_rate_id
+        - restrictions
+        - is_locked
         - initial_top_up_amount
         - node_id
         - id

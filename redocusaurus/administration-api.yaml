@@ -4683,26 +4683,26 @@ components:
               type: array
             - type: 'null'
           title: Parents Until Event Node
-        allowed_objects_at_node:
+        forbidden_objects_at_node:
           items:
             $ref: '#/components/schemas/ObjectType'
           type: array
-          title: Allowed Objects At Node
-        computed_allowed_objects_at_node:
+          title: Forbidden Objects At Node
+        computed_forbidden_objects_at_node:
           items:
             $ref: '#/components/schemas/ObjectType'
           type: array
-          title: Computed Allowed Objects At Node
-        allowed_objects_in_subtree:
+          title: Computed Forbidden Objects At Node
+        forbidden_objects_in_subtree:
           items:
             $ref: '#/components/schemas/ObjectType'
           type: array
-          title: Allowed Objects In Subtree
-        computed_allowed_objects_in_subtree:
+          title: Forbidden Objects In Subtree
+        computed_forbidden_objects_in_subtree:
           items:
             $ref: '#/components/schemas/ObjectType'
           type: array
-          title: Computed Allowed Objects In Subtree
+          title: Computed Forbidden Objects In Subtree
         children:
           items:
             $ref: '#/components/schemas/Node'
@@ -4719,10 +4719,10 @@ components:
         - parent_ids
         - event_node_id
         - parents_until_event_node
-        - allowed_objects_at_node
-        - computed_allowed_objects_at_node
-        - allowed_objects_in_subtree
-        - computed_allowed_objects_in_subtree
+        - forbidden_objects_at_node
+        - computed_forbidden_objects_at_node
+        - forbidden_objects_in_subtree
+        - computed_forbidden_objects_in_subtree
         - children
       title: Node
     NormalizedList_Account_int_:
@@ -5056,11 +5056,11 @@ components:
         - ticket
         - till
         - user_role
-        - account
         - order
-        - user_tags
         - tax_rate
+        - user_tag
         - tse
+        - account
       title: ObjectType
     Order:
       properties:

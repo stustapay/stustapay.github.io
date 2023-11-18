@@ -377,6 +377,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /users/{user_id}/change-password:
+    post:
+      tags:
+        - users
+      summary: Change User Password
+      operationId: change_user_password
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeUserPasswordPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /user-roles:
     get:
       tags:
@@ -3496,6 +3540,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /tree/events/{node_id}/generate-test-bon:
+    post:
+      tags:
+        - tree
+      summary: Generate Test Bon
+      operationId: generate_test_bon
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+            application/pdf: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
@@ -3844,6 +3918,15 @@ components:
         - old_password
         - new_password
       title: ChangePasswordPayload
+    ChangeUserPasswordPayload:
+      properties:
+        new_password:
+          type: string
+          title: New Password
+      type: object
+      required:
+        - new_password
+      title: ChangeUserPasswordPayload
     CloseOut:
       properties:
         comment:

@@ -4243,6 +4243,12 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    Language:
+      type: string
+      enum:
+        - en-US
+        - de-DE
+      title: Language
     LineItem:
       properties:
         quantity:
@@ -5507,6 +5513,22 @@ components:
             type: string
           type: array
           title: Sepa Allowed Country Codes
+        translation_texts:
+          additionalProperties:
+            additionalProperties:
+              type: string
+            type: object
+          type: object
+          title: Translation Texts
+          default: {}
+        id:
+          type: integer
+          title: Id
+        languages:
+          items:
+            $ref: '#/components/schemas/Language'
+          type: array
+          title: Languages
       type: object
       required:
         - currency_identifier
@@ -5524,6 +5546,8 @@ components:
         - sepa_sender_iban
         - sepa_description
         - sepa_allowed_country_codes
+        - id
+        - languages
       title: PublicEventSettings
     RestrictedEventSettings:
       properties:
@@ -5595,6 +5619,22 @@ components:
             type: string
           type: array
           title: Sepa Allowed Country Codes
+        translation_texts:
+          additionalProperties:
+            additionalProperties:
+              type: string
+            type: object
+          type: object
+          title: Translation Texts
+          default: {}
+        id:
+          type: integer
+          title: Id
+        languages:
+          items:
+            $ref: '#/components/schemas/Language'
+          type: array
+          title: Languages
       type: object
       required:
         - currency_identifier
@@ -5612,6 +5652,8 @@ components:
         - sepa_sender_iban
         - sepa_description
         - sepa_allowed_country_codes
+        - id
+        - languages
       title: RestrictedEventSettings
     TaxRate:
       properties:
@@ -6058,6 +6100,14 @@ components:
             type: string
           type: array
           title: Sepa Allowed Country Codes
+        translation_texts:
+          additionalProperties:
+            additionalProperties:
+              type: string
+            type: object
+          type: object
+          title: Translation Texts
+          default: {}
       type: object
       required:
         - currency_identifier

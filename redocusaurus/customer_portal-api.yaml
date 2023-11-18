@@ -480,6 +480,13 @@ components:
               type: array
             - type: 'null'
           title: Allowed Country Codes
+        translation_texts:
+          additionalProperties:
+            additionalProperties:
+              type: string
+            type: object
+          type: object
+          title: Translation Texts
       type: object
       required:
         - test_mode
@@ -490,6 +497,7 @@ components:
         - payout_enabled
         - sumup_topup_enabled
         - allowed_country_codes
+        - translation_texts
       title: CustomerPortalApiConfig
     HTTPValidationError:
       properties:
@@ -500,6 +508,12 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    Language:
+      type: string
+      enum:
+        - en-US
+        - de-DE
+      title: Language
     LineItem:
       properties:
         quantity:

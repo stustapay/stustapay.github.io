@@ -643,33 +643,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
       security:
         - OAuth2PasswordBearer: []
-  /user/update-user-roles:
-    post:
-      tags:
-        - user
-      summary: Update roles of a given user
-      operationId: create_finanzorga
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateUserPayload'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
   /user/grant-free-ticket:
     post:
       tags:
@@ -1726,11 +1699,6 @@ components:
             - type: integer
             - type: 'null'
           title: User Tag Uid
-        role_names:
-          items:
-            type: string
-          type: array
-          title: Role Names
         description:
           anyOf:
             - type: string
@@ -1740,7 +1708,6 @@ components:
       required:
         - login
         - display_name
-        - role_names
       title: NewUser
     Order:
       properties:
@@ -2500,21 +2467,6 @@ components:
         - orga_tag_uid
         - amount
       title: TransportAccountChangePayload
-    UpdateUserPayload:
-      properties:
-        user_tag_uid:
-          type: integer
-          title: User Tag Uid
-        role_names:
-          items:
-            type: string
-          type: array
-          title: Role Names
-      type: object
-      required:
-        - user_tag_uid
-        - role_names
-      title: UpdateUserPayload
     User:
       properties:
         login:
@@ -2528,11 +2480,6 @@ components:
             - type: integer
             - type: 'null'
           title: User Tag Uid
-        role_names:
-          items:
-            type: string
-          type: array
-          title: Role Names
         description:
           anyOf:
             - type: string
@@ -2564,7 +2511,6 @@ components:
       required:
         - login
         - display_name
-        - role_names
         - node_id
         - id
         - user_tag_uid_hex
@@ -2580,11 +2526,6 @@ components:
         user_tag_uid:
           type: integer
           title: User Tag Uid
-        role_names:
-          items:
-            type: string
-          type: array
-          title: Role Names
         description:
           anyOf:
             - type: string
@@ -2634,7 +2575,6 @@ components:
         - login
         - display_name
         - user_tag_uid
-        - role_names
         - node_id
         - user_tag_uid_hex
       title: UserInfo

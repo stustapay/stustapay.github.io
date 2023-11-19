@@ -202,11 +202,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -233,11 +231,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -277,11 +273,9 @@ paths:
             title: User Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -314,11 +308,9 @@ paths:
             title: User Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -357,11 +349,9 @@ paths:
             title: User Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -394,11 +384,9 @@ paths:
             title: User Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -432,11 +420,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -463,11 +449,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -507,11 +491,9 @@ paths:
             title: User Role Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -550,12 +532,112 @@ paths:
             title: User Role Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user-to-roles:
+    get:
+      tags:
+        - user-to-roles
+      summary: List User To Role
+      operationId: list_user_to_role
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserToRole'
+                title: Response List User To Role User To Roles Get
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - user-to-roles
+      summary: Associated User To Role
+      operationId: associated_user_to_role
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUserToRole'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserToRole'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - user-to-roles
+      summary: Deassociated User To Role
+      operationId: deassociated_user_to_role
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUserToRole'
       responses:
         '200':
           description: Successful Response
@@ -4099,11 +4181,6 @@ components:
         display_name:
           type: string
           title: Display Name
-        role_names:
-          items:
-            type: string
-          type: array
-          title: Role Names
         description:
           anyOf:
             - type: string
@@ -4123,7 +4200,6 @@ components:
       required:
         - login
         - display_name
-        - role_names
       title: CreateUserPayload
     CurrentUser:
       properties:
@@ -4645,6 +4721,19 @@ components:
         - name
         - privileges
       title: NewUserRole
+    NewUserToRole:
+      properties:
+        user_id:
+          type: integer
+          title: User Id
+        role_id:
+          type: integer
+          title: Role Id
+      type: object
+      required:
+        - user_id
+        - role_id
+      title: NewUserToRole
     Node:
       properties:
         id:
@@ -5056,10 +5145,10 @@ components:
         - ticket
         - till
         - user_role
-        - order
         - tax_rate
         - user_tag
         - tse
+        - order
         - account
       title: ObjectType
     Order:
@@ -6169,11 +6258,6 @@ components:
         display_name:
           type: string
           title: Display Name
-        role_names:
-          items:
-            type: string
-          type: array
-          title: Role Names
         description:
           anyOf:
             - type: string
@@ -6188,7 +6272,6 @@ components:
       required:
         - login
         - display_name
-        - role_names
       title: UpdateUserPayload
     UpdateUserRolePrivilegesPayload:
       properties:
@@ -6227,11 +6310,6 @@ components:
             - type: integer
             - type: 'null'
           title: User Tag Uid
-        role_names:
-          items:
-            type: string
-          type: array
-          title: Role Names
         description:
           anyOf:
             - type: string
@@ -6263,7 +6341,6 @@ components:
       required:
         - login
         - display_name
-        - role_names
         - node_id
         - id
         - user_tag_uid_hex
@@ -6371,6 +6448,23 @@ components:
         - mapping_was_valid_until
         - user_tag_uid_hex
       title: UserTagHistoryEntry
+    UserToRole:
+      properties:
+        user_id:
+          type: integer
+          title: User Id
+        role_id:
+          type: integer
+          title: Role Id
+        node_id:
+          type: integer
+          title: Node Id
+      type: object
+      required:
+        - user_id
+        - role_id
+        - node_id
+      title: UserToRole
     ValidationError:
       properties:
         loc:

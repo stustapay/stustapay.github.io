@@ -3551,7 +3551,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Node'
+                $ref: '#/components/schemas/NodeSeenByUser'
         '404':
           description: Not found
       security:
@@ -4966,6 +4966,100 @@ components:
         - computed_forbidden_objects_in_subtree
         - children
       title: Node
+    NodeSeenByUser:
+      properties:
+        id:
+          type: integer
+          title: Id
+        parent:
+          type: integer
+          title: Parent
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        event:
+          anyOf:
+            - $ref: '#/components/schemas/PublicEventSettings'
+            - type: 'null'
+        path:
+          type: string
+          title: Path
+        parent_ids:
+          items:
+            type: integer
+          type: array
+          title: Parent Ids
+        event_node_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Event Node Id
+        parents_until_event_node:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Parents Until Event Node
+        forbidden_objects_at_node:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Forbidden Objects At Node
+        computed_forbidden_objects_at_node:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Computed Forbidden Objects At Node
+        forbidden_objects_in_subtree:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Forbidden Objects In Subtree
+        computed_forbidden_objects_in_subtree:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Computed Forbidden Objects In Subtree
+        children:
+          items:
+            $ref: '#/components/schemas/NodeSeenByUser'
+          type: array
+          title: Children
+        roles_at_node:
+          items:
+            $ref: '#/components/schemas/UserRole'
+          type: array
+          title: Roles At Node
+        privileges_at_node:
+          items:
+            $ref: '#/components/schemas/Privilege'
+          type: array
+          uniqueItems: true
+          title: Privileges At Node
+          readOnly: true
+      type: object
+      required:
+        - id
+        - parent
+        - name
+        - description
+        - event
+        - path
+        - parent_ids
+        - event_node_id
+        - parents_until_event_node
+        - forbidden_objects_at_node
+        - computed_forbidden_objects_at_node
+        - forbidden_objects_in_subtree
+        - computed_forbidden_objects_in_subtree
+        - children
+        - roles_at_node
+        - privileges_at_node
+      title: NodeSeenByUser
     NormalizedList_Account_int_:
       properties:
         ids:

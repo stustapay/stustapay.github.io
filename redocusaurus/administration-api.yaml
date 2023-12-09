@@ -3556,6 +3556,78 @@ paths:
           description: Not found
       security:
         - OAuth2PasswordBearer: []
+  /tree/nodes/{node_id}/create-node:
+    post:
+      tags:
+        - tree
+      summary: Create Node
+      operationId: create_node
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewNode'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tree/nodes/{node_id}/settings:
+    post:
+      tags:
+        - tree
+      summary: Update Node
+      operationId: update_node
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewNode'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /tree/nodes/{node_id}/create-event:
     post:
       tags:
@@ -3592,7 +3664,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /tree/events/{node_id}:
+  /tree/events/{node_id}/event-settings:
     post:
       tags:
         - tree
@@ -4625,6 +4697,31 @@ components:
         - name
         - description
       title: NewEvent
+    NewNode:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        forbidden_objects_at_node:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Forbidden Objects At Node
+          default: []
+        forbidden_objects_in_subtree:
+          items:
+            $ref: '#/components/schemas/ObjectType'
+          type: array
+          title: Forbidden Objects In Subtree
+          default: []
+      type: object
+      required:
+        - name
+        - description
+      title: NewNode
     NewPayoutRun:
       properties:
         max_payout_sum:

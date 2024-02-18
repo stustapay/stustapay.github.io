@@ -3,7 +3,7 @@ info:
   title: StuStaPay Administration API
   license:
     name: AGPL-3.0
-  version: 0.0.1
+  version: 0.1.0
 paths:
   /products:
     get:
@@ -3760,6 +3760,108 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /sumup/checkouts:
+    get:
+      tags:
+        - sumup
+      summary: List Sumup Checkouts
+      operationId: list_sumup_checkouts
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SumUpCheckout'
+                title: Response List Sumup Checkouts Sumup Checkouts Get
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /sumup/transactions:
+    get:
+      tags:
+        - sumup
+      summary: List Sumup Transactions
+      operationId: list_sumup_transactions
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SumUpTransaction'
+                title: Response List Sumup Transactions Sumup Transactions Get
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /sumup/checkouts/{checkout_id}:
+    get:
+      tags:
+        - sumup
+      summary: Get Sumup Checkout
+      operationId: get_sumup_checkout
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: checkout_id
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Checkout Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SumUpCheckout'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
@@ -4601,6 +4703,24 @@ components:
         max_account_balance:
           type: number
           title: Max Account Balance
+        start_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Start Date
+        end_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: End Date
+        daily_end_time:
+          anyOf:
+            - type: string
+              format: time
+            - type: 'null'
+          title: Daily End Time
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled
@@ -5895,6 +6015,24 @@ components:
         max_account_balance:
           type: number
           title: Max Account Balance
+        start_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Start Date
+        end_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: End Date
+        daily_end_time:
+          anyOf:
+            - type: string
+              format: time
+            - type: 'null'
+          title: Daily End Time
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled
@@ -6001,6 +6139,24 @@ components:
         max_account_balance:
           type: number
           title: Max Account Balance
+        start_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Start Date
+        end_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: End Date
+        daily_end_time:
+          anyOf:
+            - type: string
+              format: time
+            - type: 'null'
+          title: Daily End Time
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled
@@ -6087,6 +6243,123 @@ components:
         - id
         - languages
       title: RestrictedEventSettings
+    SumUpCheckout:
+      properties:
+        checkout_reference:
+          type: string
+          format: uuid
+          title: Checkout Reference
+        amount:
+          type: number
+          title: Amount
+        currency:
+          type: string
+          title: Currency
+        merchant_code:
+          type: string
+          title: Merchant Code
+        description:
+          type: string
+          title: Description
+        id:
+          type: string
+          title: Id
+        status:
+          $ref: '#/components/schemas/SumUpCheckoutStatus'
+        valid_until:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Valid Until
+        date:
+          type: string
+          format: date-time
+          title: Date
+        transaction_code:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Transaction Code
+        transaction_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Transaction Id
+        transactions:
+          items:
+            $ref: '#/components/schemas/SumUpTransaction'
+          type: array
+          title: Transactions
+          default: []
+      type: object
+      required:
+        - checkout_reference
+        - amount
+        - currency
+        - merchant_code
+        - description
+        - id
+        - status
+        - date
+      title: SumUpCheckout
+    SumUpCheckoutStatus:
+      type: string
+      enum:
+        - PENDING
+        - FAILED
+        - PAID
+      title: SumUpCheckoutStatus
+    SumUpTransaction:
+      properties:
+        amount:
+          type: number
+          title: Amount
+        currency:
+          type: string
+          title: Currency
+        id:
+          type: string
+          title: Id
+        payment_type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Payment Type
+        product_summary:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Product Summary
+        card_type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Card Type
+        type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Type
+        status:
+          type: string
+          title: Status
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        transaction_code:
+          type: string
+          title: Transaction Code
+      type: object
+      required:
+        - amount
+        - currency
+        - id
+        - status
+        - timestamp
+        - transaction_code
+      title: SumUpTransaction
     TaxRate:
       properties:
         name:
@@ -6482,6 +6755,24 @@ components:
         max_account_balance:
           type: number
           title: Max Account Balance
+        start_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Start Date
+        end_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: End Date
+        daily_end_time:
+          anyOf:
+            - type: string
+              format: time
+            - type: 'null'
+          title: Daily End Time
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled

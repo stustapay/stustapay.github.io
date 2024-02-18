@@ -3,7 +3,7 @@ info:
   title: StuStaPay Terminal API
   license:
     name: AGPL-3.0
-  version: 0.0.1
+  version: 0.1.0
 paths:
   /health:
     get:

@@ -3,7 +3,7 @@ info:
   title: StuStaPay Customer Portal API
   license:
     name: AGPL-3.0
-  version: 0.0.1
+  version: 0.1.0
 paths:
   /auth/login:
     post:
@@ -170,6 +170,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /bon/{bon_id}:
+    get:
+      tags:
+        - base
+      summary: Retrieve a bon
+      operationId: get_bon
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: bon_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Bon Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '404':
+          description: not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /sumup/create-checkout:
     post:
       tags:
@@ -299,7 +332,7 @@ components:
     CheckCheckoutResponse:
       properties:
         status:
-          $ref: '#/components/schemas/SumupCheckoutStatus'
+          $ref: '#/components/schemas/SumUpCheckoutStatus'
       type: object
       required:
         - status
@@ -643,11 +676,6 @@ components:
             - type: boolean
             - type: 'null'
           title: Bon Generated
-        bon_output_file:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Bon Output File
         customer_tag_uid_hex:
           anyOf:
             - type: string
@@ -671,7 +699,6 @@ components:
         - customer_tag_uid
         - line_items
         - bon_generated
-        - bon_output_file
         - customer_tag_uid_hex
       title: OrderWithBon
     PaymentMethod:
@@ -770,13 +797,13 @@ components:
         - user_defined
         - ticket
       title: ProductType
-    SumupCheckoutStatus:
+    SumUpCheckoutStatus:
       type: string
       enum:
         - PENDING
         - FAILED
         - PAID
-      title: SumupCheckoutStatus
+      title: SumUpCheckoutStatus
     UserTagHistoryEntry:
       properties:
         user_tag_uid:

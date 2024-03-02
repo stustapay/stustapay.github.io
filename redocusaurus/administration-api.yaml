@@ -3862,6 +3862,85 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /customers/find-customers:
+    post:
+      tags:
+        - accounts
+      summary: Find Customers
+      operationId: find_customers
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindCustomerPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+                title: Response Find Customers Customers Find Customers Post
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /customers/{customer_id}:
+    get:
+      tags:
+        - accounts
+      summary: Get Customer
+      operationId: get_customer
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Customer Id
+        - name: node_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
@@ -4481,6 +4560,113 @@ components:
         - user_tag_uid_hex
       title: CurrentUser
       description: Describes a logged-in user in the system
+    Customer:
+      properties:
+        node_id:
+          type: integer
+          title: Node Id
+        id:
+          type: integer
+          title: Id
+        type:
+          $ref: '#/components/schemas/AccountType'
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Name
+        comment:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Comment
+        balance:
+          type: number
+          title: Balance
+        vouchers:
+          type: integer
+          title: Vouchers
+        user_tag_uid:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Uid
+        user_tag_comment:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Comment
+        restriction:
+          anyOf:
+            - $ref: '#/components/schemas/ProductRestriction'
+            - type: 'null'
+        tag_history:
+          items:
+            $ref: '#/components/schemas/UserTagHistoryEntry'
+          type: array
+          title: Tag History
+        iban:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Iban
+        account_name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Account Name
+        email:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email
+        donation:
+          anyOf:
+            - type: number
+            - type: 'null'
+          title: Donation
+        payout_error:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Payout Error
+        payout_run_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Payout Run Id
+        payout_export:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          title: Payout Export
+        user_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Uid Hex
+          readOnly: true
+      type: object
+      required:
+        - node_id
+        - id
+        - type
+        - name
+        - comment
+        - balance
+        - vouchers
+        - user_tag_uid
+        - restriction
+        - tag_history
+        - iban
+        - account_name
+        - email
+        - donation
+        - payout_error
+        - payout_run_id
+        - payout_export
+        - user_tag_uid_hex
+      title: Customer
     EditSaleProducts:
       properties:
         uuid:
@@ -4511,6 +4697,15 @@ components:
       required:
         - search_term
       title: FindAccountPayload
+    FindCustomerPayload:
+      properties:
+        search_term:
+          type: string
+          title: Search Term
+      type: object
+      required:
+        - search_term
+      title: FindCustomerPayload
     FindUserTagPayload:
       properties:
         search_term:
@@ -5836,6 +6031,7 @@ components:
       type: string
       enum:
         - node_administration
+        - customer_management
         - user_management
         - cash_transport
         - terminal_login

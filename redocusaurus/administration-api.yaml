@@ -1092,43 +1092,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /tills/{till_id}/logout:
-    post:
-      tags:
-        - tills
-      summary: Logout Till
-      operationId: logout_till
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: till_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Till Id
-        - name: node_id
-          in: query
-          required: false
-          schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
   /tills/{till_id}/force-logout-user:
     post:
       tags:
@@ -3941,6 +3904,217 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /terminal:
+    get:
+      tags:
+        - terminals
+      summary: List Terminals
+      operationId: list_terminals
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedList_Terminal_int_'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - terminals
+      summary: Create Terminal
+      operationId: create_terminal
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTerminal'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terminal'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /terminal/{terminal_id}:
+    get:
+      tags:
+        - terminals
+      summary: Get Terminal
+      operationId: get_terminal
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: terminal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Terminal Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terminal'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - terminals
+      summary: Update Terminal
+      operationId: update_terminal
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: terminal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Terminal Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTerminal'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terminal'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - terminals
+      summary: Delete Terminal
+      operationId: delete_terminal
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: terminal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Terminal Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /terminal/{terminal_id}/logout:
+    post:
+      tags:
+        - terminals
+      summary: Logout Terminal
+      operationId: logout_terminal
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: terminal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Terminal Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
@@ -5110,6 +5284,20 @@ components:
         - rate
         - description
       title: NewTaxRate
+    NewTerminal:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Description
+      type: object
+      required:
+        - name
+      title: NewTerminal
     NewTicket:
       properties:
         name:
@@ -5159,6 +5347,11 @@ components:
         active_profile_id:
           type: integer
           title: Active Profile Id
+        terminal_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Terminal Id
       type: object
       required:
         - name
@@ -5642,6 +5835,23 @@ components:
         - ids
         - entities
       title: NormalizedList[TaxRate, int]
+    NormalizedList_Terminal_int_:
+      properties:
+        ids:
+          items:
+            type: integer
+          type: array
+          title: Ids
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/Terminal'
+          type: object
+          title: Entities
+      type: object
+      required:
+        - ids
+        - entities
+      title: NormalizedList[Terminal, int]
     NormalizedList_Ticket_int_:
       properties:
         ids:
@@ -5808,6 +6018,7 @@ components:
         - tse
         - order
         - account
+        - terminal
       title: ObjectType
     Order:
       properties:
@@ -6581,6 +6792,48 @@ components:
         - id
         - node_id
       title: TaxRate
+    Terminal:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Description
+        id:
+          type: integer
+          title: Id
+        node_id:
+          type: integer
+          title: Node Id
+        till_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Till Id
+        session_uuid:
+          anyOf:
+            - type: string
+              format: uuid
+            - type: 'null'
+          title: Session Uuid
+        registration_uuid:
+          anyOf:
+            - type: string
+              format: uuid
+            - type: 'null'
+          title: Registration Uuid
+      type: object
+      required:
+        - name
+        - id
+        - node_id
+        - till_id
+        - session_uuid
+        - registration_uuid
+      title: Terminal
     Ticket:
       properties:
         name:
@@ -6650,6 +6903,11 @@ components:
         active_profile_id:
           type: integer
           title: Active Profile Id
+        terminal_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Terminal Id
         node_id:
           type: integer
           title: Node Id
@@ -6659,18 +6917,6 @@ components:
         z_nr:
           type: integer
           title: Z Nr
-        session_uuid:
-          anyOf:
-            - type: string
-              format: uuid
-            - type: 'null'
-          title: Session Uuid
-        registration_uuid:
-          anyOf:
-            - type: string
-              format: uuid
-            - type: 'null'
-          title: Registration Uuid
         active_user_id:
           anyOf:
             - type: integer

@@ -2134,6 +2134,48 @@ components:
         - new_user_tag_uid
         - comment
       title: SwitchTagPayload
+    Terminal:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Description
+        id:
+          type: integer
+          title: Id
+        node_id:
+          type: integer
+          title: Node Id
+        till_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Till Id
+        session_uuid:
+          anyOf:
+            - type: string
+              format: uuid
+            - type: 'null'
+          title: Session Uuid
+        registration_uuid:
+          anyOf:
+            - type: string
+              format: uuid
+            - type: 'null'
+          title: Registration Uuid
+      type: object
+      required:
+        - name
+        - id
+        - node_id
+        - till_id
+        - session_uuid
+        - registration_uuid
+      title: Terminal
     TerminalButton:
       properties:
         id:
@@ -2177,6 +2219,69 @@ components:
         - fixed_price
       title: TerminalButton
     TerminalConfig:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        till:
+          anyOf:
+            - $ref: '#/components/schemas/TerminalTillConfig'
+            - type: 'null'
+        test_mode:
+          type: boolean
+          title: Test Mode
+        test_mode_message:
+          type: string
+          title: Test Mode Message
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - till
+        - test_mode
+        - test_mode_message
+      title: TerminalConfig
+    TerminalRegistrationPayload:
+      properties:
+        registration_uuid:
+          type: string
+          title: Registration Uuid
+      type: object
+      required:
+        - registration_uuid
+      title: TerminalRegistrationPayload
+    TerminalRegistrationSuccess:
+      properties:
+        terminal:
+          $ref: '#/components/schemas/Terminal'
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+        - terminal
+        - token
+      title: TerminalRegistrationSuccess
+    TerminalSecrets:
+      properties:
+        sumup_affiliate_key:
+          type: string
+          title: Sumup Affiliate Key
+        user_tag_secret:
+          $ref: '#/components/schemas/UserTagSecret'
+      type: object
+      required:
+        - sumup_affiliate_key
+        - user_tag_secret
+      title: TerminalSecrets
+    TerminalTillConfig:
       properties:
         id:
           type: integer
@@ -2229,17 +2334,16 @@ components:
           anyOf:
             - $ref: '#/components/schemas/TerminalSecrets'
             - type: 'null'
+        active_user_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Active User Id
         available_roles:
           items:
             $ref: '#/components/schemas/UserRole'
           type: array
           title: Available Roles
-        test_mode:
-          type: boolean
-          title: Test Mode
-        test_mode_message:
-          type: string
-          title: Test Mode Message
       type: object
       required:
         - id
@@ -2254,43 +2358,9 @@ components:
         - allow_ticket_sale
         - buttons
         - secrets
+        - active_user_id
         - available_roles
-        - test_mode
-        - test_mode_message
-      title: TerminalConfig
-    TerminalRegistrationPayload:
-      properties:
-        registration_uuid:
-          type: string
-          title: Registration Uuid
-      type: object
-      required:
-        - registration_uuid
-      title: TerminalRegistrationPayload
-    TerminalRegistrationSuccess:
-      properties:
-        till:
-          $ref: '#/components/schemas/Till'
-        token:
-          type: string
-          title: Token
-      type: object
-      required:
-        - till
-        - token
-      title: TerminalRegistrationSuccess
-    TerminalSecrets:
-      properties:
-        sumup_affiliate_key:
-          type: string
-          title: Sumup Affiliate Key
-        user_tag_secret:
-          $ref: '#/components/schemas/UserTagSecret'
-      type: object
-      required:
-        - sumup_affiliate_key
-        - user_tag_secret
-      title: TerminalSecrets
+      title: TerminalTillConfig
     Ticket:
       properties:
         name:
@@ -2365,83 +2435,6 @@ components:
         - customer_tag_uid
         - ticket
       title: TicketScanResultEntry
-    Till:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Description
-        active_shift:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Active Shift
-        active_profile_id:
-          type: integer
-          title: Active Profile Id
-        node_id:
-          type: integer
-          title: Node Id
-        id:
-          type: integer
-          title: Id
-        z_nr:
-          type: integer
-          title: Z Nr
-        session_uuid:
-          anyOf:
-            - type: string
-              format: uuid
-            - type: 'null'
-          title: Session Uuid
-        registration_uuid:
-          anyOf:
-            - type: string
-              format: uuid
-            - type: 'null'
-          title: Registration Uuid
-        active_user_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Active User Id
-        active_user_role_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Active User Role Id
-        current_cash_register_name:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Current Cash Register Name
-        current_cash_register_balance:
-          anyOf:
-            - type: number
-            - type: 'null'
-          title: Current Cash Register Balance
-        tse_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Tse Id
-        tse_serial:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Tse Serial
-      type: object
-      required:
-        - name
-        - active_profile_id
-        - node_id
-        - id
-        - z_nr
-      title: Till
     TransferCashRegisterPayload:
       properties:
         source_cashier_tag_uid:

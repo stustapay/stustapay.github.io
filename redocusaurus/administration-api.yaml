@@ -2802,6 +2802,12 @@ paths:
       security:
         - OAuth2PasswordBearer: []
       parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
         - name: to_timestamp
           in: query
           required: false
@@ -2820,22 +2826,157 @@ paths:
                 format: date-time
               - type: 'null'
             title: From Timestamp
-        - name: node_id
-          in: query
-          required: false
-          schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
-            title: Node Id
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: >-
-                  #/components/schemas/stustapay__core__service__order__stats__ProductStats
+                $ref: '#/components/schemas/ProductStats'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /stats/vouchers:
+    get:
+      tags:
+        - stats
+      summary: Get Voucher Stats
+      operationId: get_voucher_stats
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+        - name: to_timestamp
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            title: To Timestamp
+        - name: from_timestamp
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            title: From Timestamp
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoucherStats'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /stats/entries:
+    get:
+      tags:
+        - stats
+      summary: Get Entry Stats
+      operationId: get_entry_stats
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+        - name: to_timestamp
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            title: To Timestamp
+        - name: from_timestamp
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            title: From Timestamp
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeseriesStats'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /stats/top-ups:
+    get:
+      tags:
+        - stats
+      summary: Get Top Up Stats
+      operationId: get_top_up_stats
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+        - name: to_timestamp
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            title: To Timestamp
+        - name: from_timestamp
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            title: From Timestamp
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeseriesStats'
         '404':
           description: Not found
         '422':
@@ -4399,6 +4540,18 @@ components:
         - till_ids
         - user_tag_uid_hex
       title: Cashier
+    CashierProductStats:
+      properties:
+        product:
+          $ref: '#/components/schemas/Product'
+        quantity:
+          type: integer
+          title: Quantity
+      type: object
+      required:
+        - product
+        - quantity
+      title: CashierProductStats
     CashierShift:
       properties:
         id:
@@ -4442,8 +4595,7 @@ components:
       properties:
         booked_products:
           items:
-            $ref: >-
-              #/components/schemas/stustapay__core__schema__cashier__CashierShiftStats__ProductStats
+            $ref: '#/components/schemas/CashierProductStats'
           type: array
           title: Booked Products
       type: object
@@ -6016,7 +6168,6 @@ components:
         - tax_rate
         - user_tag
         - tse
-        - order
         - account
         - terminal
       title: ObjectType
@@ -6328,81 +6479,60 @@ components:
         - under_16
         - under_18
       title: ProductRestriction
-    ProductSoldStats:
+    ProductStats:
       properties:
-        name:
+        from_time:
           type: string
-          title: Name
-        price:
-          anyOf:
-            - type: number
-            - type: 'null'
-          title: Price
-        fixed_price:
-          type: boolean
-          title: Fixed Price
-        price_in_vouchers:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Price In Vouchers
-        tax_rate_id:
-          type: integer
-          title: Tax Rate Id
-        restrictions:
+          format: date-time
+          title: From Time
+        to_time:
+          type: string
+          format: date-time
+          title: To Time
+        daily_intervals:
           items:
-            $ref: '#/components/schemas/ProductRestriction'
+            $ref: '#/components/schemas/StatInterval'
           type: array
-          title: Restrictions
-        is_locked:
-          type: boolean
-          title: Is Locked
-        is_returnable:
-          type: boolean
-          title: Is Returnable
-        target_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Target Account Id
-        node_id:
-          type: integer
-          title: Node Id
-        id:
-          type: integer
-          title: Id
-        tax_name:
-          type: string
-          title: Tax Name
-        tax_rate:
-          type: number
-          title: Tax Rate
-        type:
-          $ref: '#/components/schemas/ProductType'
-        price_per_voucher:
-          anyOf:
-            - type: number
-            - type: 'null'
-          title: Price Per Voucher
-        quantity_sold:
-          type: integer
-          title: Quantity Sold
+          title: Daily Intervals
+        hourly_intervals:
+          items:
+            $ref: '#/components/schemas/StatInterval'
+          type: array
+          title: Hourly Intervals
+        product_daily_intervals:
+          items:
+            $ref: '#/components/schemas/ProductTimeseries'
+          type: array
+          title: Product Daily Intervals
+        product_hourly_intervals:
+          items:
+            $ref: '#/components/schemas/ProductTimeseries'
+          type: array
+          title: Product Hourly Intervals
       type: object
       required:
-        - name
-        - price
-        - fixed_price
-        - tax_rate_id
-        - restrictions
-        - is_locked
-        - is_returnable
-        - node_id
-        - id
-        - tax_name
-        - tax_rate
-        - type
-        - quantity_sold
-      title: ProductSoldStats
+        - from_time
+        - to_time
+        - daily_intervals
+        - hourly_intervals
+        - product_daily_intervals
+        - product_hourly_intervals
+      title: ProductStats
+    ProductTimeseries:
+      properties:
+        product_id:
+          type: integer
+          title: Product Id
+        intervals:
+          items:
+            $ref: '#/components/schemas/StatInterval'
+          type: array
+          title: Intervals
+      type: object
+      required:
+        - product_id
+        - intervals
+      title: ProductTimeseries
     ProductType:
       type: string
       enum:
@@ -6650,6 +6780,29 @@ components:
         - id
         - languages
       title: RestrictedEventSettings
+    StatInterval:
+      properties:
+        from_time:
+          type: string
+          format: date-time
+          title: From Time
+        to_time:
+          type: string
+          format: date-time
+          title: To Time
+        count:
+          type: integer
+          title: Count
+        revenue:
+          type: number
+          title: Revenue
+      type: object
+      required:
+        - from_time
+        - to_time
+        - count
+        - revenue
+      title: StatInterval
     SumUpCheckout:
       properties:
         checkout_reference:
@@ -7055,6 +7208,33 @@ components:
         - node_id
         - id
       title: TillProfile
+    TimeseriesStats:
+      properties:
+        from_time:
+          type: string
+          format: date-time
+          title: From Time
+        to_time:
+          type: string
+          format: date-time
+          title: To Time
+        daily_intervals:
+          items:
+            $ref: '#/components/schemas/StatInterval'
+          type: array
+          title: Daily Intervals
+        hourly_intervals:
+          items:
+            $ref: '#/components/schemas/StatInterval'
+          type: array
+          title: Hourly Intervals
+      type: object
+      required:
+        - from_time
+        - to_time
+        - daily_intervals
+        - hourly_intervals
+      title: TimeseriesStats
     TransferRegisterPayload:
       properties:
         source_cashier_id:
@@ -7575,40 +7755,6 @@ components:
         - vouchers_issued
         - vouchers_spent
       title: VoucherStats
-    stustapay__core__schema__cashier__CashierShiftStats__ProductStats:
-      properties:
-        product:
-          $ref: '#/components/schemas/Product'
-        quantity:
-          type: integer
-          title: Quantity
-      type: object
-      required:
-        - product
-        - quantity
-      title: ProductStats
-    stustapay__core__service__order__stats__ProductStats:
-      properties:
-        product_quantities:
-          items:
-            $ref: '#/components/schemas/ProductSoldStats'
-          type: array
-          title: Product Quantities
-        product_quantities_by_till:
-          additionalProperties:
-            items:
-              $ref: '#/components/schemas/ProductSoldStats'
-            type: array
-          type: object
-          title: Product Quantities By Till
-        voucher_stats:
-          $ref: '#/components/schemas/VoucherStats'
-      type: object
-      required:
-        - product_quantities
-        - product_quantities_by_till
-        - voucher_stats
-      title: ProductStats
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2

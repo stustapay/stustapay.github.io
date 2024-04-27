@@ -2312,49 +2312,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /accounts/{account_id}/update-tag-uid:
-    post:
-      tags:
-        - accounts
-      summary: Update Tag Uid
-      operationId: update_tag_uid
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: account_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Account Id
-        - name: node_id
-          in: query
-          required: false
-          schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
-            title: Node Id
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateTagUidPayload'
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
   /accounts/{account_id}/update-comment:
     post:
       tags:
@@ -3209,7 +3166,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /user-tags/{user_tag_uid_hex}:
+  /user-tags/{user_tag_id}:
     get:
       tags:
         - user_tags
@@ -3218,12 +3175,12 @@ paths:
       security:
         - OAuth2PasswordBearer: []
       parameters:
-        - name: user_tag_uid_hex
+        - name: user_tag_id
           in: path
           required: true
           schema:
-            type: string
-            title: User Tag Uid Hex
+            type: integer
+            title: User Tag Id
         - name: node_id
           in: query
           required: false
@@ -3247,7 +3204,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /user-tags/{user_tag_uid_hex}/update-comment:
+  /user-tags/{user_tag_id}/update-comment:
     post:
       tags:
         - user_tags
@@ -3256,12 +3213,12 @@ paths:
       security:
         - OAuth2PasswordBearer: []
       parameters:
-        - name: user_tag_uid_hex
+        - name: user_tag_id
           in: path
           required: true
           schema:
-            type: string
-            title: User Tag Uid Hex
+            type: integer
+            title: User Tag Id
         - name: node_id
           in: query
           required: false
@@ -4284,6 +4241,11 @@ components:
         vouchers:
           type: integer
           title: Vouchers
+        user_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Id
         user_tag_uid:
           anyOf:
             - type: integer
@@ -4318,6 +4280,7 @@ components:
         - comment
         - balance
         - vouchers
+        - user_tag_id
         - user_tag_uid
         - restriction
         - tag_history
@@ -4374,11 +4337,6 @@ components:
             - type: integer
             - type: 'null'
           title: Current Cashier Id
-        current_cashier_tag_uid:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Current Cashier Tag Uid
         current_till_id:
           anyOf:
             - type: integer
@@ -4393,7 +4351,6 @@ components:
         - node_id
         - id
         - current_cashier_id
-        - current_cashier_tag_uid
         - current_till_id
         - current_balance
       title: CashRegister
@@ -4497,6 +4454,11 @@ components:
             - type: string
             - type: 'null'
           title: Description
+        user_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Id
         user_tag_uid:
           anyOf:
             - type: integer
@@ -4801,11 +4763,11 @@ components:
             - type: string
             - type: 'null'
           title: Description
-        user_tag_uid_hex:
+        user_tag_pin:
           anyOf:
             - type: string
             - type: 'null'
-          title: User Tag Uid Hex
+          title: User Tag Pin
         password:
           anyOf:
             - type: string
@@ -4850,6 +4812,11 @@ components:
             - type: string
             - type: 'null'
           title: Description
+        user_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Id
         user_tag_uid:
           anyOf:
             - type: integer
@@ -4870,12 +4837,6 @@ components:
             - type: integer
             - type: 'null'
           title: Cash Register Id
-        user_tag_uid_hex:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: User Tag Uid Hex
-          readOnly: true
       type: object
       required:
         - node_id
@@ -4883,7 +4844,6 @@ components:
         - login
         - display_name
         - privileges
-        - user_tag_uid_hex
       title: CurrentUser
       description: Describes a logged-in user in the system
     Customer:
@@ -4912,6 +4872,11 @@ components:
         vouchers:
           type: integer
           title: Vouchers
+        user_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Id
         user_tag_uid:
           anyOf:
             - type: integer
@@ -4966,6 +4931,11 @@ components:
             - type: boolean
             - type: 'null'
           title: Payout Export
+        user_tag_pin:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Pin
         user_tag_uid_hex:
           anyOf:
             - type: string
@@ -4981,6 +4951,7 @@ components:
         - comment
         - balance
         - vouchers
+        - user_tag_id
         - user_tag_uid
         - restriction
         - tag_history
@@ -4991,6 +4962,7 @@ components:
         - payout_error
         - payout_run_id
         - payout_export
+        - user_tag_pin
         - user_tag_uid_hex
       title: Customer
     EditSaleProducts:
@@ -6222,6 +6194,11 @@ components:
             - type: integer
             - type: 'null'
           title: Customer Tag Uid
+        customer_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Customer Tag Id
         line_items:
           items:
             $ref: '#/components/schemas/LineItem'
@@ -6248,6 +6225,7 @@ components:
         - till_id
         - customer_account_id
         - customer_tag_uid
+        - customer_tag_id
         - line_items
         - customer_tag_uid_hex
       title: Order
@@ -6285,6 +6263,9 @@ components:
         email:
           type: string
           title: Email
+        user_tag_id:
+          type: integer
+          title: User Tag Id
         user_tag_uid:
           type: integer
           title: User Tag Uid
@@ -6295,7 +6276,9 @@ components:
           type: integer
           title: Payout Run Id
         user_tag_uid_hex:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: User Tag Uid Hex
           readOnly: true
       type: object
@@ -6304,6 +6287,7 @@ components:
         - iban
         - account_name
         - email
+        - user_tag_id
         - user_tag_uid
         - balance
         - payout_run_id
@@ -6394,6 +6378,7 @@ components:
       enum:
         - node_administration
         - customer_management
+        - create_user
         - user_management
         - cash_transport
         - terminal_login
@@ -7471,20 +7456,6 @@ components:
         - sepa_description
         - sepa_allowed_country_codes
       title: UpdateEvent
-    UpdateTagUidPayload:
-      properties:
-        new_tag_uid_hex:
-          type: string
-          title: New Tag Uid Hex
-        comment:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Comment
-      type: object
-      required:
-        - new_tag_uid_hex
-      title: UpdateTagUidPayload
     UpdateTse:
       properties:
         name:
@@ -7519,11 +7490,11 @@ components:
             - type: string
             - type: 'null'
           title: Description
-        user_tag_uid_hex:
+        user_tag_pin:
           anyOf:
             - type: string
             - type: 'null'
-          title: User Tag Uid Hex
+          title: User Tag Pin
       type: object
       required:
         - login
@@ -7561,6 +7532,11 @@ components:
         display_name:
           type: string
           title: Display Name
+        user_tag_pin:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Pin
         user_tag_uid:
           anyOf:
             - type: integer
@@ -7574,6 +7550,11 @@ components:
         node_id:
           type: integer
           title: Node Id
+        user_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Id
         transport_account_id:
           anyOf:
             - type: integer
@@ -7587,19 +7568,12 @@ components:
         id:
           type: integer
           title: Id
-        user_tag_uid_hex:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: User Tag Uid Hex
-          readOnly: true
       type: object
       required:
         - login
         - display_name
         - node_id
         - id
-        - user_tag_uid_hex
       title: User
     UserRole:
       properties:
@@ -7644,9 +7618,20 @@ components:
       title: UserTagAccountAssociation
     UserTagDetail:
       properties:
-        user_tag_uid:
+        id:
           type: integer
-          title: User Tag Uid
+          title: Id
+        pin:
+          type: string
+          title: Pin
+        uid:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Uid
+        node_id:
+          type: integer
+          title: Node Id
         comment:
           anyOf:
             - type: string
@@ -7662,22 +7647,33 @@ components:
             $ref: '#/components/schemas/UserTagAccountAssociation'
           type: array
           title: Account History
-        user_tag_uid_hex:
+        uid_hex:
           anyOf:
             - type: string
             - type: 'null'
-          title: User Tag Uid Hex
+          title: Uid Hex
           readOnly: true
       type: object
       required:
-        - user_tag_uid
+        - id
+        - pin
+        - uid
+        - node_id
         - account_history
-        - user_tag_uid_hex
+        - uid_hex
       title: UserTagDetail
     UserTagHistoryEntry:
       properties:
-        user_tag_uid:
+        user_tag_id:
           type: integer
+          title: User Tag Id
+        user_tag_pin:
+          type: string
+          title: User Tag Pin
+        user_tag_uid:
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: User Tag Uid
         account_id:
           type: integer
@@ -7699,6 +7695,8 @@ components:
           readOnly: true
       type: object
       required:
+        - user_tag_id
+        - user_tag_pin
         - user_tag_uid
         - account_id
         - mapping_was_valid_until

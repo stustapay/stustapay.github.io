@@ -13,9 +13,9 @@ paths:
       operationId: login
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
-              $ref: '#/components/schemas/Body_login_auth_login_post'
+              $ref: '#/components/schemas/LoginPayload'
         required: true
       responses:
         '200':
@@ -287,39 +287,6 @@ components:
         - cashier
         - voucher_create
       title: AccountType
-    Body_login_auth_login_post:
-      properties:
-        grant_type:
-          anyOf:
-            - type: string
-              pattern: password
-            - type: 'null'
-          title: Grant Type
-        username:
-          type: string
-          title: Username
-        password:
-          type: string
-          title: Password
-        scope:
-          type: string
-          title: Scope
-          default: ''
-        client_id:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Client Id
-        client_secret:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Client Secret
-      type: object
-      required:
-        - username
-        - password
-      title: Body_login_auth_login_post
     CheckCheckoutPayload:
       properties:
         checkout_id:
@@ -381,6 +348,11 @@ components:
         vouchers:
           type: integer
           title: Vouchers
+        user_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Id
         user_tag_uid:
           anyOf:
             - type: integer
@@ -435,6 +407,11 @@ components:
             - type: boolean
             - type: 'null'
           title: Payout Export
+        user_tag_pin:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Pin
         user_tag_uid_hex:
           anyOf:
             - type: string
@@ -450,6 +427,7 @@ components:
         - comment
         - balance
         - vouchers
+        - user_tag_id
         - user_tag_uid
         - restriction
         - tag_history
@@ -460,6 +438,7 @@ components:
         - payout_error
         - payout_run_id
         - payout_export
+        - user_tag_pin
         - user_tag_uid_hex
       title: Customer
     CustomerBank:
@@ -588,6 +567,15 @@ components:
         - total_tax
         - total_price
       title: LineItem
+    LoginPayload:
+      properties:
+        pin:
+          type: string
+          title: Pin
+      type: object
+      required:
+        - pin
+      title: LoginPayload
     LoginResponse:
       properties:
         customer:
@@ -666,6 +654,11 @@ components:
             - type: integer
             - type: 'null'
           title: Customer Tag Uid
+        customer_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Customer Tag Id
         line_items:
           items:
             $ref: '#/components/schemas/LineItem'
@@ -697,6 +690,7 @@ components:
         - till_id
         - customer_account_id
         - customer_tag_uid
+        - customer_tag_id
         - line_items
         - bon_generated
         - customer_tag_uid_hex
@@ -806,8 +800,16 @@ components:
       title: SumUpCheckoutStatus
     UserTagHistoryEntry:
       properties:
-        user_tag_uid:
+        user_tag_id:
           type: integer
+          title: User Tag Id
+        user_tag_pin:
+          type: string
+          title: User Tag Pin
+        user_tag_uid:
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: User Tag Uid
         account_id:
           type: integer
@@ -829,6 +831,8 @@ components:
           readOnly: true
       type: object
       required:
+        - user_tag_id
+        - user_tag_pin
         - user_tag_uid
         - account_id
         - mapping_was_valid_until

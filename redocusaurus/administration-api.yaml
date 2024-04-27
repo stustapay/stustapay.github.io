@@ -5758,18 +5758,12 @@ components:
             $ref: '#/components/schemas/NodeSeenByUser'
           type: array
           title: Children
-        roles_at_node:
-          items:
-            $ref: '#/components/schemas/UserRole'
-          type: array
-          title: Roles At Node
         privileges_at_node:
           items:
             $ref: '#/components/schemas/Privilege'
           type: array
           uniqueItems: true
           title: Privileges At Node
-          readOnly: true
       type: object
       required:
         - id
@@ -5786,7 +5780,6 @@ components:
         - forbidden_objects_in_subtree
         - computed_forbidden_objects_in_subtree
         - children
-        - roles_at_node
         - privileges_at_node
       title: NodeSeenByUser
     NormalizedList_Account_int_:
@@ -6379,6 +6372,7 @@ components:
         - node_administration
         - customer_management
         - create_user
+        - allow_privileged_role_assignment
         - user_management
         - cash_transport
         - terminal_login

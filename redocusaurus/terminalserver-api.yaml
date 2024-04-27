@@ -626,7 +626,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewUser'
+              $ref: '#/components/schemas/CreateUserPayload'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /user/update-user-roles:
+    post:
+      tags:
+        - user
+      summary: Update the roles of a given user
+      operationId: update_user_roles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserPayload'
         required: true
       responses:
         '200':
@@ -1324,6 +1351,40 @@ components:
         - cashier_id
         - till_id
       title: CompletedTopUp
+    CreateUserPayload:
+      properties:
+        login:
+          type: string
+          title: Login
+        display_name:
+          type: string
+          title: Display Name
+        user_tag_pin:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Pin
+        user_tag_uid:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Tag Uid
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Description
+        role_ids:
+          items:
+            type: integer
+          type: array
+          title: Role Ids
+      type: object
+      required:
+        - login
+        - display_name
+        - role_ids
+      title: CreateUserPayload
     CurrentUser:
       properties:
         node_id:
@@ -1700,34 +1761,6 @@ components:
         - amount
         - customer_tag_uid
       title: NewTopUp
-    NewUser:
-      properties:
-        login:
-          type: string
-          title: Login
-        display_name:
-          type: string
-          title: Display Name
-        user_tag_pin:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: User Tag Pin
-        user_tag_uid:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: User Tag Uid
-        description:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Description
-      type: object
-      required:
-        - login
-        - display_name
-      title: NewUser
     Order:
       properties:
         id:
@@ -2030,6 +2063,7 @@ components:
         - node_administration
         - customer_management
         - create_user
+        - allow_privileged_role_assignment
         - user_management
         - cash_transport
         - terminal_login
@@ -2151,6 +2185,9 @@ components:
         new_user_tag_uid:
           type: integer
           title: New User Tag Uid
+        new_user_tag_pin:
+          type: string
+          title: New User Tag Pin
         comment:
           type: string
           title: Comment
@@ -2158,6 +2195,7 @@ components:
       required:
         - customer_id
         - new_user_tag_uid
+        - new_user_tag_pin
         - comment
       title: SwitchTagPayload
     Terminal:
@@ -2491,6 +2529,21 @@ components:
         - orga_tag_uid
         - amount
       title: TransportAccountChangePayload
+    UpdateUserPayload:
+      properties:
+        user_tag_uid:
+          type: integer
+          title: User Tag Uid
+        role_ids:
+          items:
+            type: integer
+          type: array
+          title: Role Ids
+      type: object
+      required:
+        - user_tag_uid
+        - role_ids
+      title: UpdateUserPayload
     User:
       properties:
         login:

@@ -856,7 +856,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: '#/components/schemas/UserLoginResult'
         '404':
           description: Not found
         '422':
@@ -5077,27 +5077,17 @@ components:
         password:
           type: string
           title: Password
+        node_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Node Id
       type: object
       required:
         - username
         - password
+        - node_id
       title: LoginPayload
-    LoginResponse:
-      properties:
-        user:
-          $ref: '#/components/schemas/CurrentUser'
-        access_token:
-          type: string
-          title: Access Token
-        grant_type:
-          type: string
-          title: Grant Type
-          default: bearer
-      type: object
-      required:
-        - user
-        - access_token
-      title: LoginResponse
     NewCashRegister:
       properties:
         name:
@@ -5695,6 +5685,23 @@ components:
         - computed_forbidden_objects_in_subtree
         - children
       title: Node
+    NodeChoice:
+      properties:
+        node_id:
+          type: integer
+          title: Node Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+        - node_id
+        - name
+        - description
+      title: NodeChoice
     NodeSeenByUser:
       properties:
         id:
@@ -7569,6 +7576,36 @@ components:
         - node_id
         - id
       title: User
+    UserLoginResult:
+      properties:
+        success:
+          anyOf:
+            - $ref: '#/components/schemas/UserLoginSuccess'
+            - type: 'null'
+        available_nodes:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/NodeChoice'
+              type: array
+            - type: 'null'
+          title: Available Nodes
+      type: object
+      required:
+        - success
+        - available_nodes
+      title: UserLoginResult
+    UserLoginSuccess:
+      properties:
+        user:
+          $ref: '#/components/schemas/CurrentUser'
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+        - user
+        - token
+      title: UserLoginSuccess
     UserRole:
       properties:
         name:

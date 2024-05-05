@@ -3779,6 +3779,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /tree/nodes/{node_id}/archive-node:
+    post:
+      tags:
+        - tree
+      summary: Archive Node
+      operationId: archive_node
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /tree/nodes/{node_id}/create-event:
     post:
       tags:
@@ -5762,6 +5792,9 @@ components:
         description:
           type: string
           title: Description
+        read_only:
+          type: boolean
+          title: Read Only
         event:
           anyOf:
             - $ref: '#/components/schemas/PublicEventSettings'
@@ -5817,6 +5850,7 @@ components:
         - parent
         - name
         - description
+        - read_only
         - event
         - path
         - parent_ids
@@ -5859,6 +5893,9 @@ components:
         description:
           type: string
           title: Description
+        read_only:
+          type: boolean
+          title: Read Only
         event:
           anyOf:
             - $ref: '#/components/schemas/PublicEventSettings'
@@ -5920,6 +5957,7 @@ components:
         - parent
         - name
         - description
+        - read_only
         - event
         - path
         - parent_ids

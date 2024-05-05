@@ -3372,11 +3372,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -3403,11 +3401,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -3441,11 +3437,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -3462,7 +3456,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /payouts/{payout_run_id}/csv:
+  /payouts/{payout_run_id}/payouts:
     get:
       tags:
         - payouts
@@ -3479,11 +3473,9 @@ paths:
             title: Payout Run Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -3494,7 +3486,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Payout'
-                title: Response Payout Run Payouts Payouts  Payout Run Id  Csv Get
+                title: >-
+                  Response Payout Run Payouts Payouts  Payout Run Id  Payouts
+                  Get
         '404':
           description: Not found
         '422':
@@ -3503,6 +3497,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /payouts/{payout_run_id}/csv:
     post:
       tags:
         - payouts
@@ -3519,27 +3514,17 @@ paths:
             title: Payout Run Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateCSVPayload'
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                type: string
                 title: >-
                   Response Payout Run Csv Export Payouts  Payout Run Id  Csv
                   Post
@@ -3555,8 +3540,8 @@ paths:
     post:
       tags:
         - payouts
-      summary: Payout Run Sepa Xml Export
-      operationId: payout_run_sepa_xml_export
+      summary: Payout Run Sepa Xml
+      operationId: payout_run_sepa_xml
       security:
         - OAuth2PasswordBearer: []
       parameters:
@@ -3568,11 +3553,9 @@ paths:
             title: Payout Run Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -3586,12 +3569,119 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                type: string
                 title: >-
-                  Response Payout Run Sepa Xml Export Payouts  Payout Run Id 
-                  Sepa Xml Post
+                  Response Payout Run Sepa Xml Payouts  Payout Run Id  Sepa Xml
+                  Post
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /payouts/{payout_run_id}/previous_sepa_xml:
+    post:
+      tags:
+        - payouts
+      summary: Previous Payout Run Sepa Xml
+      operationId: previous_payout_run_sepa_xml
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: payout_run_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Payout Run Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                title: >-
+                  Response Previous Payout Run Sepa Xml Payouts  Payout Run Id 
+                  Previous Sepa Xml Post
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /payouts/{payout_run_id}/set-as-done:
+    post:
+      tags:
+        - payouts
+      summary: Set Payout Run As Done
+      operationId: set_payout_run_as_done
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: payout_run_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Payout Run Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /payouts/{payout_run_id}/revoke:
+    post:
+      tags:
+        - payouts
+      summary: Revoke Payout Run
+      operationId: revoke_payout_run
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: payout_run_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Payout Run Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
         '404':
           description: Not found
         '422':
@@ -3934,11 +4024,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -3981,11 +4069,9 @@ paths:
             title: Customer Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -3994,6 +4080,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /customers/{customer_id}/prevent-payout:
+    post:
+      tags:
+        - accounts
+      summary: Prevent Customer Payout
+      operationId: prevent_customer_payout
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Customer Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /customers/{customer_id}/allow-payout:
+    post:
+      tags:
+        - accounts
+      summary: Allow Customer Payout
+      operationId: allow_customer_payout
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Customer Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
         '404':
           description: Not found
         '422':
@@ -4726,26 +4882,12 @@ components:
         - key
         - value
       title: ConfigEntry
-    CreateCSVPayload:
-      properties:
-        batch_size:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Batch Size
-      type: object
-      title: CreateCSVPayload
     CreateSepaXMLPayload:
       properties:
         execution_date:
           type: string
           format: date
           title: Execution Date
-        batch_size:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Batch Size
       type: object
       required:
         - execution_date
@@ -4916,16 +5058,6 @@ components:
             - type: number
             - type: 'null'
           title: Donation
-        payout_error:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Payout Error
-        payout_run_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Payout Run Id
         payout_export:
           anyOf:
             - type: boolean
@@ -4936,6 +5068,10 @@ components:
             - type: string
             - type: 'null'
           title: User Tag Pin
+        payout:
+          anyOf:
+            - $ref: '#/components/schemas/Payout'
+            - type: 'null'
         user_tag_uid_hex:
           anyOf:
             - type: string
@@ -4959,10 +5095,9 @@ components:
         - account_name
         - email
         - donation
-        - payout_error
-        - payout_run_id
         - payout_export
         - user_tag_pin
+        - payout
         - user_tag_uid_hex
       title: Customer
     EditSaleProducts:
@@ -5086,7 +5221,6 @@ components:
       required:
         - username
         - password
-        - node_id
       title: LoginPayload
     NewCashRegister:
       properties:
@@ -5249,6 +5383,11 @@ components:
         sepa_description:
           type: string
           title: Sepa Description
+        sepa_max_num_payouts_in_run:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Sepa Max Num Payouts In Run
         sepa_allowed_country_codes:
           items:
             type: string
@@ -5330,9 +5469,13 @@ components:
         max_payout_sum:
           type: number
           title: Max Payout Sum
+        max_num_payouts:
+          type: integer
+          title: Max Num Payouts
       type: object
       required:
         - max_payout_sum
+        - max_num_payouts
       title: NewPayoutRun
     NewProduct:
       properties:
@@ -6251,17 +6394,26 @@ components:
       title: PaymentMethod
     Payout:
       properties:
+        id:
+          type: integer
+          title: Id
         customer_account_id:
           type: integer
           title: Customer Account Id
         iban:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Iban
         account_name:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Account Name
         email:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Email
         user_tag_id:
           type: integer
@@ -6269,9 +6421,12 @@ components:
         user_tag_uid:
           type: integer
           title: User Tag Uid
-        balance:
+        amount:
           type: number
-          title: Balance
+          title: Amount
+        donation:
+          type: number
+          title: Donation
         payout_run_id:
           type: integer
           title: Payout Run Id
@@ -6283,13 +6438,15 @@ components:
           readOnly: true
       type: object
       required:
+        - id
         - customer_account_id
         - iban
         - account_name
         - email
         - user_tag_id
         - user_tag_uid
-        - balance
+        - amount
+        - donation
         - payout_run_id
         - user_tag_uid_hex
       title: Payout
@@ -6298,13 +6455,38 @@ components:
         id:
           type: integer
           title: Id
+        node_id:
+          type: integer
+          title: Node Id
         created_by:
-          type: string
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: Created By
         created_at:
           type: string
           format: date-time
           title: Created At
+        set_done_by:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Set Done By
+        set_done_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Set Done At
+        done:
+          type: boolean
+          title: Done
+        revoked:
+          type: boolean
+          title: Revoked
+        sepa_was_generated:
+          type: boolean
+          title: Sepa Was Generated
         total_donation_amount:
           type: number
           title: Total Donation Amount
@@ -6317,8 +6499,14 @@ components:
       type: object
       required:
         - id
+        - node_id
         - created_by
         - created_at
+        - set_done_by
+        - set_done_at
+        - done
+        - revoked
+        - sepa_was_generated
         - total_donation_amount
         - total_payout_amount
         - n_payouts
@@ -6378,9 +6566,11 @@ components:
       enum:
         - node_administration
         - customer_management
+        - payout_management
         - create_user
         - allow_privileged_role_assignment
         - user_management
+        - view_node_stats
         - cash_transport
         - terminal_login
         - supervised_terminal_login
@@ -6601,6 +6791,9 @@ components:
         sepa_description:
           type: string
           title: Sepa Description
+        sepa_max_num_payouts_in_run:
+          type: integer
+          title: Sepa Max Num Payouts In Run
         sepa_allowed_country_codes:
           items:
             type: string
@@ -6638,6 +6831,7 @@ components:
         - sepa_sender_name
         - sepa_sender_iban
         - sepa_description
+        - sepa_max_num_payouts_in_run
         - sepa_allowed_country_codes
         - id
         - languages
@@ -6725,6 +6919,9 @@ components:
         sepa_description:
           type: string
           title: Sepa Description
+        sepa_max_num_payouts_in_run:
+          type: integer
+          title: Sepa Max Num Payouts In Run
         sepa_allowed_country_codes:
           items:
             type: string
@@ -6762,6 +6959,7 @@ components:
         - sepa_sender_name
         - sepa_sender_iban
         - sepa_description
+        - sepa_max_num_payouts_in_run
         - sepa_allowed_country_codes
         - id
         - languages
@@ -7426,6 +7624,11 @@ components:
         sepa_description:
           type: string
           title: Sepa Description
+        sepa_max_num_payouts_in_run:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Sepa Max Num Payouts In Run
         sepa_allowed_country_codes:
           items:
             type: string

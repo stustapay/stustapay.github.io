@@ -392,16 +392,6 @@ components:
             - type: number
             - type: 'null'
           title: Donation
-        payout_error:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Payout Error
-        payout_run_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Payout Run Id
         payout_export:
           anyOf:
             - type: boolean
@@ -412,6 +402,10 @@ components:
             - type: string
             - type: 'null'
           title: User Tag Pin
+        payout:
+          anyOf:
+            - $ref: '#/components/schemas/Payout'
+            - type: 'null'
         user_tag_uid_hex:
           anyOf:
             - type: string
@@ -435,10 +429,9 @@ components:
         - account_name
         - email
         - donation
-        - payout_error
-        - payout_run_id
         - payout_export
         - user_tag_pin
+        - payout
         - user_tag_uid_hex
       title: Customer
     CustomerBank:
@@ -703,6 +696,64 @@ components:
         - tag
         - sumup_online
       title: PaymentMethod
+    Payout:
+      properties:
+        id:
+          type: integer
+          title: Id
+        customer_account_id:
+          type: integer
+          title: Customer Account Id
+        iban:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Iban
+        account_name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Account Name
+        email:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email
+        user_tag_id:
+          type: integer
+          title: User Tag Id
+        user_tag_uid:
+          type: integer
+          title: User Tag Uid
+        amount:
+          type: number
+          title: Amount
+        donation:
+          type: number
+          title: Donation
+        payout_run_id:
+          type: integer
+          title: Payout Run Id
+        user_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Uid Hex
+          readOnly: true
+      type: object
+      required:
+        - id
+        - customer_account_id
+        - iban
+        - account_name
+        - email
+        - user_tag_id
+        - user_tag_uid
+        - amount
+        - donation
+        - payout_run_id
+        - user_tag_uid_hex
+      title: Payout
     Product:
       properties:
         name:

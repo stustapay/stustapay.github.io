@@ -16,11 +16,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -47,11 +45,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -91,11 +87,9 @@ paths:
             title: Product Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -128,11 +122,9 @@ paths:
             title: Product Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -171,11 +163,9 @@ paths:
             title: Product Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -663,11 +653,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -694,11 +682,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -738,11 +724,9 @@ paths:
             title: Tax Rate Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -775,11 +759,9 @@ paths:
             title: Tax Rate Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -818,11 +800,9 @@ paths:
             title: Tax Rate Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -917,11 +897,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -948,11 +926,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -992,11 +968,9 @@ paths:
             title: Till Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1029,11 +1003,9 @@ paths:
             title: Till Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1072,11 +1044,9 @@ paths:
             title: Till Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1109,11 +1079,9 @@ paths:
             title: Till Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1140,11 +1108,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1171,11 +1137,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1215,11 +1179,9 @@ paths:
             title: Layout Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1252,11 +1214,9 @@ paths:
             title: Layout Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1295,11 +1255,9 @@ paths:
             title: Layout Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1326,11 +1284,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1357,11 +1313,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1401,11 +1355,9 @@ paths:
             title: Profile Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1438,11 +1390,9 @@ paths:
             title: Profile Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1481,11 +1431,9 @@ paths:
             title: Profile Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1512,11 +1460,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1543,11 +1489,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1587,11 +1531,9 @@ paths:
             title: Button Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1624,11 +1566,9 @@ paths:
             title: Button Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1667,11 +1607,9 @@ paths:
             title: Button Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1698,11 +1636,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1729,11 +1665,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1773,11 +1707,9 @@ paths:
             title: Stocking Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1816,11 +1748,9 @@ paths:
             title: Stocking Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1847,11 +1777,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -1878,11 +1806,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1916,11 +1842,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -1959,11 +1883,9 @@ paths:
             title: Register Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -2001,11 +1923,9 @@ paths:
             title: Register Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2092,11 +2012,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2124,11 +2042,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -2168,11 +2084,9 @@ paths:
             title: Account Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2206,11 +2120,9 @@ paths:
             title: Account Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2243,11 +2155,9 @@ paths:
             title: Account Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -2286,11 +2196,9 @@ paths:
             title: Account Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -2329,11 +2237,9 @@ paths:
             title: Account Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -2373,11 +2279,9 @@ paths:
             title: Till Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2403,6 +2307,12 @@ paths:
       security:
         - OAuth2PasswordBearer: []
       parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
         - name: customer_account_id
           in: query
           required: false
@@ -2411,14 +2321,6 @@ paths:
               - type: integer
               - type: 'null'
             title: Customer Account Id
-        - name: node_id
-          in: query
-          required: false
-          schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
-            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2451,11 +2353,9 @@ paths:
             title: Order Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2488,11 +2388,9 @@ paths:
             title: Order Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2525,11 +2423,9 @@ paths:
             title: Order Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -2563,11 +2459,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2601,11 +2495,9 @@ paths:
             title: Cashier Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2639,11 +2531,9 @@ paths:
             title: Cashier Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2675,6 +2565,12 @@ paths:
           schema:
             type: integer
             title: Cashier Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
         - name: shift_id
           in: query
           required: false
@@ -2683,14 +2579,6 @@ paths:
               - type: integer
               - type: 'null'
             title: Shift Id
-        - name: node_id
-          in: query
-          required: false
-          schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
-            title: Node Id
       responses:
         '200':
           description: Successful Response
@@ -2723,11 +2611,9 @@ paths:
             title: Cashier Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -2953,11 +2839,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -2984,11 +2868,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -3028,11 +2910,9 @@ paths:
             title: Ticket Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -3065,11 +2945,9 @@ paths:
             title: Ticket Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -3108,12 +2986,116 @@ paths:
             title: Ticket Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user-tag-secrets:
+    post:
+      tags:
+        - user_tags
+      summary: Create User Tag Secret
+      operationId: create_user_tag_secret
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUserTagSecret'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTagSecret'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+        - user_tags
+      summary: List User Tag Secrets
+      operationId: list_user_tag_secrets
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserTagSecret'
+                title: Response List User Tag Secrets User Tag Secrets Get
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user-tags:
+    post:
+      tags:
+        - user_tags
+      summary: Create User Tags
+      operationId: create_user_tags
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/NewUserTag'
+              title: New User Tags
       responses:
         '200':
           description: Successful Response
@@ -3139,11 +3121,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -3183,11 +3163,9 @@ paths:
             title: User Tag Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -3221,11 +3199,9 @@ paths:
             title: User Tag Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -3259,11 +3235,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       responses:
         '200':
@@ -3290,11 +3264,9 @@ paths:
       parameters:
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -3334,11 +3306,9 @@ paths:
             title: Tse Id
         - name: node_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Node Id
       requestBody:
         required: true
@@ -5765,6 +5735,41 @@ components:
         - name
         - privileges
       title: NewUserRole
+    NewUserTag:
+      properties:
+        pin:
+          type: string
+          title: Pin
+        restriction:
+          anyOf:
+            - $ref: '#/components/schemas/ProductRestriction'
+            - type: 'null'
+        secret_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Secret Id
+      type: object
+      required:
+        - pin
+      title: NewUserTag
+    NewUserTagSecret:
+      properties:
+        key0:
+          type: string
+          title: Key0
+        key1:
+          type: string
+          title: Key1
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+        - key0
+        - key1
+        - description
+      title: NewUserTagSecret
     NewUserToRole:
       properties:
         user_id:
@@ -7974,6 +7979,31 @@ components:
         - mapping_was_valid_until
         - user_tag_uid_hex
       title: UserTagHistoryEntry
+    UserTagSecret:
+      properties:
+        key0:
+          type: string
+          title: Key0
+        key1:
+          type: string
+          title: Key1
+        description:
+          type: string
+          title: Description
+        id:
+          type: integer
+          title: Id
+        node_id:
+          type: integer
+          title: Node Id
+      type: object
+      required:
+        - key0
+        - key1
+        - description
+        - id
+        - node_id
+      title: UserTagSecret
     UserToRole:
       properties:
         user_id:

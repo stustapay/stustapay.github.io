@@ -883,6 +883,33 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
       security:
         - OAuth2PasswordBearer: []
+  /mgmtrevenue-stats:
+    post:
+      tags:
+        - mgmt
+      summary: Get revenue statistics for the current node
+      operationId: get_revenue_stats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeseriesStatsQuery'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevenueStats'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
 components:
   schemas:
     Account:
@@ -2230,6 +2257,56 @@ components:
         - cash_register_id
         - register_stocking_id
       title: RegisterStockUpPayload
+    RevenueStats:
+      properties:
+        from_time:
+          type: string
+          format: date-time
+          title: From Time
+        to_time:
+          type: string
+          format: date-time
+          title: To Time
+        daily_intervals:
+          items:
+            $ref: '#/components/schemas/StatInterval'
+          type: array
+          title: Daily Intervals
+        hourly_intervals:
+          items:
+            $ref: '#/components/schemas/StatInterval'
+          type: array
+          title: Hourly Intervals
+      type: object
+      required:
+        - from_time
+        - to_time
+        - daily_intervals
+        - hourly_intervals
+      title: RevenueStats
+    StatInterval:
+      properties:
+        from_time:
+          type: string
+          format: date-time
+          title: From Time
+        to_time:
+          type: string
+          format: date-time
+          title: To Time
+        count:
+          type: integer
+          title: Count
+        revenue:
+          type: number
+          title: Revenue
+      type: object
+      required:
+        - from_time
+        - to_time
+        - count
+        - revenue
+      title: StatInterval
     SwitchTagPayload:
       properties:
         customer_id:
@@ -2556,6 +2633,25 @@ components:
         - customer_tag_pin
         - ticket
       title: TicketScanResultEntry
+    TimeseriesStatsQuery:
+      properties:
+        from_time:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: From Time
+        to_time:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: To Time
+      type: object
+      required:
+        - from_time
+        - to_time
+      title: TimeseriesStatsQuery
     TransferCashRegisterPayload:
       properties:
         source_cashier_tag_uid:

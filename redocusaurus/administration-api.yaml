@@ -5341,11 +5341,9 @@ components:
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled
-          default: false
         sumup_payment_enabled:
           type: boolean
           title: Sumup Payment Enabled
-          default: false
         customer_portal_url:
           type: string
           title: Customer Portal Url
@@ -5423,6 +5421,8 @@ components:
       required:
         - currency_identifier
         - max_account_balance
+        - sumup_topup_enabled
+        - sumup_payment_enabled
         - customer_portal_url
         - customer_portal_about_page_url
         - customer_portal_data_privacy_url
@@ -5745,13 +5745,12 @@ components:
             - $ref: '#/components/schemas/ProductRestriction'
             - type: 'null'
         secret_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
+          type: integer
           title: Secret Id
       type: object
       required:
         - pin
+        - secret_id
       title: NewUserTag
     NewUserTagSecret:
       properties:
@@ -6792,11 +6791,9 @@ components:
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled
-          default: false
         sumup_payment_enabled:
           type: boolean
           title: Sumup Payment Enabled
-          default: false
         customer_portal_url:
           type: string
           title: Customer Portal Url
@@ -6862,6 +6859,8 @@ components:
       required:
         - currency_identifier
         - max_account_balance
+        - sumup_topup_enabled
+        - sumup_payment_enabled
         - customer_portal_url
         - customer_portal_about_page_url
         - customer_portal_data_privacy_url
@@ -6920,11 +6919,9 @@ components:
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled
-          default: false
         sumup_payment_enabled:
           type: boolean
           title: Sumup Payment Enabled
-          default: false
         customer_portal_url:
           type: string
           title: Customer Portal Url
@@ -6990,6 +6987,8 @@ components:
       required:
         - currency_identifier
         - max_account_balance
+        - sumup_topup_enabled
+        - sumup_payment_enabled
         - customer_portal_url
         - customer_portal_about_page_url
         - customer_portal_data_privacy_url
@@ -7625,11 +7624,9 @@ components:
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled
-          default: false
         sumup_payment_enabled:
           type: boolean
           title: Sumup Payment Enabled
-          default: false
         customer_portal_url:
           type: string
           title: Customer Portal Url
@@ -7689,6 +7686,8 @@ components:
       required:
         - currency_identifier
         - max_account_balance
+        - sumup_topup_enabled
+        - sumup_payment_enabled
         - customer_portal_url
         - customer_portal_about_page_url
         - customer_portal_data_privacy_url

@@ -475,6 +475,9 @@ components:
         payout_enabled:
           type: boolean
           title: Payout Enabled
+        currency_identifier:
+          type: string
+          title: Currency Identifier
         sumup_topup_enabled:
           type: boolean
           title: Sumup Topup Enabled
@@ -500,6 +503,7 @@ components:
         - contact_email
         - about_page_url
         - payout_enabled
+        - currency_identifier
         - sumup_topup_enabled
         - allowed_country_codes
         - translation_texts

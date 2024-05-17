@@ -1097,6 +1097,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /tills/{till_id}/remove-from-terminal:
+    post:
+      tags:
+        - tills
+      summary: Remove From Terminal
+      operationId: remove_from_terminal
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: till_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Till Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /till-layouts:
     get:
       tags:

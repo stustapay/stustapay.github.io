@@ -3772,8 +3772,7 @@ paths:
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Node'
+              schema: {}
         '404':
           description: Not found
         '422':

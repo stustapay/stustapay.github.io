@@ -563,7 +563,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserToRole'
+                  $ref: '#/components/schemas/UserToRoles'
                 title: Response List User To Role User To Roles Get
         '404':
           description: Not found
@@ -576,8 +576,8 @@ paths:
     post:
       tags:
         - user-to-roles
-      summary: Associated User To Role
-      operationId: associated_user_to_role
+      summary: Update User To Roles
+      operationId: update_user_to_roles
       security:
         - OAuth2PasswordBearer: []
       parameters:
@@ -592,48 +592,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewUserToRole'
+              $ref: '#/components/schemas/NewUserToRoles'
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserToRole'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-    delete:
-      tags:
-        - user-to-roles
-      summary: Deassociated User To Role
-      operationId: deassociated_user_to_role
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewUserToRole'
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
+                $ref: '#/components/schemas/UserToRoles'
         '404':
           description: Not found
         '422':
@@ -1101,6 +1067,8 @@ paths:
     post:
       tags:
         - tills
+        - tills
+        - terminals
       summary: Remove From Terminal
       operationId: remove_from_terminal
       security:
@@ -5804,19 +5772,21 @@ components:
         - key1
         - description
       title: NewUserTagSecret
-    NewUserToRole:
+    NewUserToRoles:
       properties:
         user_id:
           type: integer
           title: User Id
-        role_id:
-          type: integer
-          title: Role Id
+        role_ids:
+          items:
+            type: integer
+          type: array
+          title: Role Ids
       type: object
       required:
         - user_id
-        - role_id
-      title: NewUserToRole
+        - role_ids
+      title: NewUserToRoles
     Node:
       properties:
         id:
@@ -8038,23 +8008,25 @@ components:
         - id
         - node_id
       title: UserTagSecret
-    UserToRole:
+    UserToRoles:
       properties:
         user_id:
           type: integer
           title: User Id
-        role_id:
-          type: integer
-          title: Role Id
+        role_ids:
+          items:
+            type: integer
+          type: array
+          title: Role Ids
         node_id:
           type: integer
           title: Node Id
       type: object
       required:
         - user_id
-        - role_id
+        - role_ids
         - node_id
-      title: UserToRole
+      title: UserToRoles
     ValidationError:
       properties:
         loc:

@@ -196,6 +196,14 @@ paths:
           schema:
             type: integer
             title: Node Id
+        - name: filter_privilege
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/Privilege'
+              - type: 'null'
+            title: Filter Privilege
       responses:
         '200':
           description: Successful Response
@@ -4778,9 +4786,15 @@ components:
             $ref: '#/components/schemas/CashierProductStats'
           type: array
           title: Booked Products
+        orders:
+          items:
+            $ref: '#/components/schemas/Order'
+          type: array
+          title: Orders
       type: object
       required:
         - booked_products
+        - orders
       title: CashierShiftStats
     ChangePasswordPayload:
       properties:

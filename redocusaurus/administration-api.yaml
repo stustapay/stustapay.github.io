@@ -7982,6 +7982,11 @@ components:
             - type: integer
             - type: 'null'
           title: Account Id
+        user_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: User Id
         account_history:
           items:
             $ref: '#/components/schemas/UserTagAccountAssociation'

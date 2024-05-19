@@ -2298,11 +2298,15 @@ components:
         sumup_affiliate_key:
           type: string
           title: Sumup Affiliate Key
+        sumup_api_key:
+          type: string
+          title: Sumup Api Key
         user_tag_secret:
           $ref: '#/components/schemas/UserTagSecret'
       type: object
       required:
         - sumup_affiliate_key
+        - sumup_api_key
         - user_tag_secret
       title: TerminalSecrets
     TerminalTillConfig:

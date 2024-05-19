@@ -3913,6 +3913,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /tree/events/{node_id}/generate-test-report:
+    post:
+      tags:
+        - tree
+      summary: Generate Test Report
+      operationId: generate_test_report
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+            application/pdf: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tree/nodes/{node_id}/generate-revenue-report:
+    post:
+      tags:
+        - tree
+      summary: Generate Revenue Report
+      operationId: generate_revenue_report
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+            application/pdf: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /sumup/checkouts:
     get:
       tags:

@@ -1108,6 +1108,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /tills/{till_id}/switch-terminal:
+    post:
+      tags:
+        - tills
+        - tills
+        - terminals
+      summary: Switch Terminal
+      operationId: switch_terminal
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: till_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Till Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SwitchTerminalPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /till-layouts:
     get:
       tags:
@@ -4439,6 +4482,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /terminal/{terminal_id}/switch-till:
+    post:
+      tags:
+        - terminals
+        - tills
+        - terminals
+      summary: Switch Till
+      operationId: switch_till
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: terminal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Terminal Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SwitchTillPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
@@ -7229,6 +7315,24 @@ components:
         - timestamp
         - transaction_code
       title: SumUpTransaction
+    SwitchTerminalPayload:
+      properties:
+        new_terminal_id:
+          type: integer
+          title: New Terminal Id
+      type: object
+      required:
+        - new_terminal_id
+      title: SwitchTerminalPayload
+    SwitchTillPayload:
+      properties:
+        new_till_id:
+          type: integer
+          title: New Till Id
+      type: object
+      required:
+        - new_till_id
+      title: SwitchTillPayload
     TaxRate:
       properties:
         name:

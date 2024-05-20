@@ -2659,6 +2659,9 @@ components:
             - type: integer
             - type: 'null'
           title: Cashier Account Id
+        id:
+          type: integer
+          title: Id
         cash_register_id:
           anyOf:
             - type: integer
@@ -2679,6 +2682,11 @@ components:
             - type: number
             - type: 'null'
           title: Transport Account Balance
+        assigned_roles:
+          items:
+            $ref: '#/components/schemas/UserRoleInfo'
+          type: array
+          title: Assigned Roles
         user_tag_uid_hex:
           anyOf:
             - type: string
@@ -2691,6 +2699,8 @@ components:
         - display_name
         - user_tag_uid
         - node_id
+        - id
+        - assigned_roles
         - user_tag_uid_hex
       title: UserInfo
     UserInfoPayload:
@@ -2729,6 +2739,41 @@ components:
         - id
         - node_id
       title: UserRole
+    UserRoleInfo:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          type: string
+          title: Name
+        is_privileged:
+          type: boolean
+          title: Is Privileged
+        privileges:
+          items:
+            $ref: '#/components/schemas/Privilege'
+          type: array
+          title: Privileges
+        node_id:
+          type: integer
+          title: Node Id
+        node_name:
+          type: string
+          title: Node Name
+        is_at_current_node:
+          type: boolean
+          title: Is At Current Node
+      type: object
+      required:
+        - id
+        - name
+        - is_privileged
+        - privileges
+        - node_id
+        - node_name
+        - is_at_current_node
+      title: UserRoleInfo
     UserTag:
       properties:
         uid:

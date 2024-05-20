@@ -782,6 +782,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /customer/{customer_tag_uid}/orders:
+    get:
+      tags:
+        - customer
+      summary: Obtain all orders of a customer by tag uid
+      operationId: get_customer_orders
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: customer_tag_uid
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Customer Tag Uid
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+                title: >-
+                  Response Get Customer Orders Customer  Customer Tag Uid 
+                  Orders Get
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /change-cash-register-balance:
     post:
       tags:
@@ -2139,9 +2174,9 @@ components:
       title: StatInterval
     SwitchTagPayload:
       properties:
-        customer_id:
-          type: integer
-          title: Customer Id
+        old_user_tag_pin:
+          type: string
+          title: Old User Tag Pin
         new_user_tag_uid:
           type: integer
           title: New User Tag Uid
@@ -2153,7 +2188,7 @@ components:
           title: Comment
       type: object
       required:
-        - customer_id
+        - old_user_tag_pin
         - new_user_tag_uid
         - new_user_tag_pin
         - comment
@@ -2571,12 +2606,19 @@ components:
         id:
           type: integer
           title: Id
+        user_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - login
         - display_name
         - node_id
         - id
+        - user_tag_uid_hex
       title: User
     UserInfo:
       properties:
@@ -2637,12 +2679,19 @@ components:
             - type: number
             - type: 'null'
           title: Transport Account Balance
+        user_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Tag Uid Hex
+          readOnly: true
       type: object
       required:
         - login
         - display_name
         - user_tag_uid
         - node_id
+        - user_tag_uid_hex
       title: UserInfo
     UserInfoPayload:
       properties:

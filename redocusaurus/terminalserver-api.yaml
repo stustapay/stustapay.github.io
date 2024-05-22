@@ -2357,6 +2357,9 @@ components:
             - type: string
             - type: 'null'
           title: Description
+        event_name:
+          type: string
+          title: Event Name
         profile_name:
           type: string
           title: Profile Name
@@ -2412,6 +2415,7 @@ components:
         - id
         - name
         - description
+        - event_name
         - profile_name
         - user_privileges
         - cash_register_id

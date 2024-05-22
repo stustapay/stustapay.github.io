@@ -4053,6 +4053,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /tree/nodes/{node_id}/configure-sumup-token:
+    post:
+      tags:
+        - tree
+      summary: Configure Sumup Token
+      operationId: configure_sumup_token
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SumUpTokenPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /sumup/checkouts:
     get:
       tags:
@@ -5509,6 +5544,14 @@ components:
         sumup_merchant_code:
           type: string
           title: Sumup Merchant Code
+          default: ''
+        sumup_oauth_client_id:
+          type: string
+          title: Sumup Oauth Client Id
+          default: ''
+        sumup_oauth_client_secret:
+          type: string
+          title: Sumup Oauth Client Secret
           default: ''
         currency_identifier:
           type: string
@@ -7090,6 +7133,14 @@ components:
           type: string
           title: Sumup Merchant Code
           default: ''
+        sumup_oauth_client_id:
+          type: string
+          title: Sumup Oauth Client Id
+          default: ''
+        sumup_oauth_client_secret:
+          type: string
+          title: Sumup Oauth Client Secret
+          default: ''
         currency_identifier:
           type: string
           title: Currency Identifier
@@ -7181,6 +7232,9 @@ components:
             $ref: '#/components/schemas/Language'
           type: array
           title: Languages
+        sumup_oauth_refresh_token:
+          type: string
+          title: Sumup Oauth Refresh Token
       type: object
       required:
         - currency_identifier
@@ -7203,6 +7257,7 @@ components:
         - sepa_allowed_country_codes
         - id
         - languages
+        - sumup_oauth_refresh_token
       title: RestrictedEventSettings
     StatInterval:
       properties:
@@ -7294,6 +7349,15 @@ components:
         - FAILED
         - PAID
       title: SumUpCheckoutStatus
+    SumUpTokenPayload:
+      properties:
+        authorization_code:
+          type: string
+          title: Authorization Code
+      type: object
+      required:
+        - authorization_code
+      title: SumUpTokenPayload
     SumUpTransaction:
       properties:
         amount:
@@ -7812,6 +7876,14 @@ components:
         sumup_merchant_code:
           type: string
           title: Sumup Merchant Code
+          default: ''
+        sumup_oauth_client_id:
+          type: string
+          title: Sumup Oauth Client Id
+          default: ''
+        sumup_oauth_client_secret:
+          type: string
+          title: Sumup Oauth Client Secret
           default: ''
         currency_identifier:
           type: string

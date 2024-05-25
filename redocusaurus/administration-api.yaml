@@ -2882,6 +2882,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /stats/pay-outs:
+    get:
+      tags:
+        - stats
+      summary: Get Pay Out Stats
+      operationId: get_pay_out_stats
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+        - name: to_timestamp
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            title: To Timestamp
+        - name: from_timestamp
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            title: From Timestamp
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeseriesStats'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /tickets:
     get:
       tags:
@@ -6932,6 +6980,23 @@ components:
         - tax_rate
         - type
       title: Product
+    ProductOverallStats:
+      properties:
+        product_id:
+          type: integer
+          title: Product Id
+        count:
+          type: integer
+          title: Count
+        revenue:
+          type: number
+          title: Revenue
+      type: object
+      required:
+        - product_id
+        - count
+        - revenue
+      title: ProductOverallStats
     ProductRestriction:
       type: string
       enum:
@@ -6958,24 +7023,36 @@ components:
             $ref: '#/components/schemas/StatInterval'
           type: array
           title: Hourly Intervals
-        product_daily_intervals:
-          items:
-            $ref: '#/components/schemas/ProductTimeseries'
-          type: array
-          title: Product Daily Intervals
         product_hourly_intervals:
           items:
             $ref: '#/components/schemas/ProductTimeseries'
           type: array
           title: Product Hourly Intervals
+        product_overall_stats:
+          items:
+            $ref: '#/components/schemas/ProductOverallStats'
+          type: array
+          title: Product Overall Stats
+        deposit_hourly_intervals:
+          items:
+            $ref: '#/components/schemas/ProductTimeseries'
+          type: array
+          title: Deposit Hourly Intervals
+        deposit_overall_stats:
+          items:
+            $ref: '#/components/schemas/ProductOverallStats'
+          type: array
+          title: Deposit Overall Stats
       type: object
       required:
         - from_time
         - to_time
         - daily_intervals
         - hourly_intervals
-        - product_daily_intervals
         - product_hourly_intervals
+        - product_overall_stats
+        - deposit_hourly_intervals
+        - deposit_overall_stats
       title: ProductStats
     ProductTimeseries:
       properties:

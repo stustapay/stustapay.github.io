@@ -2336,12 +2336,19 @@ components:
         sumup_api_key:
           type: string
           title: Sumup Api Key
+        sumup_api_key_expires_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Sumup Api Key Expires At
         user_tag_secret:
           $ref: '#/components/schemas/UserTagSecret'
       type: object
       required:
         - sumup_affiliate_key
         - sumup_api_key
+        - sumup_api_key_expires_at
         - user_tag_secret
       title: TerminalSecrets
     TerminalTillConfig:

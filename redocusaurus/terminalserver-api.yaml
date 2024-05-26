@@ -2286,7 +2286,9 @@ components:
           type: string
           title: Name
         description:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Description
         till:
           anyOf:

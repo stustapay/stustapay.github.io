@@ -4725,6 +4725,7 @@ components:
         - transport
         - cashier
         - voucher_create
+        - donation_exit
       title: AccountType
     BookedProduct:
       properties:
@@ -5347,6 +5348,12 @@ components:
             - type: string
             - type: 'null'
           title: User Tag Pin
+        donate_all:
+          type: boolean
+          title: Donate All
+        has_entered_info:
+          type: boolean
+          title: Has Entered Info
         payout:
           anyOf:
             - $ref: '#/components/schemas/Payout'
@@ -5376,6 +5383,8 @@ components:
         - donation
         - payout_export
         - user_tag_pin
+        - donate_all
+        - has_entered_info
         - payout
         - user_tag_uid_hex
       title: Customer
@@ -5601,6 +5610,11 @@ components:
           type: string
           title: Sumup Oauth Client Secret
           default: ''
+        email_smtp_password:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Password
         currency_identifier:
           type: string
           title: Currency Identifier
@@ -5678,6 +5692,46 @@ components:
             type: string
           type: array
           title: Sepa Allowed Country Codes
+        email_enabled:
+          type: boolean
+          title: Email Enabled
+        email_default_sender:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Default Sender
+        email_smtp_host:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Host
+        email_smtp_port:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Email Smtp Port
+        email_smtp_username:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Username
+        payout_done_subject:
+          type: string
+          title: Payout Done Subject
+        payout_done_message:
+          type: string
+          title: Payout Done Message
+        payout_registered_subject:
+          type: string
+          title: Payout Registered Subject
+        payout_registered_message:
+          type: string
+          title: Payout Registered Message
+        payout_sender:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Payout Sender
         translation_texts:
           additionalProperties:
             additionalProperties:
@@ -5723,6 +5777,11 @@ components:
         - sepa_sender_iban
         - sepa_description
         - sepa_allowed_country_codes
+        - email_enabled
+        - payout_done_subject
+        - payout_done_message
+        - payout_registered_subject
+        - payout_registered_message
         - name
         - description
       title: NewEvent
@@ -7157,6 +7216,46 @@ components:
             type: string
           type: array
           title: Sepa Allowed Country Codes
+        email_enabled:
+          type: boolean
+          title: Email Enabled
+        email_default_sender:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Default Sender
+        email_smtp_host:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Host
+        email_smtp_port:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Email Smtp Port
+        email_smtp_username:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Username
+        payout_done_subject:
+          type: string
+          title: Payout Done Subject
+        payout_done_message:
+          type: string
+          title: Payout Done Message
+        payout_registered_subject:
+          type: string
+          title: Payout Registered Subject
+        payout_registered_message:
+          type: string
+          title: Payout Registered Message
+        payout_sender:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Payout Sender
         translation_texts:
           additionalProperties:
             additionalProperties:
@@ -7193,6 +7292,11 @@ components:
         - sepa_description
         - sepa_max_num_payouts_in_run
         - sepa_allowed_country_codes
+        - email_enabled
+        - payout_done_subject
+        - payout_done_message
+        - payout_registered_subject
+        - payout_registered_message
         - id
         - languages
       title: PublicEventSettings
@@ -7218,6 +7322,11 @@ components:
           type: string
           title: Sumup Oauth Client Secret
           default: ''
+        email_smtp_password:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Password
         currency_identifier:
           type: string
           title: Currency Identifier
@@ -7293,6 +7402,46 @@ components:
             type: string
           type: array
           title: Sepa Allowed Country Codes
+        email_enabled:
+          type: boolean
+          title: Email Enabled
+        email_default_sender:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Default Sender
+        email_smtp_host:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Host
+        email_smtp_port:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Email Smtp Port
+        email_smtp_username:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Username
+        payout_done_subject:
+          type: string
+          title: Payout Done Subject
+        payout_done_message:
+          type: string
+          title: Payout Done Message
+        payout_registered_subject:
+          type: string
+          title: Payout Registered Subject
+        payout_registered_message:
+          type: string
+          title: Payout Registered Message
+        payout_sender:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Payout Sender
         translation_texts:
           additionalProperties:
             additionalProperties:
@@ -7332,6 +7481,11 @@ components:
         - sepa_description
         - sepa_max_num_payouts_in_run
         - sepa_allowed_country_codes
+        - email_enabled
+        - payout_done_subject
+        - payout_done_message
+        - payout_registered_subject
+        - payout_registered_message
         - id
         - languages
         - sumup_oauth_refresh_token
@@ -7962,6 +8116,11 @@ components:
           type: string
           title: Sumup Oauth Client Secret
           default: ''
+        email_smtp_password:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Password
         currency_identifier:
           type: string
           title: Currency Identifier
@@ -8039,6 +8198,46 @@ components:
             type: string
           type: array
           title: Sepa Allowed Country Codes
+        email_enabled:
+          type: boolean
+          title: Email Enabled
+        email_default_sender:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Default Sender
+        email_smtp_host:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Host
+        email_smtp_port:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Email Smtp Port
+        email_smtp_username:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Email Smtp Username
+        payout_done_subject:
+          type: string
+          title: Payout Done Subject
+        payout_done_message:
+          type: string
+          title: Payout Done Message
+        payout_registered_subject:
+          type: string
+          title: Payout Registered Subject
+        payout_registered_message:
+          type: string
+          title: Payout Registered Message
+        payout_sender:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Payout Sender
         translation_texts:
           additionalProperties:
             additionalProperties:
@@ -8066,6 +8265,11 @@ components:
         - sepa_sender_iban
         - sepa_description
         - sepa_allowed_country_codes
+        - email_enabled
+        - payout_done_subject
+        - payout_done_message
+        - payout_registered_subject
+        - payout_registered_message
       title: UpdateEvent
     UpdateTse:
       properties:

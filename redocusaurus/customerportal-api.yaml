@@ -138,6 +138,51 @@ paths:
           description: not found
       security:
         - OAuth2PasswordBearer: []
+  /payout_info:
+    get:
+      tags:
+        - base
+      summary: info about current state of payout
+      operationId: payout_info
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutInfo'
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '404':
+          description: not found
+      security:
+        - OAuth2PasswordBearer: []
+  /get_payout_transactions:
+    get:
+      tags:
+        - base
+      summary: transactions booked for payout if payout already happened
+      operationId: get_payout_transactions
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PayoutTransaction'
+                type: array
+                title: Response Get Payout Transactions Get Payout Transactions Get
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '404':
+          description: not found
+      security:
+        - OAuth2PasswordBearer: []
   /config:
     get:
       tags:
@@ -286,6 +331,7 @@ components:
         - transport
         - cashier
         - voucher_create
+        - donation_exit
       title: AccountType
     CheckCheckoutPayload:
       properties:
@@ -402,6 +448,12 @@ components:
             - type: string
             - type: 'null'
           title: User Tag Pin
+        donate_all:
+          type: boolean
+          title: Donate All
+        has_entered_info:
+          type: boolean
+          title: Has Entered Info
         payout:
           anyOf:
             - $ref: '#/components/schemas/Payout'
@@ -431,6 +483,8 @@ components:
         - donation
         - payout_export
         - user_tag_pin
+        - donate_all
+        - has_entered_info
         - payout
         - user_tag_uid_hex
       title: Customer
@@ -758,6 +812,48 @@ components:
         - payout_run_id
         - user_tag_uid_hex
       title: Payout
+    PayoutInfo:
+      properties:
+        in_payout_run:
+          type: boolean
+          title: In Payout Run
+        payout_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Payout Date
+      type: object
+      required:
+        - in_payout_run
+        - payout_date
+      title: PayoutInfo
+    PayoutTransaction:
+      properties:
+        amount:
+          type: number
+          title: Amount
+        booked_at:
+          type: string
+          format: date-time
+          title: Booked At
+        target_account_name:
+          type: string
+          title: Target Account Name
+        target_account_type:
+          type: string
+          title: Target Account Type
+        transaction_id:
+          type: integer
+          title: Transaction Id
+      type: object
+      required:
+        - amount
+        - booked_at
+        - target_account_name
+        - target_account_type
+        - transaction_id
+      title: PayoutTransaction
     Product:
       properties:
         name:

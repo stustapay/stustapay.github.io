@@ -1033,6 +1033,7 @@ components:
         - transport
         - cashier
         - voucher_create
+        - donation_exit
       title: AccountType
     Button:
       properties:

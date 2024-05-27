@@ -7044,6 +7044,9 @@ components:
         product_id:
           type: integer
           title: Product Id
+        product_name:
+          type: string
+          title: Product Name
         count:
           type: integer
           title: Count
@@ -7053,6 +7056,7 @@ components:
       type: object
       required:
         - product_id
+        - product_name
         - count
         - revenue
       title: ProductOverallStats
@@ -7118,6 +7122,9 @@ components:
         product_id:
           type: integer
           title: Product Id
+        product_name:
+          type: string
+          title: Product Name
         intervals:
           items:
             $ref: '#/components/schemas/StatInterval'
@@ -7126,6 +7133,7 @@ components:
       type: object
       required:
         - product_id
+        - product_name
         - intervals
       title: ProductTimeseries
     ProductType:

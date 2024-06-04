@@ -1034,6 +1034,7 @@ components:
         - cashier
         - voucher_create
         - donation_exit
+        - sepa_exit
       title: AccountType
     Button:
       properties:

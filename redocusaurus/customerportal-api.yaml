@@ -215,7 +215,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /bon/{bon_id}:
+  /bon/{order_uuid}:
     get:
       tags:
         - base
@@ -224,18 +224,19 @@ paths:
       security:
         - OAuth2PasswordBearer: []
       parameters:
-        - name: bon_id
+        - name: order_uuid
           in: path
           required: true
           schema:
-            type: integer
-            title: Bon Id
+            type: string
+            title: Order Uuid
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/BonJson'
         '401':
           description: unauthorized
         '403':
@@ -334,6 +335,48 @@ components:
         - donation_exit
         - sepa_exit
       title: AccountType
+    BonConfig:
+      properties:
+        title:
+          type: string
+          title: Title
+        issuer:
+          type: string
+          title: Issuer
+        address:
+          type: string
+          title: Address
+        ust_id:
+          type: string
+          title: Ust Id
+      type: object
+      required:
+        - title
+        - issuer
+        - address
+        - ust_id
+      title: BonConfig
+    BonJson:
+      properties:
+        order:
+          $ref: '#/components/schemas/OrderWithTse'
+        tax_rate_aggregations:
+          items:
+            $ref: '#/components/schemas/TaxRateAggregation'
+          type: array
+          title: Tax Rate Aggregations
+        config:
+          $ref: '#/components/schemas/BonConfig'
+        currency_identifier:
+          type: string
+          title: Currency Identifier
+      type: object
+      required:
+        - order
+        - tax_rate_aggregations
+        - config
+        - currency_identifier
+      title: BonJson
     CheckCheckoutPayload:
       properties:
         checkout_id:
@@ -523,6 +566,7 @@ components:
           title: Data Privacy Url
         contact_email:
           type: string
+          format: email
           title: Contact Email
         about_page_url:
           type: string
@@ -747,6 +791,155 @@ components:
         - bon_generated
         - customer_tag_uid_hex
       title: OrderWithBon
+    OrderWithTse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        uuid:
+          type: string
+          format: uuid
+          title: Uuid
+        total_price:
+          type: number
+          title: Total Price
+        total_tax:
+          type: number
+          title: Total Tax
+        total_no_tax:
+          type: number
+          title: Total No Tax
+        cancels_order:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Cancels Order
+        booked_at:
+          type: string
+          format: date-time
+          title: Booked At
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+        order_type:
+          $ref: '#/components/schemas/OrderType'
+        cashier_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Cashier Id
+        till_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Till Id
+        customer_account_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Customer Account Id
+        customer_tag_uid:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Customer Tag Uid
+        customer_tag_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Customer Tag Id
+        line_items:
+          items:
+            $ref: '#/components/schemas/LineItem'
+          type: array
+          title: Line Items
+        signature_status:
+          type: string
+          title: Signature Status
+        transaction_process_type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Transaction Process Type
+        transaction_process_data:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Transaction Process Data
+        tse_transaction:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse Transaction
+        tse_signaturenr:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse Signaturenr
+        tse_start:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse Start
+        tse_end:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse End
+        tse_hashalgo:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse Hashalgo
+        tse_time_format:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse Time Format
+        tse_signature:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse Signature
+        tse_public_key:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse Public Key
+        node_id:
+          type: integer
+          title: Node Id
+        customer_tag_uid_hex:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Customer Tag Uid Hex
+          readOnly: true
+        tse_qr_code_text:
+          type: string
+          title: Tse Qr Code Text
+          readOnly: true
+      type: object
+      required:
+        - id
+        - uuid
+        - total_price
+        - total_tax
+        - total_no_tax
+        - cancels_order
+        - booked_at
+        - payment_method
+        - order_type
+        - cashier_id
+        - till_id
+        - customer_account_id
+        - customer_tag_uid
+        - customer_tag_id
+        - line_items
+        - signature_status
+        - node_id
+        - customer_tag_uid_hex
+        - tse_qr_code_text
+      title: OrderWithTse
     PaymentMethod:
       type: string
       enum:
@@ -950,6 +1143,31 @@ components:
         - FAILED
         - PAID
       title: SumUpCheckoutStatus
+    TaxRateAggregation:
+      properties:
+        tax_name:
+          type: string
+          title: Tax Name
+        tax_rate:
+          type: number
+          title: Tax Rate
+        total_price:
+          type: number
+          title: Total Price
+        total_tax:
+          type: number
+          title: Total Tax
+        total_no_tax:
+          type: number
+          title: Total No Tax
+      type: object
+      required:
+        - tax_name
+        - tax_rate
+        - total_price
+        - total_tax
+        - total_no_tax
+      title: TaxRateAggregation
     UserTagHistoryEntry:
       properties:
         user_tag_id:

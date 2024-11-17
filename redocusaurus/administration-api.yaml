@@ -5109,8 +5109,12 @@ components:
           type: integer
           title: New Voucher Balance
         customer_account_id:
-          type: integer
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: Customer Account Id
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
         line_items:
           items:
             $ref: '#/components/schemas/PendingLineItem'
@@ -5154,6 +5158,7 @@ components:
         - old_voucher_balance
         - new_voucher_balance
         - customer_account_id
+        - payment_method
         - line_items
         - products
         - id
@@ -6067,6 +6072,15 @@ components:
         allow_ticket_sale:
           type: boolean
           title: Allow Ticket Sale
+        enable_ssp_payment:
+          type: boolean
+          title: Enable Ssp Payment
+        enable_cash_payment:
+          type: boolean
+          title: Enable Cash Payment
+        enable_card_payment:
+          type: boolean
+          title: Enable Card Payment
       type: object
       required:
         - name
@@ -6074,6 +6088,9 @@ components:
         - allow_top_up
         - allow_cash_out
         - allow_ticket_sale
+        - enable_ssp_payment
+        - enable_cash_payment
+        - enable_card_payment
       title: NewTillProfile
     NewTse:
       properties:
@@ -8154,6 +8171,15 @@ components:
         allow_ticket_sale:
           type: boolean
           title: Allow Ticket Sale
+        enable_ssp_payment:
+          type: boolean
+          title: Enable Ssp Payment
+        enable_cash_payment:
+          type: boolean
+          title: Enable Cash Payment
+        enable_card_payment:
+          type: boolean
+          title: Enable Card Payment
         node_id:
           type: integer
           title: Node Id
@@ -8167,6 +8193,9 @@ components:
         - allow_top_up
         - allow_cash_out
         - allow_ticket_sale
+        - enable_ssp_payment
+        - enable_cash_payment
+        - enable_card_payment
         - node_id
         - id
       title: TillProfile

@@ -221,8 +221,6 @@ paths:
         - base
       summary: Retrieve a bon
       operationId: get_bon
-      security:
-        - OAuth2PasswordBearer: []
       parameters:
         - name: order_uuid
           in: path

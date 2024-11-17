@@ -1258,8 +1258,12 @@ components:
           type: integer
           title: New Voucher Balance
         customer_account_id:
-          type: integer
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: Customer Account Id
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
         line_items:
           items:
             $ref: '#/components/schemas/PendingLineItem'
@@ -1283,6 +1287,9 @@ components:
         till_id:
           type: integer
           title: Till Id
+        bon_url:
+          type: string
+          title: Bon Url
         used_vouchers:
           type: integer
           title: Used Vouchers
@@ -1303,12 +1310,14 @@ components:
         - old_voucher_balance
         - new_voucher_balance
         - customer_account_id
+        - payment_method
         - line_items
         - buttons
         - id
         - booked_at
         - cashier_id
         - till_id
+        - bon_url
         - used_vouchers
         - item_count
         - total_price
@@ -1635,8 +1644,12 @@ components:
           format: uuid
           title: Uuid
         customer_tag_uid:
-          type: integer
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: Customer Tag Uid
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
         used_vouchers:
           anyOf:
             - type: integer
@@ -1650,7 +1663,7 @@ components:
       type: object
       required:
         - uuid
-        - customer_tag_uid
+        - payment_method
         - buttons
       title: NewSale
     NewTicketSale:
@@ -1894,8 +1907,12 @@ components:
           type: integer
           title: New Voucher Balance
         customer_account_id:
-          type: integer
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: Customer Account Id
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
         line_items:
           items:
             $ref: '#/components/schemas/PendingLineItem'
@@ -1926,6 +1943,7 @@ components:
         - old_voucher_balance
         - new_voucher_balance
         - customer_account_id
+        - payment_method
         - line_items
         - buttons
         - used_vouchers
@@ -2400,6 +2418,15 @@ components:
         allow_ticket_sale:
           type: boolean
           title: Allow Ticket Sale
+        enable_ssp_payment:
+          type: boolean
+          title: Enable Ssp Payment
+        enable_cash_payment:
+          type: boolean
+          title: Enable Cash Payment
+        enable_card_payment:
+          type: boolean
+          title: Enable Card Payment
         buttons:
           anyOf:
             - items:
@@ -2434,6 +2461,9 @@ components:
         - allow_top_up
         - allow_cash_out
         - allow_ticket_sale
+        - enable_ssp_payment
+        - enable_cash_payment
+        - enable_card_payment
         - buttons
         - secrets
         - active_user_id

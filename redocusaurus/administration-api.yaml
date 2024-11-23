@@ -5764,16 +5764,24 @@ components:
             - type: 'null'
           title: Email Smtp Username
         payout_done_subject:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Done Subject
         payout_done_message:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Done Message
         payout_registered_subject:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Registered Subject
         payout_registered_message:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Registered Message
         payout_sender:
           anyOf:
@@ -5826,10 +5834,6 @@ components:
         - sepa_description
         - sepa_allowed_country_codes
         - email_enabled
-        - payout_done_subject
-        - payout_done_message
-        - payout_registered_subject
-        - payout_registered_message
         - name
         - description
       title: NewEvent
@@ -7457,16 +7461,24 @@ components:
             - type: 'null'
           title: Email Smtp Username
         payout_done_subject:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Done Subject
         payout_done_message:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Done Message
         payout_registered_subject:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Registered Subject
         payout_registered_message:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Registered Message
         payout_sender:
           anyOf:
@@ -7510,10 +7522,6 @@ components:
         - sepa_max_num_payouts_in_run
         - sepa_allowed_country_codes
         - email_enabled
-        - payout_done_subject
-        - payout_done_message
-        - payout_registered_subject
-        - payout_registered_message
         - id
         - languages
       title: PublicEventSettings
@@ -7643,16 +7651,24 @@ components:
             - type: 'null'
           title: Email Smtp Username
         payout_done_subject:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Done Subject
         payout_done_message:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Done Message
         payout_registered_subject:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Registered Subject
         payout_registered_message:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Registered Message
         payout_sender:
           anyOf:
@@ -7699,10 +7715,6 @@ components:
         - sepa_max_num_payouts_in_run
         - sepa_allowed_country_codes
         - email_enabled
-        - payout_done_subject
-        - payout_done_message
-        - payout_registered_subject
-        - payout_registered_message
         - id
         - languages
         - sumup_oauth_refresh_token
@@ -8479,16 +8491,24 @@ components:
             - type: 'null'
           title: Email Smtp Username
         payout_done_subject:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Done Subject
         payout_done_message:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Done Message
         payout_registered_subject:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Registered Subject
         payout_registered_message:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Payout Registered Message
         payout_sender:
           anyOf:
@@ -8523,10 +8543,6 @@ components:
         - sepa_description
         - sepa_allowed_country_codes
         - email_enabled
-        - payout_done_subject
-        - payout_done_message
-        - payout_registered_subject
-        - payout_registered_message
       title: UpdateEvent
     UpdateTse:
       properties:

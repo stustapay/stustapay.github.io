@@ -2460,6 +2460,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /orders/{order_id}/bon:
+    get:
+      tags:
+        - orders
+      summary: Get Order Bon
+      operationId: get_order_bon
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Order Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BonJson'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /orders/{order_id}/edit:
     post:
       tags:

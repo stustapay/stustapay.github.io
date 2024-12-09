@@ -1036,41 +1036,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /tills/{till_id}/force-logout-user:
-    post:
-      tags:
-        - tills
-      summary: Force Logout User
-      operationId: force_logout_user
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: till_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Till Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
   /tills/{till_id}/remove-from-terminal:
     post:
       tags:
@@ -4665,6 +4630,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /terminal/{terminal_id}/force-logout-user:
+    post:
+      tags:
+        - terminals
+      summary: Force Logout User
+      operationId: force_logout_user
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: terminal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Terminal Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
@@ -4751,10 +4751,10 @@ components:
         - sumup_entry
         - sumup_online_entry
         - transport
-        - cashier
         - voucher_create
         - donation_exit
         - sepa_exit
+        - cash_register
       title: AccountType
     BonConfig:
       properties:
@@ -4838,9 +4838,12 @@ components:
             - type: integer
             - type: 'null'
           title: Current Till Id
-        current_balance:
+        balance:
           type: number
-          title: Current Balance
+          title: Balance
+        account_id:
+          type: integer
+          title: Account Id
       type: object
       required:
         - name
@@ -4848,7 +4851,8 @@ components:
         - id
         - current_cashier_id
         - current_till_id
-        - current_balance
+        - balance
+        - account_id
       title: CashRegister
     CashRegisterStocking:
       properties:
@@ -4965,22 +4969,21 @@ components:
             - type: integer
             - type: 'null'
           title: Transport Account Id
-        cashier_account_id:
-          type: integer
-          title: Cashier Account Id
         cash_register_id:
           anyOf:
             - type: integer
             - type: 'null'
           title: Cash Register Id
         cash_drawer_balance:
-          type: number
+          anyOf:
+            - type: number
+            - type: 'null'
           title: Cash Drawer Balance
-        till_ids:
+        terminal_ids:
           items:
             type: integer
           type: array
-          title: Till Ids
+          title: Terminal Ids
         user_tag_uid_hex:
           anyOf:
             - type: string
@@ -4993,9 +4996,8 @@ components:
         - id
         - login
         - display_name
-        - cashier_account_id
         - cash_drawer_balance
-        - till_ids
+        - terminal_ids
         - user_tag_uid_hex
       title: Cashier
     CashierProductStats:
@@ -5325,11 +5327,6 @@ components:
             - type: integer
             - type: 'null'
           title: Transport Account Id
-        cashier_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Cashier Account Id
         cash_register_id:
           anyOf:
             - type: integer
@@ -6217,6 +6214,10 @@ components:
             type: integer
           type: array
           title: Role Ids
+        terminal_only:
+          type: boolean
+          title: Terminal Only
+          default: false
       type: object
       required:
         - user_id
@@ -7997,6 +7998,16 @@ components:
               format: uuid
             - type: 'null'
           title: Registration Uuid
+        active_user_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Active User Id
+        active_user_role_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Active User Role Id
       type: object
       required:
         - name
@@ -8089,16 +8100,11 @@ components:
         z_nr:
           type: integer
           title: Z Nr
-        active_user_id:
+        active_cash_register_id:
           anyOf:
             - type: integer
             - type: 'null'
-          title: Active User Id
-        active_user_role_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Active User Role Id
+          title: Active Cash Register Id
         current_cash_register_name:
           anyOf:
             - type: string
@@ -8681,11 +8687,6 @@ components:
             - type: integer
             - type: 'null'
           title: Transport Account Id
-        cashier_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Cashier Account Id
         id:
           type: integer
           title: Id
@@ -8900,6 +8901,10 @@ components:
             type: integer
           type: array
           title: Role Ids
+        terminal_only:
+          type: boolean
+          title: Terminal Only
+          default: false
         node_id:
           type: integer
           title: Node Id

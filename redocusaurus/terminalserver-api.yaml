@@ -1031,10 +1031,10 @@ components:
         - sumup_entry
         - sumup_online_entry
         - transport
-        - cashier
         - voucher_create
         - donation_exit
         - sepa_exit
+        - cash_register
       title: AccountType
     Button:
       properties:
@@ -1076,9 +1076,12 @@ components:
             - type: integer
             - type: 'null'
           title: Current Till Id
-        current_balance:
+        balance:
           type: number
-          title: Current Balance
+          title: Balance
+        account_id:
+          type: integer
+          title: Account Id
       type: object
       required:
         - name
@@ -1086,7 +1089,8 @@ components:
         - id
         - current_cashier_id
         - current_till_id
-        - current_balance
+        - balance
+        - account_id
       title: CashRegister
     CashRegisterStocking:
       properties:
@@ -1507,11 +1511,6 @@ components:
             - type: integer
             - type: 'null'
           title: Transport Account Id
-        cashier_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Cashier Account Id
         cash_register_id:
           anyOf:
             - type: integer
@@ -2246,6 +2245,16 @@ components:
               format: uuid
             - type: 'null'
           title: Registration Uuid
+        active_user_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Active User Id
+        active_user_role_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Active User Role Id
       type: object
       required:
         - name
@@ -2310,6 +2319,30 @@ components:
             - type: string
             - type: 'null'
           title: Description
+        event_name:
+          type: string
+          title: Event Name
+        active_user_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Active User Id
+        available_roles:
+          items:
+            $ref: '#/components/schemas/UserRole'
+          type: array
+          title: Available Roles
+        user_privileges:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/Privilege'
+              type: array
+            - type: 'null'
+          title: User Privileges
+        secrets:
+          anyOf:
+            - $ref: '#/components/schemas/TerminalUserTagSecrets'
+            - type: 'null'
         till:
           anyOf:
             - $ref: '#/components/schemas/TerminalTillConfig'
@@ -2325,6 +2358,11 @@ components:
         - id
         - name
         - description
+        - event_name
+        - active_user_id
+        - available_roles
+        - user_privileges
+        - secrets
         - till
         - test_mode
         - test_mode_message
@@ -2350,7 +2388,7 @@ components:
         - terminal
         - token
       title: TerminalRegistrationSuccess
-    TerminalSecrets:
+    TerminalSumupSecrets:
       properties:
         sumup_affiliate_key:
           type: string
@@ -2364,15 +2402,12 @@ components:
               format: date-time
             - type: 'null'
           title: Sumup Api Key Expires At
-        user_tag_secret:
-          $ref: '#/components/schemas/UserTagSecret'
       type: object
       required:
         - sumup_affiliate_key
         - sumup_api_key
         - sumup_api_key_expires_at
-        - user_tag_secret
-      title: TerminalSecrets
+      title: TerminalSumupSecrets
     TerminalTillConfig:
       properties:
         id:
@@ -2386,19 +2421,9 @@ components:
             - type: string
             - type: 'null'
           title: Description
-        event_name:
-          type: string
-          title: Event Name
         profile_name:
           type: string
           title: Profile Name
-        user_privileges:
-          anyOf:
-            - items:
-                $ref: '#/components/schemas/Privilege'
-              type: array
-            - type: 'null'
-          title: User Privileges
         cash_register_id:
           anyOf:
             - type: integer
@@ -2434,28 +2459,16 @@ components:
               type: array
             - type: 'null'
           title: Buttons
-        secrets:
+        sumup_secrets:
           anyOf:
-            - $ref: '#/components/schemas/TerminalSecrets'
+            - $ref: '#/components/schemas/TerminalSumupSecrets'
             - type: 'null'
-        active_user_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Active User Id
-        available_roles:
-          items:
-            $ref: '#/components/schemas/UserRole'
-          type: array
-          title: Available Roles
       type: object
       required:
         - id
         - name
         - description
-        - event_name
         - profile_name
-        - user_privileges
         - cash_register_id
         - cash_register_name
         - allow_top_up
@@ -2465,10 +2478,16 @@ components:
         - enable_cash_payment
         - enable_card_payment
         - buttons
-        - secrets
-        - active_user_id
-        - available_roles
+        - sumup_secrets
       title: TerminalTillConfig
+    TerminalUserTagSecrets:
+      properties:
+        user_tag_secret:
+          $ref: '#/components/schemas/UserTagSecret'
+      type: object
+      required:
+        - user_tag_secret
+      title: TerminalUserTagSecrets
     Ticket:
       properties:
         name:
@@ -2643,11 +2662,6 @@ components:
             - type: integer
             - type: 'null'
           title: Transport Account Id
-        cashier_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Cashier Account Id
         id:
           type: integer
           title: Id
@@ -2699,11 +2713,6 @@ components:
             - type: integer
             - type: 'null'
           title: Transport Account Id
-        cashier_account_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Cashier Account Id
         id:
           type: integer
           title: Id

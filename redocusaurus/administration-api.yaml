@@ -5818,6 +5818,8 @@ components:
             additionalProperties:
               type: string
             type: object
+          propertyNames:
+            $ref: '#/components/schemas/Language'
           type: object
           title: Translation Texts
           default: {}
@@ -7519,6 +7521,8 @@ components:
             additionalProperties:
               type: string
             type: object
+          propertyNames:
+            $ref: '#/components/schemas/Language'
           type: object
           title: Translation Texts
           default: {}
@@ -7709,6 +7713,8 @@ components:
             additionalProperties:
               type: string
             type: object
+          propertyNames:
+            $ref: '#/components/schemas/Language'
           type: object
           title: Translation Texts
           default: {}
@@ -8368,7 +8374,6 @@ components:
       type: string
       enum:
         - diebold_nixdorf
-      const: diebold_nixdorf
       title: TseType
     UpdateAccountCommentPayload:
       properties:
@@ -8554,6 +8559,8 @@ components:
             additionalProperties:
               type: string
             type: object
+          propertyNames:
+            $ref: '#/components/schemas/Language'
           type: object
           title: Translation Texts
           default: {}

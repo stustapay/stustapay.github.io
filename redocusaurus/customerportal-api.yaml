@@ -377,12 +377,13 @@ components:
       title: BonJson
     CheckCheckoutPayload:
       properties:
-        checkout_id:
+        order_uuid:
           type: string
-          title: Checkout Id
+          format: uuid
+          title: Order Uuid
       type: object
       required:
-        - checkout_id
+        - order_uuid
       title: CheckCheckoutPayload
     CheckCheckoutResponse:
       properties:
@@ -406,9 +407,14 @@ components:
         checkout_id:
           type: string
           title: Checkout Id
+        order_uuid:
+          type: string
+          format: uuid
+          title: Order Uuid
       type: object
       required:
         - checkout_id
+        - order_uuid
       title: CreateCheckoutResponse
     Customer:
       properties:
@@ -590,6 +596,8 @@ components:
             additionalProperties:
               type: string
             type: object
+          propertyNames:
+            $ref: '#/components/schemas/Language'
           type: object
           title: Translation Texts
       type: object

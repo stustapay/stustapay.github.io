@@ -300,6 +300,35 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
       security:
         - OAuth2PasswordBearer: []
+  /order/register-pending-topup:
+    post:
+      tags:
+        - order
+      summary: >-
+        Register a pending topup with the server where the sumup payment is
+        still pending
+      operationId: register_pending_topup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTopUp'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletedTopUp'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
   /order/check-ticket-scan:
     post:
       tags:
@@ -360,6 +389,35 @@ paths:
         - order
       summary: finish a ticket sale and book the transactions
       operationId: book_ticket_sale
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTicketSale'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletedTicketSale'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /order/register-pending-ticket-sale:
+    post:
+      tags:
+        - order
+      summary: >-
+        Register a pending topup with the server where the sumup payment is
+        still pending
+      operationId: register_pending_ticket_sale
       requestBody:
         content:
           application/json:
@@ -1344,15 +1402,14 @@ components:
             $ref: '#/components/schemas/TicketScanResultEntry'
           type: array
           title: Scanned Tickets
-        id:
-          type: integer
-          title: Id
         booked_at:
           type: string
           format: date-time
           title: Booked At
         customer_account_id:
-          type: integer
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: Customer Account Id
         cashier_id:
           type: integer
@@ -1374,7 +1431,6 @@ components:
         - payment_method
         - line_items
         - scanned_tickets
-        - id
         - booked_at
         - customer_account_id
         - cashier_id

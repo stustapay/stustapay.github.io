@@ -1850,33 +1850,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /till-registers/transfer-register:
-    post:
+  /till-registers/{register_id}:
+    get:
       tags:
         - till-registers
-      summary: Transfer Register
-      operationId: transfer_register
+      summary: Get Cash Register Admin
+      operationId: get_cash_register_admin
       security:
         - OAuth2PasswordBearer: []
       parameters:
+        - name: register_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Register Id
         - name: node_id
           in: query
           required: true
           schema:
             type: integer
             title: Node Id
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransferRegisterPayload'
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/CashRegister'
         '404':
           description: Not found
         '422':
@@ -1885,7 +1886,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /till-registers/{register_id}:
     post:
       tags:
         - till-registers
@@ -1946,6 +1946,113 @@ paths:
           schema:
             type: integer
             title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /till-registers/{register_id}/cashier-shifts:
+    get:
+      tags:
+        - till-registers
+      summary: Get Cashier Shifts For Register
+      operationId: get_cashier_shifts_for_register
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: register_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Register Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedList_CashierShift_int_'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /till-registers/{register_id}/transactions:
+    get:
+      tags:
+        - till-registers
+      summary: List Transactions
+      operationId: list_transactions
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: register_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Register Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedList_Transaction_int_'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /till-registers/transfer-register:
+    post:
+      tags:
+        - till-registers
+      summary: Transfer Register
+      operationId: transfer_register
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRegisterPayload'
       responses:
         '200':
           description: Successful Response
@@ -2334,11 +2441,9 @@ paths:
             title: Node Id
         - name: customer_account_id
           in: query
-          required: false
+          required: true
           schema:
-            anyOf:
-              - type: integer
-              - type: 'null'
+            type: integer
             title: Customer Account Id
       responses:
         '200':
@@ -4665,6 +4770,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /transactions/{transaction_id}:
+    get:
+      tags:
+        - transactions
+      summary: Get Transaction
+      operationId: get_transaction
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: transaction_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Transaction Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     Account:
@@ -5020,6 +5161,14 @@ components:
         comment:
           type: string
           title: Comment
+        cashier_id:
+          type: integer
+          title: Cashier Id
+        cash_register_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Cash Register Id
         closing_out_user_id:
           type: integer
           title: Closing Out User Id
@@ -5044,6 +5193,8 @@ components:
       required:
         - id
         - comment
+        - cashier_id
+        - cash_register_id
         - closing_out_user_id
         - actual_cash_drawer_balance
         - expected_cash_drawer_balance
@@ -6689,6 +6840,23 @@ components:
         - ids
         - entities
       title: NormalizedList[Till, int]
+    NormalizedList_Transaction_int_:
+      properties:
+        ids:
+          items:
+            type: integer
+          type: array
+          title: Ids
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/Transaction'
+          type: object
+          title: Entities
+      type: object
+      required:
+        - ids
+        - entities
+      title: NormalizedList[Transaction, int]
     NormalizedList_Tse_int_:
       properties:
         ids:
@@ -6812,6 +6980,11 @@ components:
             - type: integer
             - type: 'null'
           title: Till Id
+        cash_register_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Cash Register Id
         customer_account_id:
           anyOf:
             - type: integer
@@ -6851,6 +7024,7 @@ components:
         - order_type
         - cashier_id
         - till_id
+        - cash_register_id
         - customer_account_id
         - customer_tag_uid
         - customer_tag_id
@@ -6868,6 +7042,8 @@ components:
         - ticket
         - money_transfer
         - money_transfer_imbalance
+        - cashier_shift_start
+        - cashier_shift_end
       title: OrderType
     OrderWithTse:
       properties:
@@ -6910,6 +7086,11 @@ components:
             - type: integer
             - type: 'null'
           title: Till Id
+        cash_register_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Cash Register Id
         customer_account_id:
           anyOf:
             - type: integer
@@ -7009,6 +7190,7 @@ components:
         - order_type
         - cashier_id
         - till_id
+        - cash_register_id
         - customer_account_id
         - customer_tag_uid
         - customer_tag_id
@@ -8278,6 +8460,53 @@ components:
         - daily_intervals
         - hourly_intervals
       title: TimeseriesStats
+    Transaction:
+      properties:
+        id:
+          type: integer
+          title: Id
+        conducting_user_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Conducting User Id
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Description
+        source_account:
+          type: integer
+          title: Source Account
+        target_account:
+          type: integer
+          title: Target Account
+        order:
+          anyOf:
+            - $ref: '#/components/schemas/Order'
+            - type: 'null'
+        booked_at:
+          type: string
+          format: date-time
+          title: Booked At
+        amount:
+          type: number
+          title: Amount
+        vouchers:
+          type: integer
+          title: Vouchers
+      type: object
+      required:
+        - id
+        - conducting_user_id
+        - description
+        - source_account
+        - target_account
+        - order
+        - booked_at
+        - amount
+        - vouchers
+      title: Transaction
     TransferRegisterPayload:
       properties:
         source_cashier_id:

@@ -1466,7 +1466,9 @@ components:
           format: date-time
           title: Booked At
         cashier_id:
-          type: integer
+          anyOf:
+            - type: integer
+            - type: 'null'
           title: Cashier Id
         till_id:
           type: integer
@@ -1815,6 +1817,11 @@ components:
             - type: integer
             - type: 'null'
           title: Till Id
+        cash_register_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Cash Register Id
         customer_account_id:
           anyOf:
             - type: integer
@@ -1854,6 +1861,7 @@ components:
         - order_type
         - cashier_id
         - till_id
+        - cash_register_id
         - customer_account_id
         - customer_tag_uid
         - customer_tag_id
@@ -1871,6 +1879,8 @@ components:
         - ticket
         - money_transfer
         - money_transfer_imbalance
+        - cashier_shift_start
+        - cashier_shift_end
       title: OrderType
     PaymentMethod:
       type: string

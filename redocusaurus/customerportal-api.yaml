@@ -704,6 +704,8 @@ components:
         - ticket
         - money_transfer
         - money_transfer_imbalance
+        - cashier_shift_start
+        - cashier_shift_end
       title: OrderType
     OrderWithBon:
       properties:
@@ -746,6 +748,11 @@ components:
             - type: integer
             - type: 'null'
           title: Till Id
+        cash_register_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Cash Register Id
         customer_account_id:
           anyOf:
             - type: integer
@@ -790,6 +797,7 @@ components:
         - order_type
         - cashier_id
         - till_id
+        - cash_register_id
         - customer_account_id
         - customer_tag_uid
         - customer_tag_id
@@ -838,6 +846,11 @@ components:
             - type: integer
             - type: 'null'
           title: Till Id
+        cash_register_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Cash Register Id
         customer_account_id:
           anyOf:
             - type: integer
@@ -937,6 +950,7 @@ components:
         - order_type
         - cashier_id
         - till_id
+        - cash_register_id
         - customer_account_id
         - customer_tag_uid
         - customer_tag_id

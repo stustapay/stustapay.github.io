@@ -329,6 +329,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
       security:
         - OAuth2PasswordBearer: []
+  /order/cancel-pending-topup:
+    post:
+      tags:
+        - order
+      summary: Mark a pending topup as cancelled, e.g. because the sumup booking failed
+      operationId: cancel_pending_topup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelOrderPayload'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
   /order/check-ticket-scan:
     post:
       tags:
@@ -431,6 +457,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompletedTicketSale'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /order/cancel-pending-ticket-sale:
+    post:
+      tags:
+        - order
+      summary: >-
+        Mark a pending ticket sale as cancelled, e.g. because the sumup booking
+        failed
+      operationId: cancel_pending_ticket_sale
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelOrderPayload'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
         '422':
           description: Validation Error
           content:
@@ -1113,6 +1167,16 @@ components:
       required:
         - till_button_id
       title: Button
+    CancelOrderPayload:
+      properties:
+        order_uuid:
+          type: string
+          format: uuid
+          title: Order Uuid
+      type: object
+      required:
+        - order_uuid
+      title: CancelOrderPayload
     CashRegister:
       properties:
         name:

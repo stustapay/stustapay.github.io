@@ -5834,6 +5834,11 @@ components:
           type: string
           title: Sumup Oauth Client Secret
           default: ''
+        pretix_api_key:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Api Key
         email_smtp_password:
           anyOf:
             - type: string
@@ -5882,6 +5887,31 @@ components:
           type: string
           format: email
           title: Customer Portal Contact Email
+        pretix_presale_enabled:
+          type: boolean
+          title: Pretix Presale Enabled
+        pretix_shop_url:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Shop Url
+        pretix_organizer:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Organizer
+        pretix_event:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Event
+        pretix_ticket_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Pretix Ticket Ids
         ust_id:
           type: string
           title: Ust Id
@@ -5994,6 +6024,7 @@ components:
           default: []
       type: object
       required:
+        - pretix_api_key
         - currency_identifier
         - max_account_balance
         - sumup_topup_enabled
@@ -6002,6 +6033,11 @@ components:
         - customer_portal_about_page_url
         - customer_portal_data_privacy_url
         - customer_portal_contact_email
+        - pretix_presale_enabled
+        - pretix_shop_url
+        - pretix_organizer
+        - pretix_event
+        - pretix_ticket_ids
         - ust_id
         - bon_issuer
         - bon_address
@@ -6254,6 +6290,9 @@ components:
         allow_ticket_sale:
           type: boolean
           title: Allow Ticket Sale
+        allow_ticket_vouchers:
+          type: boolean
+          title: Allow Ticket Vouchers
         enable_ssp_payment:
           type: boolean
           title: Enable Ssp Payment
@@ -6270,6 +6309,7 @@ components:
         - allow_top_up
         - allow_cash_out
         - allow_ticket_sale
+        - allow_ticket_vouchers
         - enable_ssp_payment
         - enable_cash_payment
         - enable_card_payment
@@ -7618,6 +7658,31 @@ components:
           type: string
           format: email
           title: Customer Portal Contact Email
+        pretix_presale_enabled:
+          type: boolean
+          title: Pretix Presale Enabled
+        pretix_shop_url:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Shop Url
+        pretix_organizer:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Organizer
+        pretix_event:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Event
+        pretix_ticket_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Pretix Ticket Ids
         ust_id:
           type: string
           title: Ust Id
@@ -7726,6 +7791,11 @@ components:
         - customer_portal_about_page_url
         - customer_portal_data_privacy_url
         - customer_portal_contact_email
+        - pretix_presale_enabled
+        - pretix_shop_url
+        - pretix_organizer
+        - pretix_event
+        - pretix_ticket_ids
         - ust_id
         - bon_issuer
         - bon_address
@@ -7762,6 +7832,11 @@ components:
           type: string
           title: Sumup Oauth Client Secret
           default: ''
+        pretix_api_key:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Api Key
         email_smtp_password:
           anyOf:
             - type: string
@@ -7810,6 +7885,31 @@ components:
           type: string
           format: email
           title: Customer Portal Contact Email
+        pretix_presale_enabled:
+          type: boolean
+          title: Pretix Presale Enabled
+        pretix_shop_url:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Shop Url
+        pretix_organizer:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Organizer
+        pretix_event:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Event
+        pretix_ticket_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Pretix Ticket Ids
         ust_id:
           type: string
           title: Ust Id
@@ -7913,6 +8013,7 @@ components:
           title: Sumup Oauth Refresh Token
       type: object
       required:
+        - pretix_api_key
         - currency_identifier
         - max_account_balance
         - sumup_topup_enabled
@@ -7921,6 +8022,11 @@ components:
         - customer_portal_about_page_url
         - customer_portal_data_privacy_url
         - customer_portal_contact_email
+        - pretix_presale_enabled
+        - pretix_shop_url
+        - pretix_organizer
+        - pretix_event
+        - pretix_ticket_ids
         - ust_id
         - bon_issuer
         - bon_address
@@ -8405,6 +8511,9 @@ components:
         allow_ticket_sale:
           type: boolean
           title: Allow Ticket Sale
+        allow_ticket_vouchers:
+          type: boolean
+          title: Allow Ticket Vouchers
         enable_ssp_payment:
           type: boolean
           title: Enable Ssp Payment
@@ -8427,6 +8536,7 @@ components:
         - allow_top_up
         - allow_cash_out
         - allow_ticket_sale
+        - allow_ticket_vouchers
         - enable_ssp_payment
         - enable_cash_payment
         - enable_card_payment
@@ -8653,6 +8763,11 @@ components:
           type: string
           title: Sumup Oauth Client Secret
           default: ''
+        pretix_api_key:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Api Key
         email_smtp_password:
           anyOf:
             - type: string
@@ -8701,6 +8816,31 @@ components:
           type: string
           format: email
           title: Customer Portal Contact Email
+        pretix_presale_enabled:
+          type: boolean
+          title: Pretix Presale Enabled
+        pretix_shop_url:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Shop Url
+        pretix_organizer:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Organizer
+        pretix_event:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Event
+        pretix_ticket_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Pretix Ticket Ids
         ust_id:
           type: string
           title: Ust Id
@@ -8795,6 +8935,7 @@ components:
           default: {}
       type: object
       required:
+        - pretix_api_key
         - currency_identifier
         - max_account_balance
         - sumup_topup_enabled
@@ -8803,6 +8944,11 @@ components:
         - customer_portal_about_page_url
         - customer_portal_data_privacy_url
         - customer_portal_contact_email
+        - pretix_presale_enabled
+        - pretix_shop_url
+        - pretix_organizer
+        - pretix_event
+        - pretix_ticket_ids
         - ust_id
         - bon_issuer
         - bon_address

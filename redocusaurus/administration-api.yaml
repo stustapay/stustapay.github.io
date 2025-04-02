@@ -4905,7 +4905,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /webhooks/hook:
-    get:
+    post:
       tags:
         - webhooks
       summary: Trigger Webhook
@@ -9518,7 +9518,7 @@ components:
     WebhookType:
       type: string
       enum:
-        - pretix_order_update
+        - pretix
       title: WebhookType
   securitySchemes:
     OAuth2PasswordBearer:

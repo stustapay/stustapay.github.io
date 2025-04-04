@@ -2718,11 +2718,6 @@ components:
       title: TicketScanResultEntry
     TicketVoucher:
       properties:
-        ticket:
-          $ref: '#/components/schemas/Ticket'
-        top_up_amount:
-          type: number
-          title: Top Up Amount
         id:
           type: integer
           title: Id
@@ -2741,8 +2736,6 @@ components:
           title: Token
       type: object
       required:
-        - ticket
-        - top_up_amount
         - id
         - node_id
         - created_at

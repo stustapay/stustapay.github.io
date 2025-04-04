@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[8947],{6600:e=>{e.exports=JSON.parse('{"authors":[{"name":"Michael Loipf\xfchrer","title":"Maintainer of StuStaPay","url":"https://github.com/mikonse","imageURL":"https://github.com/mikonse.png","key":"milo","page":null,"count":1}]}')}}]);

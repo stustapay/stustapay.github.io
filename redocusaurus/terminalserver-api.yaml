@@ -2385,6 +2385,10 @@ components:
             - type: integer
             - type: 'null'
           title: Active User Role Id
+        last_seen:
+          type: string
+          format: date-time
+          title: Last Seen
       type: object
       required:
         - name
@@ -2393,6 +2397,7 @@ components:
         - till_id
         - session_uuid
         - registration_uuid
+        - last_seen
       title: Terminal
     TerminalButton:
       properties:

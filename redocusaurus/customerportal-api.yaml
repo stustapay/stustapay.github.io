@@ -631,6 +631,9 @@ components:
           title: Translation Texts
         event_design:
           $ref: '#/components/schemas/EventDesign'
+        node_id:
+          type: integer
+          title: Node Id
       type: object
       required:
         - test_mode
@@ -644,6 +647,7 @@ components:
         - allowed_country_codes
         - translation_texts
         - event_design
+        - node_id
       title: CustomerPortalApiConfig
     EventDesign:
       properties:
@@ -718,9 +722,13 @@ components:
         pin:
           type: string
           title: Pin
+        node_id:
+          type: integer
+          title: Node Id
       type: object
       required:
         - pin
+        - node_id
       title: LoginPayload
     LoginResponse:
       properties:

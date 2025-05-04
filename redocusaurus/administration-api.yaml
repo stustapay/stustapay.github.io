@@ -6222,6 +6222,11 @@ components:
             - type: string
             - type: 'null'
           title: External Link
+        customer_email:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Customer Email
         id:
           type: integer
           title: Id
@@ -7006,6 +7011,12 @@ components:
         password:
           type: string
           title: Password
+        first_operation:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: First Operation
         type:
           $ref: '#/components/schemas/TseType'
         serial:
@@ -7019,6 +7030,7 @@ components:
         - ws_url
         - ws_timeout
         - password
+        - first_operation
         - type
         - serial
       title: NewTse
@@ -9367,6 +9379,12 @@ components:
         password:
           type: string
           title: Password
+        first_operation:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: First Operation
         type:
           $ref: '#/components/schemas/TseType'
         serial:
@@ -9407,12 +9425,23 @@ components:
             - type: string
             - type: 'null'
           title: Process Data Encoding
+        tse_description:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Tse Description
+        certificate_date:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Certificate Date
       type: object
       required:
         - name
         - ws_url
         - ws_timeout
         - password
+        - first_operation
         - type
         - serial
         - node_id
@@ -9423,6 +9452,8 @@ components:
         - public_key
         - certificate
         - process_data_encoding
+        - tse_description
+        - certificate_date
       title: Tse
     TseStatus:
       type: string
@@ -9697,12 +9728,19 @@ components:
         password:
           type: string
           title: Password
+        first_operation:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: First Operation
       type: object
       required:
         - name
         - ws_url
         - ws_timeout
         - password
+        - first_operation
       title: UpdateTse
     UpdateUserPayload:
       properties:

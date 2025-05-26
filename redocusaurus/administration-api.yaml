@@ -6930,7 +6930,9 @@ components:
           type: string
           title: Name
         description:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Description
         button_ids:
           anyOf:
@@ -6949,7 +6951,6 @@ components:
       type: object
       required:
         - name
-        - description
       title: NewTillLayout
     NewTillProfile:
       properties:
@@ -8903,8 +8904,7 @@ components:
             - type: 'null'
           title: Type
         status:
-          type: string
-          title: Status
+          $ref: '#/components/schemas/SumUpTransactionStatus'
         timestamp:
           type: string
           format: date-time
@@ -8921,6 +8921,15 @@ components:
         - timestamp
         - transaction_code
       title: SumUpTransaction
+    SumUpTransactionStatus:
+      type: string
+      enum:
+        - SUCCESSFUL
+        - CANCELLED
+        - FAILED
+        - PENDING
+        - REFUNDED
+      title: SumUpTransactionStatus
     SwitchTerminalPayload:
       properties:
         new_terminal_id:
@@ -9195,7 +9204,9 @@ components:
           type: string
           title: Name
         description:
-          type: string
+          anyOf:
+            - type: string
+            - type: 'null'
           title: Description
         button_ids:
           anyOf:
@@ -9220,7 +9231,6 @@ components:
       type: object
       required:
         - name
-        - description
         - node_id
         - id
       title: TillLayout

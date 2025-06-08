@@ -20,6 +20,12 @@ paths:
           schema:
             type: integer
             title: Node Id
+        - name: show_all
+          in: query
+          required: false
+          schema:
+            default: false
+            title: Show All
       responses:
         '200':
           description: Successful Response

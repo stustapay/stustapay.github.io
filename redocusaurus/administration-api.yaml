@@ -3162,6 +3162,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /tickets/stats/presale:
+    get:
+      tags:
+        - tickets
+      summary: Get Presale Stats
+      operationId: get_presale_stats
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PresaleStats'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /tickets/{ticket_id}:
     get:
       tags:
@@ -6234,6 +6264,25 @@ components:
             - type: string
             - type: 'null'
           title: Customer Email
+        customer_name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Customer Name
+        initial_top_up_amount:
+          type: number
+          title: Initial Top Up Amount
+          default: 0
+        pretix_item_id:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Pretix Item Id
+        pretix_product_name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Pretix Product Name
         id:
           type: integer
           title: Id
@@ -6243,6 +6292,10 @@ components:
         has_checked_in:
           type: boolean
           title: Has Checked In
+        cancelled:
+          type: boolean
+          title: Cancelled
+          default: false
       type: object
       required:
         - external_reference
@@ -6607,6 +6660,13 @@ components:
               type: array
             - type: 'null'
           title: Pretix Ticket Ids
+        pretix_topup_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Pretix Topup Ids
         ust_id:
           type: string
           title: Ust Id
@@ -6733,6 +6793,7 @@ components:
         - pretix_organizer
         - pretix_event
         - pretix_ticket_ids
+        - pretix_topup_ids
         - ust_id
         - bon_issuer
         - bon_address
@@ -8124,6 +8185,35 @@ components:
         - total_donation_amount
         - n_payouts
       title: PendingPayoutDetail
+    PresaleStats:
+      properties:
+        total_tickets:
+          type: integer
+          title: Total Tickets
+        checked_in_tickets:
+          type: integer
+          title: Checked In Tickets
+        cancelled_tickets:
+          type: integer
+          title: Cancelled Tickets
+        total_credit_sold:
+          type: number
+          title: Total Credit Sold
+        credit_activated:
+          type: number
+          title: Credit Activated
+        credit_pending:
+          type: number
+          title: Credit Pending
+      type: object
+      required:
+        - total_tickets
+        - checked_in_tickets
+        - cancelled_tickets
+        - total_credit_sold
+        - credit_activated
+        - credit_pending
+      title: PresaleStats
     PretixFetchProductsPayload:
       properties:
         organizer:
@@ -8435,6 +8525,13 @@ components:
               type: array
             - type: 'null'
           title: Pretix Ticket Ids
+        pretix_topup_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Pretix Topup Ids
         ust_id:
           type: string
           title: Ust Id
@@ -8548,6 +8645,7 @@ components:
         - pretix_organizer
         - pretix_event
         - pretix_ticket_ids
+        - pretix_topup_ids
         - ust_id
         - bon_issuer
         - bon_address
@@ -8667,6 +8765,13 @@ components:
               type: array
             - type: 'null'
           title: Pretix Ticket Ids
+        pretix_topup_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Pretix Topup Ids
         ust_id:
           type: string
           title: Ust Id
@@ -8784,6 +8889,7 @@ components:
         - pretix_organizer
         - pretix_event
         - pretix_ticket_ids
+        - pretix_topup_ids
         - ust_id
         - bon_issuer
         - bon_address
@@ -9636,6 +9742,13 @@ components:
               type: array
             - type: 'null'
           title: Pretix Ticket Ids
+        pretix_topup_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Pretix Topup Ids
         ust_id:
           type: string
           title: Ust Id
@@ -9744,6 +9857,7 @@ components:
         - pretix_organizer
         - pretix_event
         - pretix_ticket_ids
+        - pretix_topup_ids
         - ust_id
         - bon_issuer
         - bon_address

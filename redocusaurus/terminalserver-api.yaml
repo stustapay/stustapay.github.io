@@ -2487,6 +2487,11 @@ components:
           type: string
           format: date-time
           title: Last Seen
+        mdm_device_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Mdm Device Id
       type: object
       required:
         - name

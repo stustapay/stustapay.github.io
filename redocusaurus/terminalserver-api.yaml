@@ -1148,6 +1148,25 @@ components:
         - sepa_exit
         - cash_register
       title: AccountType
+    AssignableUserRolesAtNode:
+      properties:
+        node_id:
+          type: integer
+          title: Node Id
+        node_name:
+          type: string
+          title: Node Name
+        roles:
+          items:
+            $ref: '#/components/schemas/UserRole'
+          type: array
+          title: Roles
+      type: object
+      required:
+        - node_id
+        - node_name
+        - roles
+      title: AssignableUserRolesAtNode
     Button:
       properties:
         till_button_id:
@@ -1575,16 +1594,16 @@ components:
             - type: string
             - type: 'null'
           title: Description
-        role_ids:
+        role_assignments:
           items:
-            type: integer
+            $ref: '#/components/schemas/UserRoleAssignmentPayload'
           type: array
-          title: Role Ids
+          title: Role Assignments
       type: object
       required:
         - login
         - display_name
-        - role_ids
+        - role_assignments
       title: CreateUserPayload
     CurrentUser:
       properties:
@@ -1610,11 +1629,16 @@ components:
             - type: string
             - type: 'null'
           title: Active Role Name
-        privileges:
+        event_privileges:
           items:
-            $ref: '#/components/schemas/Privilege'
+            $ref: '#/components/schemas/EventPrivilege'
           type: array
-          title: Privileges
+          title: Event Privileges
+        node_privileges:
+          items:
+            $ref: '#/components/schemas/NodePrivilege'
+          type: array
+          title: Node Privileges
         description:
           anyOf:
             - type: string
@@ -1646,7 +1670,6 @@ components:
         - id
         - login
         - display_name
-        - privileges
       title: CurrentUser
       description: Describes a logged-in user in the system
     DetailedOrder:
@@ -1745,6 +1768,18 @@ components:
         - till_name
         - customer_tag_uid_hex
       title: DetailedOrder
+    EventPrivilege:
+      type: string
+      enum:
+        - customer_management
+        - payout_management
+        - create_user
+        - cash_transport
+        - terminal_login
+        - supervised_terminal_login
+        - grant_free_tickets
+        - grant_vouchers
+      title: EventPrivilege
     GrantVoucherPayload:
       properties:
         vouchers:
@@ -1938,6 +1973,13 @@ components:
         - amount
         - customer_tag_uid
       title: NewTopUp
+    NodePrivilege:
+      type: string
+      enum:
+        - node_administration
+        - view_node_stats
+        - can_book_orders
+      title: NodePrivilege
     Order:
       properties:
         id:
@@ -2247,23 +2289,6 @@ components:
         - old_balance
         - new_balance
       title: PendingTopUp
-    Privilege:
-      type: string
-      enum:
-        - node_administration
-        - customer_management
-        - payout_management
-        - create_user
-        - allow_privileged_role_assignment
-        - user_management
-        - view_node_stats
-        - cash_transport
-        - terminal_login
-        - supervised_terminal_login
-        - can_book_orders
-        - grant_free_tickets
-        - grant_vouchers
-      title: Privilege
     Product:
       properties:
         name:
@@ -2565,18 +2590,25 @@ components:
             - type: integer
             - type: 'null'
           title: Active User Id
-        available_roles:
+        available_roles_by_node:
           items:
-            $ref: '#/components/schemas/UserRole'
+            $ref: '#/components/schemas/AssignableUserRolesAtNode'
           type: array
-          title: Available Roles
-        user_privileges:
+          title: Available Roles By Node
+        user_event_privileges:
           anyOf:
             - items:
-                $ref: '#/components/schemas/Privilege'
+                $ref: '#/components/schemas/EventPrivilege'
               type: array
             - type: 'null'
-          title: User Privileges
+          title: User Event Privileges
+        user_node_privileges:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/NodePrivilege'
+              type: array
+            - type: 'null'
+          title: User Node Privileges
         secrets:
           anyOf:
             - $ref: '#/components/schemas/TerminalUserTagSecrets'
@@ -2598,8 +2630,9 @@ components:
         - description
         - event_name
         - active_user_id
-        - available_roles
-        - user_privileges
+        - available_roles_by_node
+        - user_event_privileges
+        - user_node_privileges
         - secrets
         - till
         - test_mode
@@ -2904,15 +2937,15 @@ components:
         user_tag_uid:
           type: integer
           title: User Tag Uid
-        role_ids:
+        role_assignments:
           items:
-            type: integer
+            $ref: '#/components/schemas/UserRoleAssignmentPayload'
           type: array
-          title: Role Ids
+          title: Role Assignments
       type: object
       required:
         - user_tag_uid
-        - role_ids
+        - role_assignments
       title: UpdateUserPayload
     User:
       properties:
@@ -3059,15 +3092,25 @@ components:
         name:
           type: string
           title: Name
-        is_privileged:
+        can_assign_all_roles:
           type: boolean
-          title: Is Privileged
+          title: Can Assign All Roles
           default: false
-        privileges:
+        assignable_role_ids:
           items:
-            $ref: '#/components/schemas/Privilege'
+            type: integer
           type: array
-          title: Privileges
+          title: Assignable Role Ids
+        event_privileges:
+          items:
+            $ref: '#/components/schemas/EventPrivilege'
+          type: array
+          title: Event Privileges
+        node_privileges:
+          items:
+            $ref: '#/components/schemas/NodePrivilege'
+          type: array
+          title: Node Privileges
         id:
           type: integer
           title: Id
@@ -3077,10 +3120,26 @@ components:
       type: object
       required:
         - name
-        - privileges
+        - event_privileges
+        - node_privileges
         - id
         - node_id
       title: UserRole
+    UserRoleAssignmentPayload:
+      properties:
+        node_id:
+          type: integer
+          title: Node Id
+        role_ids:
+          items:
+            type: integer
+          type: array
+          title: Role Ids
+      type: object
+      required:
+        - node_id
+        - role_ids
+      title: UserRoleAssignmentPayload
     UserRoleInfo:
       properties:
         id:
@@ -3089,14 +3148,16 @@ components:
         name:
           type: string
           title: Name
-        is_privileged:
-          type: boolean
-          title: Is Privileged
-        privileges:
+        event_privileges:
           items:
-            $ref: '#/components/schemas/Privilege'
+            $ref: '#/components/schemas/EventPrivilege'
           type: array
-          title: Privileges
+          title: Event Privileges
+        node_privileges:
+          items:
+            $ref: '#/components/schemas/NodePrivilege'
+          type: array
+          title: Node Privileges
         node_id:
           type: integer
           title: Node Id
@@ -3110,8 +3171,8 @@ components:
       required:
         - id
         - name
-        - is_privileged
-        - privileges
+        - event_privileges
+        - node_privileges
         - node_id
         - node_name
         - is_at_current_node

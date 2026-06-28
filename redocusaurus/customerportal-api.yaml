@@ -710,6 +710,9 @@ components:
         tax_rate:
           type: number
           title: Tax Rate
+        vouchers_redeemed:
+          type: integer
+          title: Vouchers Redeemed
         item_id:
           type: integer
           title: Item Id
@@ -728,6 +731,7 @@ components:
         - tax_rate_id
         - tax_name
         - tax_rate
+        - vouchers_redeemed
         - item_id
         - total_tax
         - total_price

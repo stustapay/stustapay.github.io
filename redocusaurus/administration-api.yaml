@@ -3587,6 +3587,182 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /user-tag-variants:
+    get:
+      tags:
+        - user_tags
+      summary: List User Tag Variants
+      operationId: list_user_tag_variants
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedList_UserTagVariant__int_'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - user_tags
+      summary: Create User Tag Variant
+      operationId: create_user_tag_variant
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUserTagVariant'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTagVariant'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user-tag-variants/{user_tag_variant_id}:
+    get:
+      tags:
+        - user_tags
+      summary: Get User Tag Variant
+      operationId: get_user_tag_variant
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_tag_variant_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Tag Variant Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTagVariant'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - user_tags
+      summary: Update User Tag Variant
+      operationId: update_user_tag_variant
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_tag_variant_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Tag Variant Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUserTagVariant'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTagVariant'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - user_tags
+      summary: Delete User Tag Variant
+      operationId: delete_user_tag_variant
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_tag_variant_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Tag Variant Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /tses/:
     get:
       tags:
@@ -5679,10 +5855,18 @@ components:
             - type: string
             - type: 'null'
           title: User Tag Comment
-        restriction:
-          anyOf:
-            - $ref: '#/components/schemas/ProductRestriction'
-            - type: 'null'
+        user_tag_variant_ids:
+          items:
+            type: integer
+          type: array
+          title: User Tag Variant Ids
+          default: []
+        user_tag_variant_names:
+          items:
+            type: string
+          type: array
+          title: User Tag Variant Names
+          default: []
         tag_history:
           items:
             $ref: '#/components/schemas/UserTagHistoryEntry'
@@ -5705,7 +5889,6 @@ components:
         - vouchers
         - user_tag_id
         - user_tag_uid
-        - restriction
         - tag_history
         - user_tag_uid_hex
       title: Account
@@ -6389,10 +6572,18 @@ components:
             - type: string
             - type: 'null'
           title: User Tag Comment
-        restriction:
-          anyOf:
-            - $ref: '#/components/schemas/ProductRestriction'
-            - type: 'null'
+        user_tag_variant_ids:
+          items:
+            type: integer
+          type: array
+          title: User Tag Variant Ids
+          default: []
+        user_tag_variant_names:
+          items:
+            type: string
+          type: array
+          title: User Tag Variant Names
+          default: []
         tag_history:
           items:
             $ref: '#/components/schemas/UserTagHistoryEntry'
@@ -6455,7 +6646,6 @@ components:
         - vouchers
         - user_tag_id
         - user_tag_uid
-        - restriction
         - tag_history
         - iban
         - account_name
@@ -7292,11 +7482,11 @@ components:
         tax_rate_id:
           type: integer
           title: Tax Rate Id
-        restrictions:
+        user_tag_variant_ids:
           items:
-            $ref: '#/components/schemas/ProductRestriction'
+            type: integer
           type: array
-          title: Restrictions
+          title: User Tag Variant Ids
           default: []
         is_locked:
           type: boolean
@@ -7359,11 +7549,11 @@ components:
         tax_rate_id:
           type: integer
           title: Tax Rate Id
-        restrictions:
+        user_tag_variant_ids:
           items:
-            $ref: '#/components/schemas/ProductRestriction'
+            type: integer
           type: array
-          title: Restrictions
+          title: User Tag Variant Ids
         is_locked:
           type: boolean
           title: Is Locked
@@ -7375,7 +7565,7 @@ components:
         - name
         - price
         - tax_rate_id
-        - restrictions
+        - user_tag_variant_ids
         - is_locked
         - initial_top_up_amount
       title: NewTicket
@@ -7568,18 +7758,21 @@ components:
         pin:
           type: string
           title: Pin
-        restriction:
-          anyOf:
-            - $ref: '#/components/schemas/ProductRestriction'
-            - type: 'null'
         secret_id:
           type: integer
           title: Secret Id
-        variant:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Variant
+        variant_ids:
+          items:
+            type: integer
+          type: array
+          title: Variant Ids
+          default: []
+        variant_names:
+          items:
+            type: string
+          type: array
+          title: Variant Names
+          default: []
       type: object
       required:
         - pin
@@ -7602,6 +7795,23 @@ components:
         - key1
         - description
       title: NewUserTagSecret
+    NewUserTagVariant:
+      properties:
+        variant_name:
+          type: string
+          title: Variant Name
+        description:
+          type: string
+          title: Description
+          default: ''
+        priority:
+          type: integer
+          title: Priority
+          default: 0
+      type: object
+      required:
+        - variant_name
+      title: NewUserTagVariant
     NewUserToRoles:
       properties:
         user_id:
@@ -8129,6 +8339,23 @@ components:
         - ids
         - entities
       title: NormalizedList[UserTagDetail, int]
+    NormalizedList_UserTagVariant__int_:
+      properties:
+        ids:
+          items:
+            type: integer
+          type: array
+          title: Ids
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/UserTagVariant'
+          type: object
+          title: Entities
+      type: object
+      required:
+        - ids
+        - entities
+      title: NormalizedList[UserTagVariant, int]
     NormalizedList_User__int_:
       properties:
         ids:
@@ -8733,11 +8960,11 @@ components:
         tax_rate_id:
           type: integer
           title: Tax Rate Id
-        restrictions:
+        user_tag_variant_ids:
           items:
-            $ref: '#/components/schemas/ProductRestriction'
+            type: integer
           type: array
-          title: Restrictions
+          title: User Tag Variant Ids
         is_locked:
           type: boolean
           title: Is Locked
@@ -8774,7 +9001,7 @@ components:
         - price
         - fixed_price
         - tax_rate_id
-        - restrictions
+        - user_tag_variant_ids
         - is_locked
         - is_returnable
         - node_id
@@ -8816,12 +9043,6 @@ components:
         - revenue
         - vouchers_redeemed
       title: ProductOverallStats
-    ProductRestriction:
-      type: string
-      enum:
-        - under_16
-        - under_18
-      title: ProductRestriction
     ProductStats:
       properties:
         from_time:
@@ -9736,11 +9957,11 @@ components:
         tax_rate_id:
           type: integer
           title: Tax Rate Id
-        restrictions:
+        user_tag_variant_ids:
           items:
-            $ref: '#/components/schemas/ProductRestriction'
+            type: integer
           type: array
-          title: Restrictions
+          title: User Tag Variant Ids
         is_locked:
           type: boolean
           title: Is Locked
@@ -9767,7 +9988,7 @@ components:
         - name
         - price
         - tax_rate_id
-        - restrictions
+        - user_tag_variant_ids
         - is_locked
         - initial_top_up_amount
         - node_id
@@ -10725,11 +10946,18 @@ components:
             - type: string
             - type: 'null'
           title: Comment
-        variant:
-          anyOf:
-            - type: string
-            - type: 'null'
-          title: Variant
+        variant_ids:
+          items:
+            type: integer
+          type: array
+          title: Variant Ids
+          default: []
+        variant_names:
+          items:
+            type: string
+          type: array
+          title: Variant Names
+          default: []
         account_id:
           anyOf:
             - type: integer
@@ -10825,12 +11053,43 @@ components:
         - id
         - node_id
       title: UserTagSecret
+    UserTagVariant:
+      properties:
+        variant_name:
+          type: string
+          title: Variant Name
+        description:
+          type: string
+          title: Description
+          default: ''
+        priority:
+          type: integer
+          title: Priority
+          default: 0
+        id:
+          type: integer
+          title: Id
+        node_id:
+          type: integer
+          title: Node Id
+      type: object
+      required:
+        - variant_name
+        - id
+        - node_id
+      title: UserTagVariant
     UserTagsCsvExportPayload:
       properties:
         exclude_activated:
           type: boolean
           title: Exclude Activated
           default: false
+        variant_ids:
+          items:
+            type: integer
+          type: array
+          title: Variant Ids
+          default: []
       type: object
       title: UserTagsCsvExportPayload
     UserToRoles:

@@ -32,7 +32,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_Product__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+                title: Response List Products Products Get
         '404':
           description: Not found
         '422':
@@ -77,41 +80,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /products/{product_id}:
-    get:
-      tags:
-        - products
-      summary: Get Product
-      operationId: get_product
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: product_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Product Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - products
@@ -217,7 +185,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_User__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                title: Response List Users Users Get
         '404':
           description: Not found
         '422':
@@ -253,117 +224,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /users/{user_id}:
-    get:
-      tags:
-        - users
-      summary: Get User
-      operationId: get_user
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: user_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: User Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-    post:
-      tags:
-        - users
-      summary: Update User
-      operationId: update_user
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: user_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: User Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateUserPayload'
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-    delete:
-      tags:
-        - users
-      summary: Delete User
-      operationId: delete_user
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: user_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: User Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
         '404':
           description: Not found
         '422':
@@ -449,6 +309,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /users/{user_id}:
+    post:
+      tags:
+        - users
+      summary: Update User
+      operationId: update_user
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - users
+      summary: Delete User
+      operationId: delete_user
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Id
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /users/{user_id}/change-password:
     post:
       tags:
@@ -512,7 +448,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_UserRole__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserRole'
+                title: Response List User Roles User Roles Get
         '404':
           description: Not found
         '422':
@@ -721,7 +660,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_TaxRate__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaxRate'
+                title: Response List Tax Rates Tax Rates Get
         '404':
           description: Not found
         '422':
@@ -766,41 +708,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /tax-rates/{tax_rate_id}:
-    get:
-      tags:
-        - tax-rates
-      summary: Get Tax Rate
-      operationId: get_tax_rate
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: tax_rate_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Tax Rate Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TaxRate'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - tax-rates
@@ -965,7 +872,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_Till__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Till'
+                title: Response List Tills Tills Get
         '404':
           description: Not found
         '422':
@@ -1010,41 +920,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /tills/{till_id}:
-    get:
-      tags:
-        - tills
-      summary: Get Till
-      operationId: get_till
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: till_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Till Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Till'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - tills
@@ -1221,7 +1096,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_TillLayout__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TillLayout'
+                title: Response List Till Layouts Till Layouts Get
         '404':
           description: Not found
         '422':
@@ -1266,41 +1144,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /till-layouts/{layout_id}:
-    get:
-      tags:
-        - till-layouts
-      summary: Get Till Layout
-      operationId: get_till_layout
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: layout_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Layout Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TillLayout'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - till-layouts
@@ -1397,7 +1240,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_TillProfile__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TillProfile'
+                title: Response List Till Profiles Till Profiles Get
         '404':
           description: Not found
         '422':
@@ -1442,41 +1288,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /till-profiles/{profile_id}:
-    get:
-      tags:
-        - till-profiles
-      summary: Get Till Profile
-      operationId: get_till_profile
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: profile_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Profile Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TillProfile'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - till-profiles
@@ -1573,7 +1384,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_TillButton__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TillButton'
+                title: Response List Till Buttons Till Buttons Get
         '404':
           description: Not found
         '422':
@@ -1618,41 +1432,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /till-buttons/{button_id}:
-    get:
-      tags:
-        - till-buttons
-      summary: Get Till Button
-      operationId: get_till_button
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: button_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Button Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TillButton'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - till-buttons
@@ -1749,7 +1528,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_CashRegisterStocking__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CashRegisterStocking'
+                title: Response List Register Stockings Till Register Stockings Get
         '404':
           description: Not found
         '422':
@@ -1890,7 +1672,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_CashRegister__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CashRegister'
+                title: Response List Cash Registers Admin Till Registers Get
         '404':
           description: Not found
         '422':
@@ -1934,34 +1719,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /till-registers/{register_id}:
-    get:
+  /till-registers/transfer-register:
+    post:
       tags:
         - till-registers
-      summary: Get Cash Register Admin
-      operationId: get_cash_register_admin
+      summary: Transfer Register
+      operationId: transfer_register
       security:
         - OAuth2PasswordBearer: []
       parameters:
-        - name: register_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Register Id
         - name: node_id
           in: query
           required: true
           schema:
             type: integer
             title: Node Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRegisterPayload'
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/CashRegister'
+              schema: {}
         '404':
           description: Not found
         '422':
@@ -1970,6 +1754,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /till-registers/{register_id}:
     post:
       tags:
         - till-registers
@@ -2044,113 +1829,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /till-registers/{register_id}/cashier-shifts:
-    get:
-      tags:
-        - till-registers
-      summary: Get Cashier Shifts For Register
-      operationId: get_cashier_shifts_for_register
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: register_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Register Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NormalizedList_CashierShift__int_'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /till-registers/{register_id}/transactions:
-    get:
-      tags:
-        - till-registers
-      summary: List Transactions
-      operationId: list_transactions
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: register_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Register Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NormalizedList_Transaction__int_'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /till-registers/transfer-register:
-    post:
-      tags:
-        - till-registers
-      summary: Transfer Register
-      operationId: transfer_register
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransferRegisterPayload'
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
   /public-config:
     get:
       tags:
@@ -2187,7 +1865,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_Account__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+                title: Response List System Accounts System Accounts Get
         '404':
           description: Not found
         '422':
@@ -2421,42 +2102,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /orders/by-till/{till_id}:
-    get:
-      tags:
-        - orders
-      summary: List Orders By Till
-      operationId: list_orders_by_till
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: till_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Till Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NormalizedList_Order__int_'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
   /orders:
     get:
       tags:
@@ -2474,17 +2119,42 @@ paths:
             title: Node Id
         - name: customer_account_id
           in: query
-          required: true
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Customer Account Id
+        - name: till_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Till Id
+        - name: offset
+          in: query
+          required: false
           schema:
             type: integer
-            title: Customer Account Id
+            default: 0
+            title: Offset
+        - name: limit
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Limit
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_Order__int_'
+                $ref: '#/components/schemas/PaginatedList_Order_'
         '404':
           description: Not found
         '422':
@@ -2633,34 +2303,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
-  /cashiers/{cashier_id}/shifts:
+  /cashiers/shifts:
     get:
       tags:
         - cashiers
-      summary: Get Cashier Shifts
-      operationId: get_cashier_shifts
+      summary: List Cashier Shifts
+      operationId: list_cashier_shifts
       security:
         - OAuth2PasswordBearer: []
       parameters:
-        - name: cashier_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Cashier Id
         - name: node_id
           in: query
           required: true
           schema:
             type: integer
             title: Node Id
+        - name: cashier_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Cashier Id
+        - name: cash_register_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Cash Register Id
+        - name: shift_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Shift Id
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_CashierShift__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CashierShift'
+                title: Response List Cashier Shifts Cashiers Shifts Get
         '404':
           description: Not found
         '422':
@@ -3112,7 +2803,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_Ticket__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+                title: Response List Tickets Tickets Get
         '404':
           description: Not found
         '422':
@@ -3220,41 +2914,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /tickets/{ticket_id}:
-    get:
-      tags:
-        - tickets
-      summary: Get Ticket
-      operationId: get_ticket
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: ticket_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Ticket Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Ticket'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - tickets
@@ -3608,7 +3267,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_UserTagVariant__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserTagVariant'
+                title: Response List User Tag Variants User Tag Variants Get
         '404':
           description: Not found
         '422':
@@ -3784,7 +3446,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_Tse__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tse'
+                title: Response List Tses Tses  Get
         '404':
           description: Not found
         '422':
@@ -3891,7 +3556,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_PayoutRunWithStats__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PayoutRunWithStats'
+                title: Response List Payout Runs Payouts  Get
         '404':
           description: Not found
         '422':
@@ -4929,44 +4597,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AuditLog'
+                  $ref: '#/components/schemas/AuditLogDetail'
                 title: Response List Audit Logs Tree Nodes  Node Id  Audit Logs Get
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tree/nodes/{node_id}/audit-logs/{audit_log_id}:
-    get:
-      tags:
-        - tree
-      summary: Get Audit Log
-      operationId: get_audit_log
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: node_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-        - name: audit_log_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Audit Log Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuditLogDetail'
         '404':
           description: Not found
         '422':
@@ -5313,7 +4945,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NormalizedList_Terminal__int_'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Terminal'
+                title: Response List Terminals Terminal Get
         '404':
           description: Not found
         '422':
@@ -5495,41 +5130,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
   /terminal/{terminal_id}:
-    get:
-      tags:
-        - terminals
-      summary: Get Terminal
-      operationId: get_terminal
-      security:
-        - OAuth2PasswordBearer: []
-      parameters:
-        - name: terminal_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            title: Terminal Id
-        - name: node_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            title: Node Id
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Terminal'
-        '404':
-          description: Not found
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
         - terminals
@@ -5710,6 +5310,67 @@ paths:
           content:
             application/json:
               schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /transactions:
+    get:
+      tags:
+        - transactions
+      summary: List Transactions
+      operationId: list_transactions
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: node_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            title: Node Id
+        - name: cash_register_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Cash Register Id
+        - name: transaction_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Transaction Id
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            title: Offset
+        - name: limit
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: 'null'
+            title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedList_Transaction_'
         '404':
           description: Not found
         '422':
@@ -5920,40 +5581,6 @@ components:
           title: Shutdown Date
       type: object
       title: Ao146aExportPayload
-    AuditLog:
-      properties:
-        id:
-          type: integer
-          title: Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        node_id:
-          type: integer
-          title: Node Id
-        log_type:
-          type: string
-          title: Log Type
-        originating_user_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Originating User Id
-        originating_terminal_id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: Originating Terminal Id
-      type: object
-      required:
-        - id
-        - created_at
-        - node_id
-        - log_type
-        - originating_user_id
-        - originating_terminal_id
-      title: AuditLog
     AuditLogDetail:
       properties:
         id:
@@ -6742,7 +6369,6 @@ components:
         initial_top_up_amount:
           type: number
           title: Initial Top Up Amount
-          default: 0
         pretix_item_id:
           anyOf:
             - type: integer
@@ -6765,16 +6391,22 @@ components:
         cancelled:
           type: boolean
           title: Cancelled
-          default: false
       type: object
       required:
         - external_reference
         - created_at
         - token
         - ticket_type
+        - external_link
+        - customer_email
+        - customer_name
+        - initial_top_up_amount
+        - pretix_item_id
+        - pretix_product_name
         - id
         - customer_account_id
         - has_checked_in
+        - cancelled
       title: ExternalTicket
     ExternalTicketType:
       type: string
@@ -7284,9 +6916,19 @@ components:
         bon_issuer:
           type: string
           title: Bon Issuer
-        bon_address:
+        bon_street:
           type: string
-          title: Bon Address
+          title: Bon Street
+        bon_zip:
+          type: string
+          title: Bon Zip
+        bon_city:
+          type: string
+          title: Bon City
+        bon_country:
+          type: string
+          title: Bon Country
+          default: DEU
         bon_title:
           type: string
           title: Bon Title
@@ -7411,7 +7053,9 @@ components:
         - pretix_topup_ids
         - ust_id
         - bon_issuer
-        - bon_address
+        - bon_street
+        - bon_zip
+        - bon_city
         - bon_title
         - sepa_enabled
         - sepa_sender_name
@@ -7518,11 +7162,14 @@ components:
         description:
           type: string
           title: Description
+        tax_type:
+          $ref: '#/components/schemas/TaxType'
       type: object
       required:
         - name
         - rate
         - description
+        - tax_type
       title: NewTaxRate
     NewTerminal:
       properties:
@@ -8033,295 +7680,6 @@ components:
         - event_privileges_at_node
         - node_privileges_at_node
       title: NodeSeenByUser
-    NormalizedList_Account__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/Account'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[Account, int]
-    NormalizedList_CashRegisterStocking__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/CashRegisterStocking'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[CashRegisterStocking, int]
-    NormalizedList_CashRegister__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/CashRegister'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[CashRegister, int]
-    NormalizedList_CashierShift__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/CashierShift'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[CashierShift, int]
-    NormalizedList_Order__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/Order'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[Order, int]
-    NormalizedList_PayoutRunWithStats__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/PayoutRunWithStats'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[PayoutRunWithStats, int]
-    NormalizedList_Product__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/Product'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[Product, int]
-    NormalizedList_TaxRate__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/TaxRate'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[TaxRate, int]
-    NormalizedList_Terminal__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/Terminal'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[Terminal, int]
-    NormalizedList_Ticket__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/Ticket'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[Ticket, int]
-    NormalizedList_TillButton__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/TillButton'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[TillButton, int]
-    NormalizedList_TillLayout__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/TillLayout'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[TillLayout, int]
-    NormalizedList_TillProfile__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/TillProfile'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[TillProfile, int]
-    NormalizedList_Till__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/Till'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[Till, int]
-    NormalizedList_Transaction__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/Transaction'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[Transaction, int]
-    NormalizedList_Tse__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/Tse'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[Tse, int]
-    NormalizedList_UserRole__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/UserRole'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[UserRole, int]
     NormalizedList_UserTagDetail__int_:
       properties:
         ids:
@@ -8339,40 +7697,6 @@ components:
         - ids
         - entities
       title: NormalizedList[UserTagDetail, int]
-    NormalizedList_UserTagVariant__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/UserTagVariant'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[UserTagVariant, int]
-    NormalizedList_User__int_:
-      properties:
-        ids:
-          items:
-            type: integer
-          type: array
-          title: Ids
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/User'
-          type: object
-          title: Entities
-      type: object
-      required:
-        - ids
-        - entities
-      title: NormalizedList[User, int]
     ObjectType:
       type: string
       enum:
@@ -8648,6 +7972,36 @@ components:
         - customer_tag_uid_hex
         - tse_qr_code_text
       title: OrderWithTse
+    PaginatedList_Order_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Order'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+        - items
+        - total
+      title: PaginatedList[Order]
+    PaginatedList_Transaction_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Transaction'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+        - items
+        - total
+      title: PaginatedList[Transaction]
     PaymentMethod:
       type: string
       enum:
@@ -8988,6 +8342,8 @@ components:
         tax_rate:
           type: number
           title: Tax Rate
+        tax_type:
+          $ref: '#/components/schemas/TaxType'
         type:
           $ref: '#/components/schemas/ProductType'
         price_per_voucher:
@@ -9008,6 +8364,7 @@ components:
         - id
         - tax_name
         - tax_rate
+        - tax_type
         - type
       title: Product
     ProductOverallStats:
@@ -9220,9 +8577,19 @@ components:
         bon_issuer:
           type: string
           title: Bon Issuer
-        bon_address:
+        bon_street:
           type: string
-          title: Bon Address
+          title: Bon Street
+        bon_zip:
+          type: string
+          title: Bon Zip
+        bon_city:
+          type: string
+          title: Bon City
+        bon_country:
+          type: string
+          title: Bon Country
+          default: DEU
         bon_title:
           type: string
           title: Bon Title
@@ -9334,7 +8701,9 @@ components:
         - pretix_topup_ids
         - ust_id
         - bon_issuer
-        - bon_address
+        - bon_street
+        - bon_zip
+        - bon_city
         - bon_title
         - sepa_enabled
         - sepa_sender_name
@@ -9479,9 +8848,19 @@ components:
         bon_issuer:
           type: string
           title: Bon Issuer
-        bon_address:
+        bon_street:
           type: string
-          title: Bon Address
+          title: Bon Street
+        bon_zip:
+          type: string
+          title: Bon Zip
+        bon_city:
+          type: string
+          title: Bon City
+        bon_country:
+          type: string
+          title: Bon Country
+          default: DEU
         bon_title:
           type: string
           title: Bon Title
@@ -9597,7 +8976,9 @@ components:
         - pretix_topup_ids
         - ust_id
         - bon_issuer
-        - bon_address
+        - bon_street
+        - bon_zip
+        - bon_city
         - bon_title
         - sepa_enabled
         - sepa_sender_name
@@ -9813,6 +9194,8 @@ components:
         description:
           type: string
           title: Description
+        tax_type:
+          $ref: '#/components/schemas/TaxType'
         id:
           type: integer
           title: Id
@@ -9824,6 +9207,7 @@ components:
         - name
         - rate
         - description
+        - tax_type
         - id
         - node_id
       title: TaxRate
@@ -9852,6 +9236,14 @@ components:
         - total_tax
         - total_no_tax
       title: TaxRateAggregation
+    TaxType:
+      type: string
+      enum:
+        - regular_vat
+        - reduced_vat
+        - no_tax
+        - transparent
+      title: TaxType
     Terminal:
       properties:
         name:
@@ -10529,9 +9921,19 @@ components:
         bon_issuer:
           type: string
           title: Bon Issuer
-        bon_address:
+        bon_street:
           type: string
-          title: Bon Address
+          title: Bon Street
+        bon_zip:
+          type: string
+          title: Bon Zip
+        bon_city:
+          type: string
+          title: Bon City
+        bon_country:
+          type: string
+          title: Bon Country
+          default: DEU
         bon_title:
           type: string
           title: Bon Title
@@ -10638,7 +10040,9 @@ components:
         - pretix_topup_ids
         - ust_id
         - bon_issuer
-        - bon_address
+        - bon_street
+        - bon_zip
+        - bon_city
         - bon_title
         - sepa_enabled
         - sepa_sender_name

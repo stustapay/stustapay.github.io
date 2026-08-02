@@ -2359,6 +2359,8 @@ components:
         tax_rate:
           type: number
           title: Tax Rate
+        tax_type:
+          $ref: '#/components/schemas/TaxType'
         type:
           $ref: '#/components/schemas/ProductType'
         price_per_voucher:
@@ -2379,6 +2381,7 @@ components:
         - id
         - tax_name
         - tax_rate
+        - tax_type
         - type
       title: Product
     ProductType:
@@ -2480,6 +2483,14 @@ components:
         - new_user_tag_pin
         - comment
       title: SwitchTagPayload
+    TaxType:
+      type: string
+      enum:
+        - regular_vat
+        - reduced_vat
+        - no_tax
+        - transparent
+      title: TaxType
     Terminal:
       properties:
         name:

@@ -2752,6 +2752,9 @@ components:
         enable_card_payment:
           type: boolean
           title: Enable Card Payment
+        use_ttp_for_card_payment:
+          type: boolean
+          title: Use Ttp For Card Payment
         buttons:
           anyOf:
             - items:
@@ -2778,6 +2781,7 @@ components:
         - enable_ssp_payment
         - enable_cash_payment
         - enable_card_payment
+        - use_ttp_for_card_payment
         - buttons
         - sumup_secrets
       title: TerminalTillConfig

@@ -7321,6 +7321,9 @@ components:
         enable_card_payment:
           type: boolean
           title: Enable Card Payment
+        use_ttp_for_card_payment:
+          type: boolean
+          title: Use Ttp For Card Payment
       type: object
       required:
         - name
@@ -7332,6 +7335,7 @@ components:
         - enable_ssp_payment
         - enable_cash_payment
         - enable_card_payment
+        - use_ttp_for_card_payment
       title: NewTillProfile
     NewTse:
       properties:
@@ -9551,6 +9555,9 @@ components:
         enable_card_payment:
           type: boolean
           title: Enable Card Payment
+        use_ttp_for_card_payment:
+          type: boolean
+          title: Use Ttp For Card Payment
         node_id:
           type: integer
           title: Node Id
@@ -9568,6 +9575,7 @@ components:
         - enable_ssp_payment
         - enable_cash_payment
         - enable_card_payment
+        - use_ttp_for_card_payment
         - node_id
         - id
       title: TillProfile
